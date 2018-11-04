@@ -2,7 +2,10 @@
 
 namespace web\api\controller;
 
+use addons\fomo\model\TokenRecord;
+use addons\member\model\MemberAccountModel;
 use think\Exception;
+use web\common\model\sys\SysParameterModel;
 
 class Keygame extends \web\api\controller\ApiBase {
 
@@ -254,8 +257,22 @@ class Keygame extends \web\api\controller\ApiBase {
                     $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
                     //用户购买分配自己 : 然后f3d_amount - 分配给自己的 = 队列要处理的金额
                     $f3d_amount = $this->_sendToSelf($this->user_id, $game_id, $coin_id, $f3d_amount);
-                    $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id);
-
+                    $m = new \addons\member\model\MemberAccountModel();
+                    $bonus_limit = $m->where('id='.$this->user_id)->value('bonus_limit');
+                    $bonus_limit_num = null;
+                    if($bonus_limit > 0){
+                        $bonus_limit_num = $key_total_price * $bonus_limit; // 投注额 * 封顶限制倍数
+                        $before_amount = $sequeueM->where(['user_id' => $this->user_id, 'type' => 1, 'scene' => 1])->sum('amount');
+                        $total_amount = $before_amount + $f3d_amount;
+                        if($total_amount < $bonus_limit_num)
+                        {
+                            $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id);
+                        }else
+                        {
+                            $amount = $bonus_limit_num - $total_amount;
+                            $sequeueM->addSequeue($this->user_id, $coin_id, $amount, 1, 1, $game_id);
+                        }
+                    }
                 }
                 //用户key+
                 $save_key = $keyRecordM->saveUserKey($this->user_id, $team_id, $game_id, $key_num, $key_total_price);
@@ -263,6 +280,9 @@ class Keygame extends \web\api\controller\ApiBase {
                 $current_price_data['key_amount'] = $current_price + $key_rule['multi'];
                 $current_price_data['update_time'] = NOW_DATETIME;
                 $priceM->save($current_price_data);
+
+                //更新用户购买金额
+                $this->updateTokenNum($this->user_id,$key_total_price);
                 $gameM->commit();
                 return $this->successJSON();
             } catch (\Exception $ex) {
@@ -270,6 +290,88 @@ class Keygame extends \web\api\controller\ApiBase {
                 return $this->failJSON($ex->getMessage());
             }
         }
+    }
+
+    private function updateBuyAmount($user_id,$amount)
+    {
+        $buyAmountM = new \addons\fomo\model\BuyAmount();
+        $buyAmount = $buyAmountM->where('user_id',$user_id)->find();
+        if(empty($buyAmount))
+        {
+            $data = array(
+                'user_id'   => $user_id,
+                'amount'    => 0,
+                'update_time'   => NOW_DATETIME,
+            );
+
+            $buyAmountM->add($data);
+        }
+
+        $buyAmountM->where('user_id',$user_id)->setInc('amount',$amount);
+    }
+
+    /**
+     * 更新用户购买金额
+     * @param $user_id
+     * @param $amount
+     */
+    private function updateTokenNum($user_id,$amount)
+    {
+        $this->updateBuyAmount($user_id,$amount);
+        $memberM = new MemberAccountModel();
+        $this->updateUserTokenNum($user_id);
+
+        $user = $memberM->getDetail($user_id);
+        if($user['pid'])
+        {
+            $this->updateBuyAmount($user['pid'],$amount);
+            $this->updateUserTokenNum($user['pid']);
+        }
+    }
+
+    /**
+     * 更新token数量
+     * @param $user_id
+     */
+    private function updateUserTokenNum($user_id)
+    {
+        $buyAmountM = new \addons\fomo\model\BuyAmount();
+        $amount = $buyAmountM->where('user_id',$user_id)->value('amount');
+        if(empty($amount))
+            return;
+        $amount = intval($amount);
+
+        $sysM = new SysParameterModel();
+        $get_token_amount = $sysM->getValByName('get_token_amount');
+
+        if(empty($get_token_amount))
+            return;
+        $get_token_amount = intval($get_token_amount);
+
+        $token_amount = bcdiv($amount,intval($get_token_amount));
+        if($token_amount < 1)
+            return;
+
+        $mod_amount = bcmod($amount,$get_token_amount);
+        $tokenRecordM = new TokenRecord();
+        $user_token = $tokenRecordM->where('user_id',$user_id)->find();
+        if(empty($user_token))
+        {
+            $data = array(
+                'user_id'   => $user_id,
+                'token'     => 0,
+                'before_token'  => 0,
+                'update_time'   => NOW_DATETIME,
+            );
+            $tokenRecordM->add($data);
+        }
+        $tokenRecordM->where('user_id',$user_id)->setInc('token',$token_amount);
+
+        $buyAmountM->save([
+            'amount' => $mod_amount,
+        ],[
+            'user_id' => $user_id,
+        ]);
     }
     
     /**

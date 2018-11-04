@@ -104,7 +104,7 @@ class KeyRecord extends \web\common\model\BaseModel{
         }
         $where['game_id'] = $game_id;
         $where['user_id'] = array('<>', $user_id);
-        return $this->where($where)->field('id,user_id,sum(key_num) as key_num')->group('user_id')->select();
+        return $this->where($where)->field('id,user_id,sum(key_num) as key_num,bonus_limit_num')->group('user_id')->select();
     }
     
     /**

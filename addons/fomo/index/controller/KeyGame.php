@@ -133,7 +133,7 @@ class KeyGame extends Fomobase {
                     $sequeueM->addSequeue($this->user_id, $coin_id, $p3d_amount, 0, 1, $game_id);
                 }
                 $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
-                $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id, $team_id);
+                $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id, $team_id,$save_key);
                 $gameM->commit();
                 return $this->successData();
             } catch (\Exception $ex) {

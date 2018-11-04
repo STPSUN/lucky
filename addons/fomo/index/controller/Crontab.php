@@ -29,7 +29,7 @@ class Crontab extends \web\common\controller\Controller {
                 $queueM->startTrans();
                 if ($data['type'] == 1) {
                     //f3d分红,去除用户本身
-                    $res = $this->sendF3d($data['user_id'], $data['coin_id'], $data['game_id'], $data['amount'], $data['scene'], $data['team_id']);
+                    $res = $this->sendF3d($data['user_id'], $data['coin_id'], $data['game_id'], $data['amount'], $data['scene'], $data['team_id'],$data['type']);
                 } else {
                     //p3d分红
                     $res = $this->sendP3d($data['user_id'], $data['coin_id'], $data['amount'], $data['game_id'], $data['scene']);
@@ -64,7 +64,7 @@ class Crontab extends \web\common\controller\Controller {
                     $queueM->startTrans();
                     if ($data['type'] == 1) {
                         //f3d分红,去除用户本身
-                        $res = $this->sendF3d($data['user_id'], $data['coin_id'], $data['game_id'], $data['amount'], $data['scene'], $data['team_id']);
+                        $res = $this->sendF3d($data['user_id'], $data['coin_id'], $data['game_id'], $data['amount'], $data['scene'], $data['team_id'],$data['type']);
                     } else {
                         //p3d分红
                         $res = $this->sendP3d($data['user_id'], $data['coin_id'], $data['amount'], $data['game_id'], $data['scene']);
@@ -97,7 +97,7 @@ class Crontab extends \web\common\controller\Controller {
      * @param type $scene 场景id 场景:0=p3d购买，1=f3d投注分配，2=f3d开奖分配'
      * @param type $team_id 
      */
-    private function sendF3d($user_id, $coin_id, $game_id, $amount, $scene, $team_id) {
+    private function sendF3d($user_id, $coin_id, $game_id, $amount, $scene, $team_id,$bonus_type) {
         $keyRecordM = new \addons\fomo\model\KeyRecord();
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
@@ -116,6 +116,11 @@ class Crontab extends \web\common\controller\Controller {
         }
         if (!empty($record_list)) {
             foreach ($record_list as $k => $record) {
+                $bonus_limit_num = $record['bonus_limit_num'];
+                if(!empty($bonus_limit_num))
+                {
+
+                }
                 $user_id = $record['user_id'];
                 $key_num = $record['key_num'];
                 $rate = $this->getUserRate($total_key, $key_num);
