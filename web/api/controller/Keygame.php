@@ -257,22 +257,7 @@ class Keygame extends \web\api\controller\ApiBase {
                     $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
                     //用户购买分配自己 : 然后f3d_amount - 分配给自己的 = 队列要处理的金额
                     $f3d_amount = $this->_sendToSelf($this->user_id, $game_id, $coin_id, $f3d_amount);
-                    $m = new \addons\member\model\MemberAccountModel();
-                    $bonus_limit = $m->where('id='.$this->user_id)->value('bonus_limit');
-                    $bonus_limit_num = null;
-                    if($bonus_limit > 0){
-                        $bonus_limit_num = $key_total_price * $bonus_limit; // 投注额 * 封顶限制倍数
-                        $before_amount = $sequeueM->where(['user_id' => $this->user_id, 'type' => 1, 'scene' => 1])->sum('amount');
-                        $total_amount = $before_amount + $f3d_amount;
-                        if($total_amount < $bonus_limit_num)
-                        {
-                            $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id);
-                        }else
-                        {
-                            $amount = $bonus_limit_num - $total_amount;
-                            $sequeueM->addSequeue($this->user_id, $coin_id, $amount, 1, 1, $game_id);
-                        }
-                    }
+                    $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id);
                 }
                 //用户key+
                 $save_key = $keyRecordM->saveUserKey($this->user_id, $team_id, $game_id, $key_num, $key_total_price);
