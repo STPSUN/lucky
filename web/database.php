@@ -5,15 +5,19 @@ return [
     'type'            => 'mysql',
     // 服务器地址
     'hostname'        => '127.0.0.1',
+//    'hostname'        => '107.174.247.122',
     // 数据库名
-    'database'        => 'lucky_winner',
+//    'database'        => 'lucky',
+    'database'        => 'fomo3d',
     // 用户名
-    'username'        => 'root',
+//    'username'        => 'root',
+    'username'        => 'fomo3d',
     // 密码
-    'password'        => 'root',
+//    'password'        => 'root',
+    'password'        => 'RSeMD7Xm6jLeYdLm',
     // 端口
-    'hostport'        => '3307',
-//    'hostport'        => '3306',
+//    'hostport'        => '3307',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
