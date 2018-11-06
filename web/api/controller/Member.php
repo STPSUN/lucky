@@ -709,7 +709,7 @@ class Member extends \web\api\controller\ApiBase
      */
     public function applyAgency()
     {
-        $user_id = 84;
+        $user_id = $this->user_id;
         $m = new \addons\member\model\Agency();
         $data = $m->where(['user_id' => $user_id, 'status' => 1])->find();
         if(!empty($data))
