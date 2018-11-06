@@ -52,8 +52,8 @@ class KeyRecord extends \web\common\model\BaseModel{
         $data = $this->where($where)->find();
         $bonus_limit_num = 0;
         if($is_limit){
-            $m = new \addons\member\model\MemberAccountModel();
-            $bonus_limit = $m->where('id='.$user_id)->value('bonus_limit');
+            $sysM = new \web\common\model\sys\SysParameterModel();
+            $bonus_limit = $sysM->getValByName('bonus_limit');
             if($bonus_limit > 0){
                 $bonus_limit_num = $eth * $bonus_limit; // 投注额 * 封顶限制倍数
             }
