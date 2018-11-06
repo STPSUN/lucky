@@ -704,4 +704,38 @@ class Member extends \web\api\controller\ApiBase
         }
     }
 
+    /**
+     * 申请代理
+     */
+    public function applyAgency()
+    {
+        $user_id = 84;
+        $m = new \addons\member\model\Agency();
+        $data = $m->where(['user_id' => $user_id, 'status' => 1])->find();
+        if(!empty($data))
+            return $this->failJSON('代理审核中，请耐心等待');
+
+        $param = array(
+            'user_id' => $user_id,
+            'status'  => 1,
+            'create_time'   => NOW_DATETIME,
+            'update_time'   => NOW_DATETIME,
+        );
+        $res = $m->add($param);
+        if($res)
+            return $this->successJSON();
+        else
+            return $this->failData();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+

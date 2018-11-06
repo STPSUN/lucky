@@ -29,7 +29,7 @@ class Trade extends \web\user\controller\AddonUserBase{
         $total = $m->getTotal($filter);
         $rows = $m->getList($this->getPageIndex(), $this->getPageSize(), $filter);
         $count_total = $m->getCountTotal($filter);
-        return $this->toTotalDataGrid($total, $rows,$count_total);
+        return $this->toDataGrid($total, $rows,$count_total);
     }
 
     /**
