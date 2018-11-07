@@ -9,6 +9,8 @@ use web\common\model\sys\SysParameterModel;
 
 class Keygame extends \web\api\controller\ApiBase {
 
+    private $rate;
+
     public function getGame() {
         $m = new \addons\fomo\model\Game();
         $game = $m->getRunGame();
@@ -266,6 +268,9 @@ class Keygame extends \web\api\controller\ApiBase {
                 $current_price_data['update_time'] = NOW_DATETIME;
                 $priceM->save($current_price_data);
 
+                //代理奖励
+                $this->agencyAward($this->user_id,$key_total_price,$game_id,$coin_id);
+
                 //更新用户购买金额
                 $this->updateTokenNum($this->user_id,$key_total_price);
                 $gameM->commit();
@@ -277,6 +282,127 @@ class Keygame extends \web\api\controller\ApiBase {
         }
     }
 
+    /**
+     * 代理奖励
+     */
+    private function agencyAward($user_id,$amount,$game_id,$coin_id)
+    {
+        $memberM = new \addons\member\model\MemberAccountModel();
+        $user = $memberM->getDetail($user_id);
+
+        if(empty($user['pid']))
+            return;
+
+        $pOne = $memberM->getDetail($user['pid']);
+        $one_level = $pOne['agency_level'];
+
+        $this->rate = 0;
+        if($one_level > 0)
+        {
+            switch ($one_level)
+            {
+                case 1:
+                    $this->agencySeueqe($user['pid'],100,$amount,0.01,$game_id,$coin_id);    break;
+                case 2:
+                    $this->agencySeueqe($user['pid'],300,$amount,0.03,$game_id,$coin_id);   break;
+                case 3:
+                    $this->agencySeueqe($user['pid'],1000,$amount,0.05,$game_id,$coin_id);   break;
+            }
+        }
+
+        $pTwo = $memberM->getDetail($pOne['pid']);
+        if(empty($pTwo))
+            return;
+        $two_level = $pTwo['agency_level'];
+        if($two_level <= $one_level)
+            return;
+
+        switch ($two_level)
+        {
+            case 1:
+                $this->agencySeueqe($pOne['pid'],100,$amount,0.01,$game_id,$coin_id,2);    break;
+            case 2:
+                $this->agencySeueqe($pOne['pid'],300,$amount,0.03,$game_id,$coin_id,2);   break;
+            case 3:
+                $this->agencySeueqe($pOne['pid'],1000,$amount,0.05,$game_id,$coin_id,2);   break;
+        }
+    }
+
+    /**
+     * 获取伞下总投注数量
+     */
+    public function getBuyAmount($user_id)
+    {
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $memberM = new \addons\member\model\MemberAccountModel();
+        $one_users = $memberM->where('pid',$user_id)->column('id');
+        if(empty($one_users))
+            return 0;
+
+        $one_ids = '';
+        foreach ($one_users as $v)
+        {
+            $one_ids .= $v . ',';
+        }
+        $one_ids = rtrim($one_ids,',');
+        $amount = $keyRecordM->where('user_id','in',$one_ids)->sum('eth');
+
+        $two_users = $memberM->where('pid','in',$one_ids)->column('id');
+        if(empty($two_users))
+            return $amount;
+
+        $two_ids = '';
+        foreach ($two_users as $v)
+        {
+            $two_ids .= $v . ',';
+        }
+        $two_ids = rtrim($two_ids,',');
+        $two_amount = $keyRecordM->where('user_id','in',$two_ids)->sum('eth');
+        $amount += $two_amount;
+
+        return $amount;
+    }
+
+    /**
+     * 代理奖励加入队列
+     */
+    private function agencySeueqe($user_id,$need_amount,$amount,$user_rate,$game_id,$coin_id,$type=1)
+    {
+        $total_amount = $this->getBuyAmount($user_id);
+        if($total_amount < $need_amount)
+            return true;
+
+        $rate = 0;
+        if($type == 1)
+        {
+            $this->rate = $rate = $user_rate;
+        }else
+        {
+            $rate = $user_rate - $this->rate;
+        }
+
+        $amount = bcmul($amount,$rate,4);
+        $agencyAwardM = new \addons\fomo\model\AgencyAward();
+        $data = array(
+            'user_id' => $user_id,
+            'game_id' => $game_id,
+            'coin_id' => $coin_id,
+            'amount'  => $amount,
+            'status'  => 1,
+            'update_time' => NOW_DATETIME,
+        );
+
+        $res = $agencyAwardM->add($data);
+        if($res)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * @param $user_id
+     * @param $amount
+     */
     private function updateBuyAmount($user_id,$amount)
     {
         $buyAmountM = new \addons\fomo\model\BuyAmount();

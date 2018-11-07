@@ -89,6 +89,33 @@ class Crontab extends \web\common\controller\Controller {
     }
 
     /**
+     * 代理奖励发放
+     */
+    public function agencyAward()
+    {
+        $agencyAwardM = new \addons\fomo\model\AgencyAward();
+        $balanceM = new \addons\member\model\Balance();
+        $rewardM = new \addons\fomo\model\RewardRecord();
+        $data = $agencyAwardM->where('status',1)->limit(1000)->select();
+        foreach ($data as $v)
+        {
+            $user_id = $v['user_id'];
+            $amount = $v['amount'];
+            $coin_id = $v['coin_id'];
+            $game_id = $v['game_id'];
+            $remark = '代理分红';
+            $type = 5;
+            //添加余额, 添加分红记录
+            $balance = $balanceM->updateBalance($user_id, $amount, $coin_id, true);
+            if ($balance != false) {
+                $before_amount = $balance['before_amount'];
+                $after_amount = $balance['amount'];
+                $rewardM->addRecord($user_id, $coin_id, $before_amount, $amount, $after_amount, $type, $game_id, $remark);
+            }
+        }
+    }
+
+    /**
      * 发放F3d分红
      * @param type $user_id
      * @param type $coin_id
