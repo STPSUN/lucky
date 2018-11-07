@@ -713,7 +713,7 @@ class Member extends \web\api\controller\ApiBase
         $m = new \addons\member\model\Agency();
         $data = $m->where(['user_id' => $user_id, 'status' => 1])->find();
         if(!empty($data))
-            return $this->successJSON('代理审核中，请耐心等待');
+            return $this->failJSON('代理审核中，请耐心等待');
 
         $param = array(
             'user_id' => $user_id,
