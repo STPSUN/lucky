@@ -743,32 +743,26 @@ class Member extends \web\api\controller\ApiBase
      */
     public function convertCoin()
     {
-        $coin_type = $this->_post('coin_type');
+        $coin_id = $this->_post('coin_id');
         $amount = $this->_post('amount');
         $user_id = $this->user_id;
 
-        if (!$user_id || !$coin_type|| !$amount) {
+        if (!$user_id || !$coin_id|| !$amount) {
             return $this->failJSON("illegal request");
         }
 
         $sysM = new \web\common\model\sys\SysParameterModel();
         $balanceM = new \addons\member\model\Balance();
         $coinM = new Coins();
-        if($coin_type == 1)
-        {
-            $coin_id = $coinM->where('coin_name','BTC')->value('id');
-            $rate = $sysM->getValByName('btc_rate');
-            $amount_rate = $amount * $rate;
-            $type = 21;
-            $remark = 'BTC兑换代币';
-        }else
-        {
-            $coin_id = $coinM->where('coin_name','USDT')->value('id');
-            $rate = $sysM->getValByName('btc_rate');
-            $amount_rate = $amount * $rate;
-            $type = 22;
-            $remark = 'USDT兑换代币';
-        }
+
+        $coin = $coinM->getDetail($coin_id);
+        if(empty($coin))
+            return $this->failJSON('该币种不存在');
+
+        $rate = $sysM->getValByName($coin['coin_name']);
+        $amount_rate = $amount * $rate;
+        $type = 21;
+        $remark = '兑换代币';
 
         $coin_balance = $balanceM->getBalanceByCoinID($user_id,$coin_id);
         if($coin_balance['amount'] < $amount)
