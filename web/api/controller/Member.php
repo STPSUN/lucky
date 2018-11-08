@@ -3,6 +3,7 @@
 namespace web\api\controller;
 
 use addons\config\model\Coins;
+use addons\fomo\model\AgencyAward;
 use addons\member\model\MemberAccountModel;
 use addons\member\model\TradingRecord;
 use addons\otc\model\PayConfig;
@@ -819,10 +820,29 @@ class Member extends \web\api\controller\ApiBase
         $level = $memberM->where('id',$user_id)->value('agency_level');
         $users = $memberM->getTeamByIdBreak($user_id,1,2);
 
+        $agencyAwardM = new AgencyAward();
+        $total_amount = $agencyAwardM->where(['user_id' => $user_id, 'status' => 2])->sum('amount');
         $data = [
             'level' => $level,
-            ''
+            'user_num'  => count($users),
+            'total_amount' => empty($total_amount) ? 0 : $total_amount,
         ];
+
+        $detail = [];
+        foreach ($users as $v)
+        {
+            $award = $agencyAwardM->where(['user_id' => $user_id, 'from_user_id' => $v['id'], 'status' => 2])->sum('amount');
+            $temp = [
+                'username' => $v['username'],
+                'amount'   => empty($award) ? 0 : $award,
+            ];
+
+            $detail[] = $temp;
+        }
+
+        $data['detail'] = $detail;
+
+        return $this->successJSON($data);
     }
 
 }
