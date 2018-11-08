@@ -26,6 +26,7 @@ class Member extends \web\api\controller\ApiBase
     {
         try {
             $user_id = $this->user_id;
+            $user_id = 84;
             if (!$user_id || $user_id <= 0) {
                 return $this->failJSON("请登录");
             }
@@ -47,6 +48,12 @@ class Member extends \web\api\controller\ApiBase
             $tokenM = new \addons\fomo\model\TokenRecord();
             $token = $tokenM->getDataByUserID($user_id);
             $data['token_num'] = (empty($token['token']))?0:$token['token'];
+
+            $btc_balance = $balanceM->getBalanceByCoinID($user_id,3);
+            $data['btc_num'] = $btc_balance ? $btc_balance['amount'] : 0;
+
+            $usdt_balance = $balanceM->getBalanceByCoinID($user_id,4);
+            $data['usdt_num'] = $usdt_balance ? $usdt_balance['amount'] : 0;
 
             return $this->successJSON($data);
         } catch (Exception $ex) {
@@ -752,14 +759,14 @@ class Member extends \web\api\controller\ApiBase
             $coin_id = $coinM->where('coin_name','BTC')->value('id');
             $rate = $sysM->getValByName('btc_rate');
             $amount_rate = $amount * $rate;
-            $type = 11;
+            $type = 21;
             $remark = 'BTC兑换代币';
         }else
         {
             $coin_id = $coinM->where('coin_name','USDT')->value('id');
             $rate = $sysM->getValByName('btc_rate');
             $amount_rate = $amount * $rate;
-            $type = 12;
+            $type = 22;
             $remark = 'USDT兑换代币';
         }
 
@@ -791,6 +798,16 @@ class Member extends \web\api\controller\ApiBase
         return $this->successJSON();
     }
 
+    /**
+     * 获取币种类型
+     */
+    public function getCoinType()
+    {
+        $coinM = new Coins();
+        $data = $coinM->field('id coin_id,coin_name')->where('is_token',0)->select();
+
+        return $this->successJSON($data);
+    }
 }
 
 
