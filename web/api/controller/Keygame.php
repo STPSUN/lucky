@@ -302,11 +302,11 @@ class Keygame extends \web\api\controller\ApiBase {
             switch ($one_level)
             {
                 case 1:
-                    $this->agencySeueqe($user['pid'],100,$amount,0.01,$game_id,$coin_id);    break;
+                    $this->agencySeueqe($user['pid'],100,$amount,0.01,$game_id,$coin_id,1,$user_id);    break;
                 case 2:
-                    $this->agencySeueqe($user['pid'],300,$amount,0.03,$game_id,$coin_id);   break;
+                    $this->agencySeueqe($user['pid'],300,$amount,0.03,$game_id,$coin_id,1,$user_id);   break;
                 case 3:
-                    $this->agencySeueqe($user['pid'],1000,$amount,0.05,$game_id,$coin_id);   break;
+                    $this->agencySeueqe($user['pid'],1000,$amount,0.05,$game_id,$coin_id,1,$user_id);   break;
             }
         }
 
@@ -320,11 +320,11 @@ class Keygame extends \web\api\controller\ApiBase {
         switch ($two_level)
         {
             case 1:
-                $this->agencySeueqe($pOne['pid'],100,$amount,0.01,$game_id,$coin_id,2);    break;
+                $this->agencySeueqe($pOne['pid'],100,$amount,0.01,$game_id,$coin_id,2,$user_id);    break;
             case 2:
-                $this->agencySeueqe($pOne['pid'],300,$amount,0.03,$game_id,$coin_id,2);   break;
+                $this->agencySeueqe($pOne['pid'],300,$amount,0.03,$game_id,$coin_id,2,$user_id);   break;
             case 3:
-                $this->agencySeueqe($pOne['pid'],1000,$amount,0.05,$game_id,$coin_id,2);   break;
+                $this->agencySeueqe($pOne['pid'],1000,$amount,0.05,$game_id,$coin_id,2,$user_id);   break;
         }
     }
 
@@ -366,7 +366,7 @@ class Keygame extends \web\api\controller\ApiBase {
     /**
      * 代理奖励加入队列
      */
-    private function agencySeueqe($user_id,$need_amount,$amount,$user_rate,$game_id,$coin_id,$type=1)
+    private function agencySeueqe($user_id,$need_amount,$amount,$user_rate,$game_id,$coin_id,$type=1,$from_user_id)
     {
         $total_amount = $this->getBuyAmount($user_id);
         if($total_amount < $need_amount)
@@ -385,6 +385,7 @@ class Keygame extends \web\api\controller\ApiBase {
         $agencyAwardM = new \addons\fomo\model\AgencyAward();
         $data = array(
             'user_id' => $user_id,
+            'from_user_id' => $from_user_id,
             'game_id' => $game_id,
             'coin_id' => $coin_id,
             'amount'  => $amount,

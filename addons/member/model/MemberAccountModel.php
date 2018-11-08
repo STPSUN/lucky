@@ -352,5 +352,28 @@ class MemberAccountModel extends \web\common\model\BaseModel
         return $this->getTeamById($ids, $tier += 1, $arr);
     }
 
+    /**
+     * @param $pid int 顶点用户
+     * @param $tier int 层级
+     * @param array $arr 子集
+     * @return array $arr 子集返回
+     */
+    public function getTeamByIdBreak($pid, $tier,$break,$arr = [])
+    {
+        $where = ['pid' => ['in', $pid]];
+        $ret = $this->where($where)->field("id,pid,username,{$tier} tier")->select();
+        if (!$ret) {
+            return $arr;
+        }
+
+        $arr = array_merge($arr, $ret);
+        if($tier >= $break)
+            return $arr;
+
+        $ids = array_column($ret, 'id');
+        $ids = join(',', $ids);
+        return $this->getTeamById($ids, $tier += 1, $arr);
+    }
+
 
 }

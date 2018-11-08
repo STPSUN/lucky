@@ -2,6 +2,11 @@
 
 namespace web\api\controller;
 
+use addons\config\model\Coins;
+use addons\member\model\Recharge;
+use think\Request;
+use think\Validate;
+
 class Transaction extends ApiBase{
     public function getPayData(){
 
@@ -217,6 +222,61 @@ class Transaction extends ApiBase{
         } catch (\Exception $ex) {
             return $this->failJSON($ex->getMessage());
         }
+    }
+
+    /**
+     * 充值
+     */
+    public function recharge()
+    {
+        $param = Request::instance()->post();
+        $validate = new Validate([
+            'amount'    => 'require',
+            'coin_id'   => 'require',
+            'file'      => 'require',
+        ]);
+
+        $user_id = $this->user_id;
+        if(!$validate->check($param))
+            return $this->failJSON($validate->getError());
+
+        $coinM = new Coins();
+        $coin = $coinM->getDetail($param['coin_id']);
+        if(empty($coin))
+            return $this->failJSON('该币种不存在');
+
+        $data = array(
+            'user_id'   => $user_id,
+            'amount'    => $param['amount'],
+            'coin_id'   => $param['coin_id'],
+            'status'    => 1,
+            'create_time' => NOW_DATETIME,
+        );
+
+        try
+        {
+            $base64 = $param['file'];
+            if($base64){
+                $savePath = 'transaction/proof/'.$user_id.'/';
+                $ret = $this->base_img_upload($base64, $user_id, $savePath);
+                if(!$ret['success']){
+                    return $this->failJSON($ret['message']);
+                }
+                $data['remit_img'] = $ret['path'];
+            }
+
+            $rechargeM = new Recharge();
+            $res = $rechargeM->add($data);
+            if($res)
+                return $this->successJSON();
+            else
+                return $this->failJSON('充值提交失败');
+
+        }catch (\Exception $e)
+        {
+            return $this->failJSON($e->getMessage());
+        }
+
     }
     
     /**

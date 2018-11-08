@@ -3,9 +3,13 @@
 namespace web\api\controller;
 
 use addons\config\model\Coins;
+use addons\member\model\MemberAccountModel;
 use addons\member\model\TradingRecord;
 use addons\otc\model\PayConfig;
 use think\Exception;
+use think\Request;
+use think\Validate;
+use web\common\model\sys\SysParameterModel;
 
 class Member extends \web\api\controller\ApiBase
 {
@@ -26,7 +30,6 @@ class Member extends \web\api\controller\ApiBase
     {
         try {
             $user_id = $this->user_id;
-            $user_id = 84;
             if (!$user_id || $user_id <= 0) {
                 return $this->failJSON("请登录");
             }
@@ -37,13 +40,9 @@ class Member extends \web\api\controller\ApiBase
             $data['eth_num'] = $eth_balance ? $eth_balance['amount'] : 0;
 
             $keyRecordM = new \addons\fomo\model\KeyRecord();
-            $key_num = $keyRecordM->getTotalByGameID($this->user_id, $game_id); //持有游戏key数量
-            $data['key_num'] = $key_num ? $key_num : 0;
-
-
-            $maketM = new \web\api\model\MarketModel();
-            $rate = $maketM->getCnyRateByCoinId(1);
-            $data['cny_rate'] = $rate;
+            $key = $keyRecordM->getKeyByGameId($user_id, $game_id); //持有游戏key数量
+            $data['key_num'] = $key ? $key['key_num'] : 0;
+            $data['lose_key_num'] = $key ? $key['lose_key_num'] : 0;
 
             $tokenM = new \addons\fomo\model\TokenRecord();
             $token = $tokenM->getDataByUserID($user_id);
@@ -54,6 +53,12 @@ class Member extends \web\api\controller\ApiBase
 
             $usdt_balance = $balanceM->getBalanceByCoinID($user_id,4);
             $data['usdt_num'] = $usdt_balance ? $usdt_balance['amount'] : 0;
+
+            $world_balance = $balanceM->getBalanceByCoinID($user_id,2);
+            $data['world_num'] = $world_balance ? $world_balance['amount'] : 0;
+            $sysM = new SysParameterModel();
+            $token_rate = $sysM->getValByName('token_rate');
+            $data['cny_num'] = bcmul($world_balance['amount'],$token_rate,2);
 
             return $this->successJSON($data);
         } catch (Exception $ex) {
@@ -802,6 +807,24 @@ class Member extends \web\api\controller\ApiBase
 
         return $this->successJSON($data);
     }
+
+    /**
+     * 俱乐部
+     */
+    public function club()
+    {
+        $user_id = $this->user_id;
+        $user_id = 85;
+        $memberM = new MemberAccountModel();
+        $level = $memberM->where('id',$user_id)->value('agency_level');
+        $users = $memberM->getTeamByIdBreak($user_id,1,2);
+
+        $data = [
+            'level' => $level,
+            ''
+        ];
+    }
+
 }
 
 

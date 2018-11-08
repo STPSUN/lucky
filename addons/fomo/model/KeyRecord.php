@@ -93,6 +93,16 @@ class KeyRecord extends \web\common\model\BaseModel{
         return $data;
     }
 
+    public function getKeyByGameId($user_id,$game_id)
+    {
+        $where['user_id'] = $user_id;
+        $where['game_id'] = $game_id;
+        $data = $this->where($where)->find();
+        if(empty($data))
+            return null;
+        return $data;
+    }
+
     /**
      * 获取user_id 以外的所有指定游戏,战队 - 拥有key的用户
      * @param type $user_id
