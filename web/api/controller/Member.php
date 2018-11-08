@@ -2,6 +2,9 @@
 
 namespace web\api\controller;
 
+use addons\config\model\Coins;
+use addons\member\model\TradingRecord;
+use addons\otc\model\PayConfig;
 use think\Exception;
 
 class Member extends \web\api\controller\ApiBase
@@ -728,7 +731,82 @@ class Member extends \web\api\controller\ApiBase
             return $this->failData();
     }
 
+    /**
+     * 兑换代币
+     */
+    public function convertCoin()
+    {
+        $coin_type = $this->_post('coin_type');
+        $amount = $this->_post('amount');
+        $user_id = $this->user_id;
+
+        if (!$user_id || !$coin_type|| !$amount) {
+            return $this->failJSON("illegal request");
+        }
+
+        $sysM = new \web\common\model\sys\SysParameterModel();
+        $balanceM = new \addons\member\model\Balance();
+        $coinM = new Coins();
+        if($coin_type == 1)
+        {
+            $coin_id = $coinM->where('coin_name','BTC')->value('id');
+            $rate = $sysM->getValByName('btc_rate');
+            $amount_rate = $amount * $rate;
+            $type = 11;
+            $remark = 'BTC兑换代币';
+        }else
+        {
+            $coin_id = $coinM->where('coin_name','USDT')->value('id');
+            $rate = $sysM->getValByName('btc_rate');
+            $amount_rate = $amount * $rate;
+            $type = 12;
+            $remark = 'USDT兑换代币';
+        }
+
+        $coin_balance = $balanceM->getBalanceByCoinID($user_id,$coin_id);
+        if($coin_balance['amount'] < $amount)
+            return $this->failJSON('余额不足');
+
+        $agency_coin_id = $coinM->where('is_token',1)->value('id');
+        $recordM = new TradingRecord();
+        $balanceM->startTrans();
+        try
+        {
+            $balanceM->updateBalance($user_id,$amount,$coin_id,false);
+            $coin_after = $coin_balance['amount'] - $amount;
+            $recordM->addRecord($user_id,$coin_id,$amount,$coin_balance['amount'],$coin_after,$type,0,0,'','',$remark);
+
+            $agency_balance = $balanceM->getBalanceByCoinID($user_id,$agency_coin_id);
+            $balanceM->updateBalance($user_id,$amount_rate,$agency_coin_id,true);
+            $agency_after = $agency_balance['amount'] + $amount_rate;
+            $recordM->addRecord($user_id,$agency_coin_id,$amount_rate,$agency_balance['amount'],$agency_after,$type,1,0,'','',$remark);
+
+            $balanceM->commit();
+        }catch (\Exception $e)
+        {
+            $balanceM->rollback();
+            return $this->failJSON($e->getMessage());
+        }
+
+        return $this->successJSON();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
