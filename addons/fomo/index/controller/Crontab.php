@@ -145,6 +145,9 @@ class Crontab extends \web\common\controller\Controller {
             foreach ($record_list as $k => $record) {
                 $user_id = $record['user_id'];
                 $key_num = $record['key_num'];
+                if($key_num <= 0)
+                    continue;
+
                 $rate = $this->getUserRate($total_key, $key_num);
                 $_amount = $amount * $rate;
 
@@ -158,19 +161,50 @@ class Crontab extends \web\common\controller\Controller {
                         continue;
 
                     if($total_amount >= $bonus_limit_num)
-                        $_amount = $total_amount - $bonus_limit_num;
-                }
+                    {
+                        $_amount = $bonus_limit_num - $profit_amount;
+                        //令牌失效
+                        $this->keyLose($record['user_id'],$game_id);
+                    }
 
-                //添加余额, 添加分红记录
-                $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
-                if ($balance != false) {
-                    $before_amount = $balance['before_amount'];
-                    $after_amount = $balance['amount'];
-                    $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
+                    //添加余额, 添加分红记录
+                    $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
+                    if ($balance != false) {
+                        $before_amount = $balance['before_amount'];
+                        $after_amount = $balance['amount'];
+                        $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
+                    }
+                }else
+                {
+                    //添加余额, 添加分红记录
+                    $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
+                    if ($balance != false) {
+                        $before_amount = $balance['before_amount'];
+                        $after_amount = $balance['amount'];
+                        $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
+                    }
                 }
             }
         }
         return true;
+    }
+
+    /**
+     * 令牌失效
+     */
+    private function keyLose($user_id,$game_id)
+    {
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $record = $keyRecordM->where(['game_id' => $game_id, 'user_id' => $user_id])->find();
+        if(empty($record))
+            return;
+
+        $keyRecordM->save([
+            'key_num' => 0,
+            'lose_key_num' => $record['key_num'] + $record['lose_key_num'],
+        ],[
+            'id' => $record['id']
+        ]);
     }
 
     /**
