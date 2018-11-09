@@ -815,7 +815,6 @@ class Member extends \web\api\controller\ApiBase
     public function club()
     {
         $user_id = $this->user_id;
-        $user_id = 85;
         $memberM = new MemberAccountModel();
         $level = $memberM->where('id',$user_id)->value('agency_level');
         $users = $memberM->getTeamByIdBreak($user_id,1,2);
