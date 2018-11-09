@@ -804,8 +804,19 @@ class Member extends \web\api\controller\ApiBase
      */
     public function getCoinType()
     {
+        $sysM = new SysParameterModel();
         $coinM = new Coins();
         $data = $coinM->field('id coin_id,coin_name')->where('is_token',0)->select();
+        foreach ($data as &$v)
+        {
+            $coin_name = $v['coin_name'];
+            if($coin_name == 'ETH')
+                $v['address'] = $sysM->getValByName('out_address');
+            else if($coin_name == 'USDT')
+                $v['address'] = $sysM->getValByName('usdt_address');
+            else if($coin_name == 'BTC')
+                $v['address'] = $sysM->getValByName('btc_address');
+        }
 
         return $this->successJSON($data);
     }
@@ -844,6 +855,7 @@ class Member extends \web\api\controller\ApiBase
 
         return $this->successJSON($data);
     }
+
 
 }
 
