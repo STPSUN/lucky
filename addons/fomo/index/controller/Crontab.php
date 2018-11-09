@@ -93,24 +93,43 @@ class Crontab extends \web\common\controller\Controller {
      */
     public function agencyAward()
     {
+        set_time_limit(0);
         $agencyAwardM = new \addons\fomo\model\AgencyAward();
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
         $data = $agencyAwardM->where('status',1)->limit(1000)->select();
         foreach ($data as $v)
         {
-            $user_id = $v['user_id'];
-            $amount = $v['amount'];
-            $coin_id = $v['coin_id'];
-            $game_id = $v['game_id'];
-            $remark = '代理分红';
-            $type = 5;
-            //添加余额, 添加分红记录
-            $balance = $balanceM->updateBalance($user_id, $amount, $coin_id, true);
-            if ($balance != false) {
-                $before_amount = $balance['before_amount'];
-                $after_amount = $balance['amount'];
-                $rewardM->addRecord($user_id, $coin_id, $before_amount, $amount, $after_amount, $type, $game_id, $remark);
+            try
+            {
+                $agencyAwardM->startTrans();
+                $agencyAwardM->save([
+                    'status' => 2,
+                    'update_time' => NOW_DATETIME,
+                ],[
+                    'id' => $v['id'],
+                ]);
+
+                $user_id = $v['user_id'];
+                $amount = $v['amount'];
+                $coin_id = $v['coin_id'];
+                $game_id = $v['game_id'];
+                $remark = '代理分红';
+                $type = 5;
+                //添加余额, 添加分红记录
+                $balance = $balanceM->updateBalance($user_id, $amount, $coin_id, true);
+                if ($balance != false) {
+                    $before_amount = $balance['before_amount'];
+                    $after_amount = $balance['amount'];
+                    $rewardM->addRecord($user_id, $coin_id, $before_amount, $amount, $after_amount, $type, $game_id, $remark);
+                }
+
+                $agencyAwardM->commit();
+                echo '代理分红处理成功';
+            }catch (\Exception $e)
+            {
+                $agencyAwardM->rollback();
+                echo '代理分红处理失败';
             }
         }
     }
