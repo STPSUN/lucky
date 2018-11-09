@@ -765,7 +765,8 @@ class Member extends \web\api\controller\ApiBase
         if(empty($coin))
             return $this->failJSON('该币种不存在');
 
-        $rate = $sysM->getValByName($coin['coin_name']);
+        $coin_name = $coin['coin_name'] . '_rate';
+        $rate = $sysM->getValByName($coin_name);
         $amount_rate = $amount * $rate;
         $type = 21;
         $remark = '兑换代币';

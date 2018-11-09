@@ -251,6 +251,7 @@ class Transaction extends ApiBase{
             'coin_id'   => $param['coin_id'],
             'status'    => 1,
             'create_time' => NOW_DATETIME,
+            'update_time' => NOW_DATETIME,
         );
 
         try
