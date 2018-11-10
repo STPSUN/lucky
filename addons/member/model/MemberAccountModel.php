@@ -27,9 +27,7 @@ class MemberAccountModel extends \web\common\model\BaseModel
         if (!empty($filter))
             $sql =  'select * from ('.$sql.') t where '.$filter;
 
-        $balanceM = new \addons\member\model\Balance();
-        $sql = "select a.*,ifnull(b.amount,0) balance from ({$sql}) a left join {$balanceM->getTableName()} b on a.id = b.user_id and coin_id =1";
-
+       
         $RewardRecordM = new \addons\fomo\model\RewardRecord();
         $sql = "select a.*,ifnull(sum(b.amount),0) reward_total from ({$sql}) a left join {$RewardRecordM->getTableName()} b on a.id = b.user_id group by a.id";
 

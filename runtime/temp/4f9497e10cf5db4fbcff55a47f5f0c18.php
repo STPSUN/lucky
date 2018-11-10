@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:90:"/Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/index.html";i:1541835848;s:77:"/Users/shilinqing/GitHub/lucky/public/../web/user/view/default/base/list.html";i:1541827348;s:81:"/Users/shilinqing/GitHub/lucky/public/../web/user/view/default/public/header.html";i:1541827348;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:89:"/Users/shilinqing/GitHub/lucky/public/../addons/config/user/view/default/coins/index.html";i:1541827347;s:77:"/Users/shilinqing/GitHub/lucky/public/../web/user/view/default/base/list.html";i:1541827348;s:81:"/Users/shilinqing/GitHub/lucky/public/../web/user/view/default/public/header.html";i:1541827348;}*/ ?>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -173,52 +173,23 @@
         <input type="hidden" id="curMenu" value="menu_<?php echo $_ADDON_NAME; ?>_<?php echo $_CONTROLLER_NAME; ?>"/><!--当前菜单项-->      
         <div id="main_container">
             
-<div class="right-main">
-    <div class="page_nav" id="js_page_nav"><span class="page_title"><?php echo $page_nav; ?></span></div>
-
-    <div id="js_main_header" class="ui-form main_header">
-        <span class="frm_input_box search append">
-            <!--<a href="javascript:void(0);" id="js_search" class="frm_input_append">-->
-                <!--<i class="icon wb-search" title="搜索"></i>-->
-            <!--</a>-->
-            <input type="text" id="js_keyword" placeholder="请输入用户名称" value="" class="frm_input" />
-        </span>
-        <span class="frm_input_box search append">
-            <a href="javascript:void(0);" id="js_search" class="frm_input_append">
-                <i class="icon wb-search" title="搜索"></i>
-            </a>
-            <!--<input type="text" id="js_keyword2" placeholder="请输入用户名称" value="" class="frm_input" />-->
-            <input type="text" id="phone" placeholder="请输入手机号" value="" class="frm_input" />
-        </span>
-    </div>
-    <table id="grid-table">
-        <thead frozen="true">
-        <th data-options="field:'username',width:100,align:'center'">用户名称</th> 
-        <th data-options="field:'invite_user_name',width:100,align:'center'">上级用户名称</th> 
-        <!--<th data-options="field:'bonus_limit',width:150, align:'center'">分红封顶倍数(0为不封顶)</th>-->
-        </thead>
-        <thead>
-            <tr>
-                <th data-options="field:'phone',width:150, align:'center'">手机号</th>
-<!--                <th data-options="field:'real_name',width:100, align:'center'">真实姓名</th>
-                <th data-options="field:'card_no',width:160, align:'center'">身份证号</th>-->
-                <th data-options="field:'address',width:300, align:'center'">地址</th>
-                <th data-options="field:'reward_total',width:150, align:'center'">历史分红</th>
-                <th data-options="field:'now_key_num',width:150, align:'center'">当前游戏钥匙持有量</th>
-                <th data-options="field:'key_total',width:150, align:'center'">历史钥匙持有总量</th>
-                <th data-options="field:'token_total',width:150, align:'center'">令牌持有量</th>
-                <th data-options="field:'recommend1',width:150, align:'center'">直推人数</th>
-                <th data-options="field:'recommend2',width:150, align:'center'">二级人数</th>
-                <th data-options="field:'game_count',width:150, align:'center'">参与局数</th>
-                <!--<th data-options="field:'is_auth',width:120,align:'center', formatter:formatAuth">是否认证</th>-->
-                <th data-options="field:'is_frozen',width:100,align:'center', formatter:formatStatus">是否冻结</th>
-                <th data-options="field:'register_time',width:150, align:'center'">注册时间</th>
-                <th data-options="field:'_oper',width:250,halign:'center',formatter: formatOper">操作</th>
-            </tr>
-        </thead>
-    </table>
+<div class="right-main ui-form">
+    <div class="page_nav" id="js_page_nav"><span class="page_title"><?php echo $page_nav; ?></span></div>       
+    <div id="js_main_header" class="main_header">
+        <div>
+            <span class="frm_input_box search append">
+                <a href="javascript:void(0);" id="js_search" class="frm_input_append">
+                    <i class="icon wb-search" title="搜索"></i>
+                </a>
+                <input type="text" id="js_keyword" placeholder="请输入名称" value="" class="frm_input" />
+            </span>
+            <span class="right">       
+                <button type="button" id="js_addBtn" class="btn btn-primary"><i class="icon wb-plus"></i> 添加<?php echo $page_nav; ?></button>
+            </span>
+        </div>
+    </div>    
+    <table id="grid-table"></table>    
 </div>
-
 
         </div>
 
@@ -322,113 +293,78 @@
 
     function formatOper(value, row, index) {
         var html = '<span class="grid-operation">';
-        html += '<button type="button" onclick="view_balance(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-eye"></i>查看资产</button>';
-        
-        html += '<button type="button" onclick="add_coin_stock(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>拨币</button>';
-        html += '<button type="button" onclick="edit(' + row['id'] + ')" class="btn btn-xs btn-default del-btn"><i class="icon wb-close"></i>编辑用户资料</button>';
-        
-        if(row['is_frozen'] == 1)
-            html += '<button type="button" onclick="change_frozen(' + row['id'] + ',0)" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>解冻</button>';
-        else
-            html += '<button type="button" onclick="change_frozen(' + row['id'] + ',1)" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>冻结</button>'
-        if(row['is_auth'] == 2)
-            html += '<button type="button" onclick="auth(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>认证</button>';
-        
+        html += '<button type="button" onclick="edit(' + row['id'] + ', 0)" class="btn btn-xs btn-default view-btn"><i class="icon wb-edit"></i>编辑</button>';
         html += '<button type="button" onclick="del(' + row['id'] + ')" class="btn btn-xs btn-default del-btn"><i class="icon wb-close"></i>删除</button>';
         html += '</span>';
         return html;
     }
-    
-    function formatStatus(value,row,index){
-        var text = '<span style="color:red">否</span>';
-        if(value == '1')
-            text = '<span style="color:green">是</span>';
-        return text;
-    }
-    
     $(function () {
         $('#grid-table').datagrid({
             url: getURL('loadList'),
             method: "GET",
             height: getGridHeight(),
-            rownumbers: true,
-            singleSelect: true,
+            singleSelect: false,
             remoteSort: false,
+            rownumbers: true,
             multiSort: true,
             emptyMsg: '<span>无相关数据</span>',
             pagination: true,
-            pageSize: 20
+            pageSize: 20,
+            columns: [[
+                    {field: 'coin_name', title: '币种名称', width: 90, align: 'center', sortable: true},
+                    {field: 'is_token', title: '是否代币', width: 90, align: 'center',formatter:formatType},
+                    {field: 'update_time', title: '更新时间', width: 140, align: 'center'},
+                    {field: 'without_rate', title: '提现手续费', width: 140, align: 'center',formatter:formatRate},
+                    {field: 'without_min', title: '最低提现额度', width: 140, align: 'center'},
+                    
+                    {field: '_oper', title: '操作', width: 160, align: 'center', sortable: true, formatter: formatOper}
+                ]]
         });
+
         //设置分页控件 
-        $('#grid-table').datagrid('getPager').pagination({
+        var p = $('#grid-table').datagrid('getPager');
+        $(p).pagination({
             pageSize: 20, //每页显示的记录条数，默认为10 
             pageList: [20, 30, 50]
         });
+
     });
-    function view_balance(id){
-        var url = getURL('view_balance', 'id=' + id);
-        openBarWin('资产', 400, 400, url, function () {
-            reload();
-        }, ['确定','取消']);
-    }
     
-    function formatAuth(value,row,index){
-        var text = '<span style="color:red">未认证</span>';
-        if(value == '1'){
-            text = '<span style="color:green">已认证</span>';
-        }else if(value == '2'){
-            text = '<span style="color:#ff9b00">待认证</span>';
-        }else if(value =='-1'){
-            text = '<span style="color:red">不通过</span>';
-        }
+    function formatRate(val,row,index){
+        var text = val + '%'
         return text;
     }
     
-    function setLimit(id){
-        var url = getURL('set_limit', 'id=' + id);
-        openBarWin('设置封顶', 400, 200, url, function () {
-            reload();
-        }, ['确定','取消']);
-    }
-    
-    function change_frozen(id,status){
-        var title = '确认要解冻此用户吗?';
-        if(status == 1)
-            title = '确认要冻结此用户吗?';
-        confirm(title, function () {
-            var url = getURL('change_frozen');
-            $.getJSON(url, {id: id,status:status}, function (json) {
-                if (json.success)
-                    reload();
-                else
-                    alert(json.message);
-            });
-        });
-    }
-    
-    function add_coin_stock(id) {
-        var url = getURL('add_coin_stock', 'id=' + id);
-        openBarWin('拨币', 400, 200, url, function () {
-            reload();
-        }, ['确定','取消']);
+    function formatType(value, row, index){
+        var text = '是';
+        if(value == 0){
+            text = '否';
+        }
+        return text;
     }
 
-    function auth(id) {
-        var url = getURL('auth', 'id=' + id);
-        openBarWin('认证用户', 1000, 400, url, function () {
+    $("#col_main").resize(function () {
+        $('#grid-table').datagrid('resize', {
+            height: getGridHeight()
+        });
+    });
+
+    $("#js_addBtn").click(function () {
+        var url = getURL('edit');
+        openBarWin('添加币种', 800, 370, url, function () {
             reload();
-        }, ['确定','取消']);
-    }
-    
-    function edit(id) {
-        var url = getURL('edit', 'id=' + id);
-        openBarWin('编辑', 1000, 500, url, function () {
+        });
+    });
+
+    function edit(id, act) {
+        var url = getURL('edit', 'id=' + id + '&act=' + act);
+        openBarWin('编辑币种', 800, 370, url, function () {
             reload();
-        }, ['确定','取消']);
+        }, ['保存', '取消']);
     }
-    
+
     function del(id) {
-        confirm("确认要删除此会员吗？", function () {
+        confirm("确认要删除此数据吗？", function () {
             var url = getURL('del');
             $.getJSON(url, {id: id}, function (json) {
                 if (json.success)
@@ -442,16 +378,14 @@
     $("#js_search").click(function () {
         reload();
     });
+
     function reload() {
         var keyword = $("#js_keyword").val();
-        var phone = $("#phone").val();
-        $('#grid-table').datagrid('reload', {keyword: keyword,phone: phone});
+        $('#grid-table').datagrid('reload', {
+            keyword: keyword
+        });
     }
-    $("#type").change(function () {
-        var keyword = $("#js_keyword").val();
-        var phone = $("#phone").val();
-        $('#grid-table').datagrid('reload', {keyword: keyword,phone: phone});
-    });
+
 </script>
 
     </body>

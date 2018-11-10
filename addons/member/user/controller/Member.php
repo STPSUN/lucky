@@ -89,6 +89,15 @@ class Member extends \web\user\controller\AddonUserBase{
         }
     }
     
+    public function view_balance(){
+        $id = $this->_get('id');
+        $m = new \addons\member\model\Balance();
+        $filter = 'user_id='.$id;
+        $list = $m->getList(-1,-1,$filter);
+        $this->assign('data',$list);
+        return $this->fetch();
+    }
+    
     public function loadData() {
         $id = $this->_get('id');
         $m = new \addons\member\model\MemberAccountModel();

@@ -26,10 +26,18 @@ class Balance extends \web\common\model\BaseModel
         $m = new \addons\config\model\Coins();
         $marketM = new \web\api\model\MarketModel();
         $sql = 'select a.id,a.amount,a.coin_id,b.coin_name,b.pic,(c.cny * a.amount) as cny from ' . $this->getTableName() . ' a,' . $m->getTableName() . ' b,' . $marketM->getTableName() . ' c where a.user_id=' . $user_id . ' and a.coin_id=b.id and b.coin_name=c.coin_name';
-        if (!empty($coin_id)) {
+        if ($coin_id !='') {
             $sql .= ' and a.coin_id=' . $coin_id;
         }
         return $this->query($sql);
+    }
+    
+    public function getList($pageIndex = -1, $pageSize = -1, $filter = '', $fields = '', $order = 'id desc') {
+        $c = new \addons\config\model\Coins();
+        $sql = 'select tab.*,c.coin_name from ' . $this->getTableName() . ' as tab left join ' . $c->getTableName() . ' c on tab.coin_id=c.id';
+        if (!empty($filter))
+            $sql = 'select * from (' . $sql . ') t where ' . $filter;
+        return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
     }
 
     /**

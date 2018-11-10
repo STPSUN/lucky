@@ -30,10 +30,9 @@
 <!--                <th data-options="field:'real_name',width:100, align:'center'">真实姓名</th>
                 <th data-options="field:'card_no',width:160, align:'center'">身份证号</th>-->
                 <th data-options="field:'address',width:300, align:'center'">地址</th>
-                <th data-options="field:'balance',width:150, align:'center'">余额</th>
                 <th data-options="field:'reward_total',width:150, align:'center'">历史分红</th>
-                <th data-options="field:'now_key_num',width:150, align:'center'">当前key持有量</th>
-                <th data-options="field:'key_total',width:150, align:'center'">历史key持有量</th>
+                <th data-options="field:'now_key_num',width:150, align:'center'">当前游戏钥匙持有量</th>
+                <th data-options="field:'key_total',width:150, align:'center'">历史钥匙持有总量</th>
                 <th data-options="field:'token_total',width:150, align:'center'">令牌持有量</th>
                 <th data-options="field:'recommend1',width:150, align:'center'">直推人数</th>
                 <th data-options="field:'recommend2',width:150, align:'center'">二级人数</th>
@@ -53,6 +52,8 @@
 
     function formatOper(value, row, index) {
         var html = '<span class="grid-operation">';
+        html += '<button type="button" onclick="view_balance(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-eye"></i>查看资产</button>';
+        
         html += '<button type="button" onclick="add_coin_stock(' + row['id'] + ')" class="btn btn-xs btn-default edit-btn"><i class="icon wb-edit"></i>拨币</button>';
         html += '<button type="button" onclick="edit(' + row['id'] + ')" class="btn btn-xs btn-default del-btn"><i class="icon wb-close"></i>编辑用户资料</button>';
         
@@ -94,6 +95,12 @@
             pageList: [20, 30, 50]
         });
     });
+    function view_balance(id){
+        var url = getURL('view_balance', 'id=' + id);
+        openBarWin('资产', 400, 400, url, function () {
+            reload();
+        }, ['确定','取消']);
+    }
     
     function formatAuth(value,row,index){
         var text = '<span style="color:red">未认证</span>';
