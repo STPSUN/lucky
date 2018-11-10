@@ -1,0 +1,3 @@
+<?php
+//000000000000a:7:{s:8:"app_init";a:1:{i:0;s:24:"web\common\behavior\Init";}s:11:"picResource";a:1:{i:0;s:30:"addons\resources\ResourcesHook";}s:9:"uploadPIC";a:1:{i:0;s:28:"addons\uploader\UploaderHook";}s:10:"uploadFile";a:1:{i:0;s:28:"addons\uploader\UploaderHook";}s:6:"editor";a:1:{i:0;s:24:"addons\editor\EditorHook";}s:5:"jssdk";a:1:{i:0;s:22:"addons\jssdk\JssdkHook";}s:5:"share";a:1:{i:0;s:22:"addons\jssdk\JssdkHook";}}
+?>
