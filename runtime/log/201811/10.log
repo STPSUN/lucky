@@ -1,9 +1,9 @@
 ---------------------------------------------------------------
-[ 2018-11-10T13:40:39+08:00 ] ::1 ::1 GET /user
-[ info ] localhost/user [运行时间：0.092146s][吞吐率：10.85req/s] [内存消耗：3,334.02kb] [文件加载：61]
+[ 2018-11-10T14:13:16+08:00 ] ::1 ::1 GET /user
+[ info ] localhost/user [运行时间：0.074665s][吞吐率：13.39req/s] [内存消耗：3,699.30kb] [文件加载：67]
 [ info ] [ CACHE ] INIT File
 [ info ] [ DB ] INIT mysql
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.045834s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.022062s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -15,13 +15,341 @@
   ),
 )
 [ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944',
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
   'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
   'accept-encoding' => 'gzip, deflate, br',
   'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
   'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
   'upgrade-insecure-requests' => '1',
-  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] web\user\controller\Index->index[ /Users/shilinqing/GitHub/lucky/web/user/controller/Index.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../web/user/view/default/index/index.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000719s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_sys_hooks` [ RunTime:0.000812s ]
+[ sql ] [ SQL ] SELECT `name`,`addons` FROM `tp_sys_hooks` [ RunTime:0.000361s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_sys_addons` [ RunTime:0.000674s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('resources') [ RunTime:0.000408s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('uploader') [ RunTime:0.000283s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('uploader') [ RunTime:0.000287s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('editor') [ RunTime:0.000333s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('jssdk') [ RunTime:0.000275s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('jssdk') [ RunTime:0.000287s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000677s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000426s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000453s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000430s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000358s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000327s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000456s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:13:18+08:00 ] ::1 ::1 GET /user/parameter/index/addon/config.html
+[ info ] localhost/user/parameter/index/addon/config.html [运行时间：0.041000s][吞吐率：24.39req/s] [内存消耗：2,475.82kb] [文件加载：53]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003629s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'parameter',
+  'action' => 'index',
+  'addon' => 'config',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-11-10T14:13:18+08:00 ] ::1 ::1 GET /user//user/login/addon/config.html
+[ info ] localhost/user//user/login/addon/config.html [运行时间：0.036037s][吞吐率：27.75req/s] [内存消耗：2,138.49kb] [文件加载：49]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003780s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'user',
+  'action' => 'login',
+  'addon' => 'config',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]未找到控制器:addons\config\user\controller\User[/Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code:1]
+---------------------------------------------------------------
+[ 2018-11-10T14:13:22+08:00 ] ::1 ::1 GET /user/agency/index/addon/member.html?_pjax=%23main_container
+[ info ] localhost/user/agency/index/addon/member.html?_pjax=%23main_container [运行时间：0.039837s][吞吐率：25.10req/s] [内存消耗：2,483.15kb] [文件加载：53]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003097s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-pjax-container' => '#main_container',
+  'x-pjax' => 'true',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'text/html, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  '_pjax' => '#main_container',
+  'module' => 'user',
+  'controller' => 'agency',
+  'action' => 'index',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-11-10T14:13:22+08:00 ] ::1 ::1 GET /user//user/login/addon/member.html
+[ info ] localhost/user//user/login/addon/member.html [运行时间：0.030286s][吞吐率：33.02req/s] [内存消耗：2,138.82kb] [文件加载：49]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002789s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-pjax-container' => '#main_container',
+  'x-pjax' => 'true',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'text/html, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'user',
+  'action' => 'login',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]未找到控制器:addons\member\user\controller\User[/Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code:1]
+---------------------------------------------------------------
+[ 2018-11-10T14:13:22+08:00 ] ::1 ::1 GET /user/agency/index/addon/member.html
+[ info ] localhost/user/agency/index/addon/member.html [运行时间：0.032864s][吞吐率：30.43req/s] [内存消耗：2,482.27kb] [文件加载：53]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002636s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'agency',
+  'action' => 'index',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-11-10T14:13:22+08:00 ] ::1 ::1 GET /user//user/login/addon/member.html
+[ info ] localhost/user//user/login/addon/member.html [运行时间：0.038477s][吞吐率：25.99req/s] [内存消耗：2,138.49kb] [文件加载：49]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.005259s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'user',
+  'action' => 'login',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ LOG ] INIT File
+[ error ] [0]未找到控制器:addons\member\user\controller\User[/Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code:1]
+---------------------------------------------------------------
+[ 2018-11-10T14:13:25+08:00 ] ::1 ::1 GET /user/
+[ info ] localhost/user/ [运行时间：0.029001s][吞吐率：34.48req/s] [内存消耗：2,366.48kb] [文件加载：52]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002545s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'user',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'purpose' => 'prefetch',
   'connection' => 'keep-alive',
   'host' => 'localhost',
 )
@@ -38,21 +366,11 @@
   'auto_start' => true,
 )
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.002586s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_sys_hooks` [ RunTime:0.011245s ]
-[ sql ] [ SQL ] SELECT `name`,`addons` FROM `tp_sys_hooks` [ RunTime:0.000792s ]
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_sys_addons` [ RunTime:0.000762s ]
-[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('resources') [ RunTime:0.001194s ]
-[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('uploader') [ RunTime:0.000321s ]
-[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('uploader') [ RunTime:0.000345s ]
-[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('editor') [ RunTime:0.000300s ]
-[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('jssdk') [ RunTime:0.000280s ]
-[ sql ] [ SQL ] SELECT `id`,`name` FROM `tp_sys_addons` WHERE  `status` = 1  AND `name` IN ('jssdk') [ RunTime:0.000267s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:40:39+08:00 ] ::1 ::1 GET /user/login.html
-[ info ] localhost/user/login.html [运行时间：0.045585s][吞吐率：21.94req/s] [内存消耗：2,705.41kb] [文件加载：57]
+[ 2018-11-10T14:13:25+08:00 ] ::1 ::1 GET /user/login.html
+[ info ] localhost/user/login.html [运行时间：0.032602s][吞吐率：30.67req/s] [内存消耗：2,705.41kb] [文件加载：57]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003787s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002653s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -70,7 +388,7 @@
   'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
   'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
   'upgrade-insecure-requests' => '1',
-  'cache-control' => 'max-age=0',
+  'purpose' => 'prefetch',
   'connection' => 'keep-alive',
   'host' => 'localhost',
 )
@@ -85,10 +403,87 @@
 ) ]
 [ info ] [ LOG ] INIT File
 ---------------------------------------------------------------
-[ 2018-11-10T13:40:53+08:00 ] ::1 ::1 POST /user/login.html
-[ info ] localhost/user/login.html [运行时间：0.060615s][吞吐率：16.50req/s] [内存消耗：3,319.31kb] [文件加载：62]
+[ 2018-11-10T14:13:25+08:00 ] ::1 ::1 GET /user/
+[ info ] localhost/user/ [运行时间：0.031594s][吞吐率：31.65req/s] [内存消耗：2,366.09kb] [文件加载：52]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.005378s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002809s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'user',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-11-10T14:13:25+08:00 ] ::1 ::1 GET /captcha.html
+[ info ] localhost/captcha.html [运行时间：0.033702s][吞吐率：29.67req/s] [内存消耗：1,933.96kb] [文件加载：43]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002715s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'method',
+  'method' => 
+  array (
+    0 => '\\think\\captcha\\CaptchaController',
+    1 => 'index',
+  ),
+  'var' => 
+  array (
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/login.html',
+  'accept' => 'image/webp,image/apng,image/*,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '',
+)
+[ info ] [ RUN ] think\captcha\CaptchaController->index[ /Users/shilinqing/GitHub/lucky/vendor/topthink/think-captcha/src/CaptchaController.php ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-11-10T14:13:28+08:00 ] ::1 ::1 POST /user/login.html
+[ info ] localhost/user/login.html [运行时间：0.040505s][吞吐率：24.69req/s] [内存消耗：3,320.05kb] [文件加载：62]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002456s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -109,14 +504,14 @@
   'x-requested-with' => 'XMLHttpRequest',
   'origin' => 'http://localhost',
   'accept' => 'application/json, text/javascript, */*; q=0.01',
-  'content-length' => '39',
+  'content-length' => '40',
   'connection' => 'keep-alive',
   'host' => 'localhost',
 )
 [ info ] [ PARAM ] array (
   'username' => 'admin',
   'password' => 'slq111',
-  'code' => '333',
+  'code' => '1111',
 )
 [ info ] [ CACHE ] INIT Redis
 [ info ] [ CACHE ] INIT Redis
@@ -131,13 +526,13 @@
   'auto_start' => true,
 )
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000785s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] select id,role_id,username,is_admin,logic_delete from tp_user_account a where username='admin' and password='11a9926f2696af0b56daf0636adec422' [ RunTime:0.000794s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000520s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select id,role_id,username,is_admin,logic_delete from tp_user_account a where username='admin' and password='11a9926f2696af0b56daf0636adec422' [ RunTime:0.000650s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:40:53+08:00 ] ::1 ::1 GET /user/index/index.html
-[ info ] localhost/user/index/index.html [运行时间：0.058618s][吞吐率：17.06req/s] [内存消耗：3,670.27kb] [文件加载：65]
+[ 2018-11-10T14:13:28+08:00 ] ::1 ::1 GET /user/index/index.html
+[ info ] localhost/user/index/index.html [运行时间：0.049173s][吞吐率：20.34req/s] [内存消耗：3,422.49kb] [文件加载：63]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002784s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002851s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -187,271 +582,19 @@
   10 => 'login_user_name',
 ) ]
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000478s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000683s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000325s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000567s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000334s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000372s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000316s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000319s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000465s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000768s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000372s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000395s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000346s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000472s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000325s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000332s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:40:56+08:00 ] ::1 ::1 GET /user/index/index.html
-[ info ] localhost/user/index/index.html [运行时间：0.058039s][吞吐率：17.23req/s] [内存消耗：3,421.84kb] [文件加载：63]
+[ 2018-11-10T14:13:30+08:00 ] ::1 ::1 GET /user/member/index/addon/member.html?_pjax=%23main_container
+[ info ] localhost/user/member/index/addon/member.html?_pjax=%23main_container [运行时间：0.053743s][吞吐率：18.61req/s] [内存消耗：3,726.95kb] [文件加载：66]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003591s ]
-[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
-[ info ] [ ROUTE ] array (
-  'type' => 'module',
-  'module' => 
-  array (
-    0 => 'user',
-    1 => 'index',
-    2 => 'index',
-  ),
-)
-[ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
-  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
-  'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/login.html',
-  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'upgrade-insecure-requests' => '1',
-  'cache-control' => 'max-age=0',
-  'connection' => 'keep-alive',
-  'host' => 'localhost',
-)
-[ info ] [ PARAM ] array (
-)
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT File
-[ info ] [ SESSION ] INIT array (
-  'id' => '',
-  'var_session_id' => '',
-  'prefix' => 'think',
-  'type' => '',
-  'auto_start' => true,
-)
-[ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] web\user\controller\Index->index[ /Users/shilinqing/GitHub/lucky/web/user/controller/Index.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../web/user/view/default/index/index.html [ array (
-  0 => 'SYS_TITLE',
-  1 => 'is_admin',
-  2 => '_CONTROLLER_NAME',
-  3 => '_ADDON_NAME',
-  4 => 'PUBLIC_HEADER',
-  5 => 'loadDataAction',
-  6 => 'addon_id',
-  7 => 'page',
-  8 => 'page_nav',
-  9 => 'filter',
-  10 => 'login_user_name',
-) ]
-[ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000642s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000828s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000351s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000349s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000337s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000380s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000348s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000382s ]
----------------------------------------------------------------
-[ 2018-11-10T13:41:16+08:00 ] ::1 ::1 GET /user/index/index.html
-[ info ] localhost/user/index/index.html [运行时间：0.055945s][吞吐率：17.87req/s] [内存消耗：3,421.84kb] [文件加载：63]
-[ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003272s ]
-[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
-[ info ] [ ROUTE ] array (
-  'type' => 'module',
-  'module' => 
-  array (
-    0 => 'user',
-    1 => 'index',
-    2 => 'index',
-  ),
-)
-[ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
-  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
-  'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/login.html',
-  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'upgrade-insecure-requests' => '1',
-  'cache-control' => 'max-age=0',
-  'connection' => 'keep-alive',
-  'host' => 'localhost',
-)
-[ info ] [ PARAM ] array (
-)
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT File
-[ info ] [ SESSION ] INIT array (
-  'id' => '',
-  'var_session_id' => '',
-  'prefix' => 'think',
-  'type' => '',
-  'auto_start' => true,
-)
-[ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] web\user\controller\Index->index[ /Users/shilinqing/GitHub/lucky/web/user/controller/Index.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../web/user/view/default/index/index.html [ array (
-  0 => 'SYS_TITLE',
-  1 => 'is_admin',
-  2 => '_CONTROLLER_NAME',
-  3 => '_ADDON_NAME',
-  4 => 'PUBLIC_HEADER',
-  5 => 'loadDataAction',
-  6 => 'addon_id',
-  7 => 'page',
-  8 => 'page_nav',
-  9 => 'filter',
-  10 => 'login_user_name',
-) ]
-[ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000481s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000680s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000396s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000392s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000332s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000332s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000321s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000427s ]
----------------------------------------------------------------
-[ 2018-11-10T13:41:17+08:00 ] ::1 ::1 GET /user/index/index.html
-[ info ] localhost/user/index/index.html [运行时间：0.056180s][吞吐率：17.80req/s] [内存消耗：3,421.84kb] [文件加载：63]
-[ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003099s ]
-[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
-[ info ] [ ROUTE ] array (
-  'type' => 'module',
-  'module' => 
-  array (
-    0 => 'user',
-    1 => 'index',
-    2 => 'index',
-  ),
-)
-[ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
-  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
-  'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/login.html',
-  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'upgrade-insecure-requests' => '1',
-  'cache-control' => 'max-age=0',
-  'connection' => 'keep-alive',
-  'host' => 'localhost',
-)
-[ info ] [ PARAM ] array (
-)
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT File
-[ info ] [ SESSION ] INIT array (
-  'id' => '',
-  'var_session_id' => '',
-  'prefix' => 'think',
-  'type' => '',
-  'auto_start' => true,
-)
-[ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] web\user\controller\Index->index[ /Users/shilinqing/GitHub/lucky/web/user/controller/Index.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../web/user/view/default/index/index.html [ array (
-  0 => 'SYS_TITLE',
-  1 => 'is_admin',
-  2 => '_CONTROLLER_NAME',
-  3 => '_ADDON_NAME',
-  4 => 'PUBLIC_HEADER',
-  5 => 'loadDataAction',
-  6 => 'addon_id',
-  7 => 'page',
-  8 => 'page_nav',
-  9 => 'filter',
-  10 => 'login_user_name',
-) ]
-[ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000489s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000828s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000387s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000374s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000388s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000465s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000385s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000350s ]
----------------------------------------------------------------
-[ 2018-11-10T13:41:17+08:00 ] ::1 ::1 GET /user/index/index.html
-[ info ] localhost/user/index/index.html [运行时间：0.056876s][吞吐率：17.58req/s] [内存消耗：3,421.84kb] [文件加载：63]
-[ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003740s ]
-[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
-[ info ] [ ROUTE ] array (
-  'type' => 'module',
-  'module' => 
-  array (
-    0 => 'user',
-    1 => 'index',
-    2 => 'index',
-  ),
-)
-[ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
-  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
-  'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/login.html',
-  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'upgrade-insecure-requests' => '1',
-  'cache-control' => 'max-age=0',
-  'connection' => 'keep-alive',
-  'host' => 'localhost',
-)
-[ info ] [ PARAM ] array (
-)
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT File
-[ info ] [ SESSION ] INIT array (
-  'id' => '',
-  'var_session_id' => '',
-  'prefix' => 'think',
-  'type' => '',
-  'auto_start' => true,
-)
-[ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] web\user\controller\Index->index[ /Users/shilinqing/GitHub/lucky/web/user/controller/Index.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../web/user/view/default/index/index.html [ array (
-  0 => 'SYS_TITLE',
-  1 => 'is_admin',
-  2 => '_CONTROLLER_NAME',
-  3 => '_ADDON_NAME',
-  4 => 'PUBLIC_HEADER',
-  5 => 'loadDataAction',
-  6 => 'addon_id',
-  7 => 'page',
-  8 => 'page_nav',
-  9 => 'filter',
-  10 => 'login_user_name',
-) ]
-[ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000428s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000774s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = ''  AND `controller` = 'index' LIMIT 1 [ RunTime:0.000320s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000359s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000365s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000374s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000399s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000422s ]
----------------------------------------------------------------
-[ 2018-11-10T13:41:18+08:00 ] ::1 ::1 GET /user/member/index/addon/member.html
-[ info ] localhost/user/member/index/addon/member.html [运行时间：0.062930s][吞吐率：15.89req/s] [内存消耗：3,858.64kb] [文件加载：67]
-[ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003101s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002921s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -468,13 +611,17 @@
   'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
   'accept-encoding' => 'gzip, deflate, br',
   'referer' => 'http://localhost/user/index/index.html',
-  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
   'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'upgrade-insecure-requests' => '1',
+  'x-pjax-container' => '#main_container',
+  'x-pjax' => 'true',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'text/html, */*; q=0.01',
   'connection' => 'keep-alive',
   'host' => 'localhost',
 )
 [ info ] [ PARAM ] array (
+  '_pjax' => '#main_container',
   'module' => 'user',
   'controller' => 'member',
   'action' => 'index',
@@ -494,37 +641,27 @@
 [ info ] [ DB ] INIT mysql
 [ info ] [ RUN ] addons\member\user\controller\Member->index[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
 [ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/index.html [ array (
-  0 => 'SYS_TITLE',
-  1 => 'is_admin',
-  2 => '_CONTROLLER_NAME',
-  3 => '_ADDON_NAME',
-  4 => 'PUBLIC_HEADER',
-  5 => 'loadDataAction',
-  6 => 'addon_id',
-  7 => 'page',
-  8 => 'page_nav',
-  9 => 'filter',
-  10 => 'login_user_name',
-  11 => 'BASE_LIST',
-  12 => 'BASE_POPUP',
-  13 => 'BASE_POPUP_FORM',
-  14 => 'BASE_INDEX',
-  15 => 'is_auth',
+  0 => 'is_admin',
+  1 => '_CONTROLLER_NAME',
+  2 => '_ADDON_NAME',
+  3 => 'PUBLIC_HEADER',
+  4 => 'loadDataAction',
+  5 => 'addon_id',
+  6 => 'page',
+  7 => 'page_nav',
+  8 => 'filter',
+  9 => 'login_user_name',
+  10 => 'is_auth',
 ) ]
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000881s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000785s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000375s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000465s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000370s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000368s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000366s ]
-[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000418s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000584s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000783s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000425s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:41:18+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?page=1&rows=20
-[ info ] localhost/user/member/loadList/addon/member?page=1&rows=20 [运行时间：0.065741s][吞吐率：15.21req/s] [内存消耗：3,801.00kb] [文件加载：70]
+[ 2018-11-10T14:13:30+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?page=1&rows=20 [运行时间：0.053970s][吞吐率：18.53req/s] [内存消耗：3,801.73kb] [文件加载：70]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003518s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002529s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -569,17 +706,1222 @@
 [ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
 [ info ] [ DB ] INIT mysql
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000546s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.003436s ]
-[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000756s ]
-[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000738s ]
-[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000386s ]
-[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.006324s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000575s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000532s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000571s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000496s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000382s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.004203s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:41:21+08:00 ] ::1 ::1 GET /user/game/index/addon/fomo.html?_pjax=%23main_container
-[ info ] localhost/user/game/index/addon/fomo.html?_pjax=%23main_container [运行时间：0.056298s][吞吐率：17.76req/s] [内存消耗：3,703.85kb] [文件加载：66]
+[ 2018-11-10T14:13:32+08:00 ] ::1 ::1 GET /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.054657s][吞吐率：18.30req/s] [内存消耗：3,775.13kb] [文件加载：68]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003681s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002915s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/add_coin_stock.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'coins',
+  16 => 'id',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000418s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000688s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000406s ]
+[ sql ] [ SQL ] select id,coin_name from tp_coins order by id asc [ RunTime:0.000342s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:13:37+08:00 ] ::1 ::1 POST /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.063347s][吞吐率：15.79req/s] [内存消耗：3,659.27kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002553s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/add_coin_stock/addon/member?id=88',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://localhost',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'content-length' => '26',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'coin_id' => '1',
+  'amount' => '111',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000494s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_account` [ RunTime:0.000774s ]
+[ sql ] [ SQL ] SELECT `address` FROM `tp_member_account` WHERE  `id` = 88 LIMIT 1 [ RunTime:0.001255s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_balance` [ RunTime:0.000513s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_member_balance` WHERE  `user_id` = 88  AND `coin_id` = 1 LIMIT 1 [ RunTime:0.000363s ]
+[ sql ] [ SQL ] UPDATE `tp_member_balance`  SET `user_id`=88,`coin_id`=1,`amount`=161,`before_amount`=50,`total_amount`=161,`otc_frozen_amount`=0,`withdraw_frozen_amount`=0,`update_time`='2018-11-10 14:13:37'  WHERE  `id` = 108 [ RunTime:0.001804s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_trading_record` [ RunTime:0.000601s ]
+[ sql ] [ SQL ] INSERT INTO `tp_trading_record` (`user_id` , `to_user_id` , `type` , `change_type` , `coin_id` , `before_amount` , `after_amount` , `amount` , `to_address` , `from_address` , `game_id` , `team_id` , `remark` , `update_time`) VALUES (88 , 0 , 6 , 1 , 1 , 50 , 161 , 111 , '0x3dd91ae7dd2976353cb7fe6d55875cf388ab765d' , '' , 0 , 0 , '系统后台拨币' , '2018-11-10 14:13:37') [ RunTime:0.000418s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:13:37+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20 [运行时间：0.053540s][吞吐率：18.68req/s] [内存消耗：3,801.77kb] [文件加载：70]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003236s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'keyword' => '',
+  'phone' => '',
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000452s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000378s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000633s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000487s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000386s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.003683s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:10+08:00 ] ::1 ::1 GET /user/member/index/addon/member.html
+[ info ] localhost/user/member/index/addon/member.html [运行时间：0.060324s][吞吐率：16.58req/s] [内存消耗：3,859.46kb] [文件加载：67]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002699s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'index',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->index[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/index.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'is_auth',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000438s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000686s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000386s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000460s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000372s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000446s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000379s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000478s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:10+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?page=1&rows=20 [运行时间：0.051180s][吞吐率：19.54req/s] [内存消耗：3,801.73kb] [文件加载：70]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002401s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000420s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000334s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000527s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000469s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000415s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.003502s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:13+08:00 ] ::1 ::1 GET /user/member/edit/addon/member?id=88
+[ info ] localhost/user/member/edit/addon/member?id=88 [运行时间：0.050328s][吞吐率：19.87req/s] [内存消耗：3,830.45kb] [文件加载：68]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002902s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'edit',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->edit[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/edit.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'id',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000407s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000592s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000336s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:13+08:00 ] ::1 ::1 GET /user/member/loadData/addon/member?id=88
+[ info ] localhost/user/member/loadData/addon/member?id=88 [运行时间：0.043807s][吞吐率：22.83req/s] [内存消耗：3,550.77kb] [文件加载：64]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003253s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/edit/addon/member?id=88',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadData',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadData[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000470s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_account` [ RunTime:0.000789s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_member_account` WHERE  `id` = 88 LIMIT 1 [ RunTime:0.000536s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:17+08:00 ] ::1 ::1 GET /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.049180s][吞吐率：20.33req/s] [内存消耗：3,534.77kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003407s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/add_coin_stock.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'coins',
+  16 => 'id',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000451s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000829s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000454s ]
+[ sql ] [ SQL ] select id,coin_name from tp_coins order by id asc [ RunTime:0.000374s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:19+08:00 ] ::1 ::1 POST /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.054520s][吞吐率：18.34req/s] [内存消耗：3,659.27kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003180s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/add_coin_stock/addon/member?id=88',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://localhost',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'content-length' => '26',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'coin_id' => '1',
+  'amount' => '444',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000443s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_account` [ RunTime:0.000722s ]
+[ sql ] [ SQL ] SELECT `address` FROM `tp_member_account` WHERE  `id` = 88 LIMIT 1 [ RunTime:0.000314s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_balance` [ RunTime:0.000562s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_member_balance` WHERE  `user_id` = 88  AND `coin_id` = 1 LIMIT 1 [ RunTime:0.000323s ]
+[ sql ] [ SQL ] UPDATE `tp_member_balance`  SET `user_id`=88,`coin_id`=1,`amount`=605,`before_amount`=161,`total_amount`=605,`otc_frozen_amount`=0,`withdraw_frozen_amount`=0,`update_time`='2018-11-10 14:14:19'  WHERE  `id` = 108 [ RunTime:0.000408s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_trading_record` [ RunTime:0.000596s ]
+[ sql ] [ SQL ] INSERT INTO `tp_trading_record` (`user_id` , `to_user_id` , `type` , `change_type` , `coin_id` , `before_amount` , `after_amount` , `amount` , `to_address` , `from_address` , `game_id` , `team_id` , `remark` , `update_time`) VALUES (88 , 0 , 6 , 1 , 1 , 161 , 605 , 444 , '0x3dd91ae7dd2976353cb7fe6d55875cf388ab765d' , '' , 0 , 0 , '系统后台拨币' , '2018-11-10 14:14:19') [ RunTime:0.000495s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:19+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20 [运行时间：0.052984s][吞吐率：18.87req/s] [内存消耗：3,801.77kb] [文件加载：70]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002639s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'keyword' => '',
+  'phone' => '',
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000434s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000378s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000475s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000431s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000384s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.004185s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:21+08:00 ] ::1 ::1 GET /user/member/index/addon/member.html
+[ info ] localhost/user/member/index/addon/member.html [运行时间：0.053600s][吞吐率：18.66req/s] [内存消耗：3,592.58kb] [文件加载：65]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002639s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'index',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->index[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/index.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'is_auth',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000461s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000676s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000405s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=0 order by order_index asc,id asc [ RunTime:0.000397s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=1 order by order_index asc,id asc [ RunTime:0.000390s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=2 order by order_index asc,id asc [ RunTime:0.000364s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=5 order by order_index asc,id asc [ RunTime:0.000365s ]
+[ sql ] [ SQL ] select id,title,addon,controller,action,target,dialog_width,dialog_height from tp_user_nav_menu where allow=1 and pid=116 order by order_index asc,id asc [ RunTime:0.000375s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:21+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?page=1&rows=20 [运行时间：0.049605s][吞吐率：20.16req/s] [内存消耗：3,801.73kb] [文件加载：70]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002437s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000392s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000342s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000434s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000379s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000401s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.004012s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:25+08:00 ] ::1 ::1 GET /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.049517s][吞吐率：20.20req/s] [内存消耗：3,534.77kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003028s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/add_coin_stock.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'coins',
+  16 => 'id',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000478s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.001051s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000385s ]
+[ sql ] [ SQL ] select id,coin_name from tp_coins order by id asc [ RunTime:0.000359s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:27+08:00 ] ::1 ::1 POST /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.056658s][吞吐率：17.65req/s] [内存消耗：3,659.27kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002714s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/add_coin_stock/addon/member?id=88',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://localhost',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'content-length' => '26',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'coin_id' => '1',
+  'amount' => '333',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000455s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_account` [ RunTime:0.000782s ]
+[ sql ] [ SQL ] SELECT `address` FROM `tp_member_account` WHERE  `id` = 88 LIMIT 1 [ RunTime:0.000403s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_balance` [ RunTime:0.000670s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_member_balance` WHERE  `user_id` = 88  AND `coin_id` = 1 LIMIT 1 [ RunTime:0.000393s ]
+[ sql ] [ SQL ] UPDATE `tp_member_balance`  SET `user_id`=88,`coin_id`=1,`amount`=938,`before_amount`=605,`total_amount`=938,`otc_frozen_amount`=0,`withdraw_frozen_amount`=0,`update_time`='2018-11-10 14:14:27'  WHERE  `id` = 108 [ RunTime:0.000356s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_trading_record` [ RunTime:0.000608s ]
+[ sql ] [ SQL ] INSERT INTO `tp_trading_record` (`user_id` , `to_user_id` , `type` , `change_type` , `coin_id` , `before_amount` , `after_amount` , `amount` , `to_address` , `from_address` , `game_id` , `team_id` , `remark` , `update_time`) VALUES (88 , 0 , 6 , 1 , 1 , 605 , 938 , 333 , '0x3dd91ae7dd2976353cb7fe6d55875cf388ab765d' , '' , 0 , 0 , '系统后台拨币' , '2018-11-10 14:14:27') [ RunTime:0.000457s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:27+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20 [运行时间：0.054940s][吞吐率：18.20req/s] [内存消耗：3,801.77kb] [文件加载：70]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003370s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'keyword' => '',
+  'phone' => '',
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000499s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000460s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000537s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000465s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000369s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.004572s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:28+08:00 ] ::1 ::1 GET /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.050084s][吞吐率：19.97req/s] [内存消耗：3,534.77kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002387s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/add_coin_stock.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'coins',
+  16 => 'id',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000433s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000711s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000485s ]
+[ sql ] [ SQL ] select id,coin_name from tp_coins order by id asc [ RunTime:0.000512s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:31+08:00 ] ::1 ::1 POST /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.056080s][吞吐率：17.83req/s] [内存消耗：3,659.27kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002808s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/add_coin_stock/addon/member?id=88',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://localhost',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'content-length' => '26',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'coin_id' => '2',
+  'amount' => '333',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000462s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_account` [ RunTime:0.000863s ]
+[ sql ] [ SQL ] SELECT `address` FROM `tp_member_account` WHERE  `id` = 88 LIMIT 1 [ RunTime:0.000329s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_member_balance` [ RunTime:0.000609s ]
+[ sql ] [ SQL ] SELECT * FROM `tp_member_balance` WHERE  `user_id` = 88  AND `coin_id` = 2 LIMIT 1 [ RunTime:0.000365s ]
+[ sql ] [ SQL ] UPDATE `tp_member_balance`  SET `user_id`=88,`coin_id`=2,`amount`=333,`before_amount`=0,`total_amount`=333,`otc_frozen_amount`=0,`withdraw_frozen_amount`=0,`update_time`='2018-11-10 14:14:31'  WHERE  `id` = 109 [ RunTime:0.000332s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_trading_record` [ RunTime:0.000520s ]
+[ sql ] [ SQL ] INSERT INTO `tp_trading_record` (`user_id` , `to_user_id` , `type` , `change_type` , `coin_id` , `before_amount` , `after_amount` , `amount` , `to_address` , `from_address` , `game_id` , `team_id` , `remark` , `update_time`) VALUES (88 , 0 , 6 , 1 , 2 , 0 , 333 , 333 , '0x3dd91ae7dd2976353cb7fe6d55875cf388ab765d' , '' , 0 , 0 , '系统后台拨币' , '2018-11-10 14:14:31') [ RunTime:0.000461s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:31+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?keyword=&phone=&page=1&rows=20 [运行时间：0.052732s][吞吐率：18.96req/s] [内存消耗：3,801.77kb] [文件加载：70]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002519s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'keyword' => '',
+  'phone' => '',
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000413s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000376s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000664s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000520s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000388s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.004169s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:14:32+08:00 ] ::1 ::1 GET /user/member/add_coin_stock/addon/member?id=88
+[ info ] localhost/user/member/add_coin_stock/addon/member?id=88 [运行时间：0.048513s][吞吐率：20.61req/s] [内存消耗：3,534.77kb] [文件加载：66]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002667s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/member/index/addon/member.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'id' => '88',
+  'module' => 'user',
+  'controller' => 'member',
+  'action' => 'add_coin_stock',
+  'addon' => 'member',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\member\user\controller\Member->add_coin_stock[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/add_coin_stock.html [ array (
+  0 => 'SYS_TITLE',
+  1 => 'is_admin',
+  2 => '_CONTROLLER_NAME',
+  3 => '_ADDON_NAME',
+  4 => 'PUBLIC_HEADER',
+  5 => 'loadDataAction',
+  6 => 'addon_id',
+  7 => 'page',
+  8 => 'page_nav',
+  9 => 'filter',
+  10 => 'login_user_name',
+  11 => 'BASE_LIST',
+  12 => 'BASE_POPUP',
+  13 => 'BASE_POPUP_FORM',
+  14 => 'BASE_INDEX',
+  15 => 'coins',
+  16 => 'id',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000450s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000682s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000352s ]
+[ sql ] [ SQL ] select id,coin_name from tp_coins order by id asc [ RunTime:0.000370s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:15:26+08:00 ] ::1 ::1 GET /user/reward_record/index/addon/fomo.html?_pjax=%23main_container
+[ info ] localhost/user/reward_record/index/addon/fomo.html?_pjax=%23main_container [运行时间：0.333426s][吞吐率：3.00req/s] [内存消耗：3,717.23kb] [文件加载：68]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003249s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -608,7 +1950,7 @@
 [ info ] [ PARAM ] array (
   '_pjax' => '#main_container',
   'module' => 'user',
-  'controller' => 'game',
+  'controller' => 'reward_record',
   'action' => 'index',
   'addon' => 'fomo',
 )
@@ -624,8 +1966,8 @@
   'auto_start' => true,
 )
 [ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] addons\fomo\user\controller\Game->index[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/Game.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/fomo/user/view/default/game/index.html [ array (
+[ info ] [ RUN ] addons\fomo\user\controller\RewardRecord->index[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/RewardRecord.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/fomo/user/view/default/reward_record/index.html [ array (
   0 => 'is_admin',
   1 => '_CONTROLLER_NAME',
   2 => '_ADDON_NAME',
@@ -636,16 +1978,19 @@
   7 => 'page_nav',
   8 => 'filter',
   9 => 'login_user_name',
+  10 => 'coins',
+  11 => 'type',
 ) ]
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000499s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000815s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'fomo'  AND `controller` = 'game' LIMIT 1 [ RunTime:0.000413s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000452s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000660s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'fomo'  AND `controller` = 'reward_record' LIMIT 1 [ RunTime:0.000339s ]
+[ sql ] [ SQL ] select * from tp_coins order by id asc [ RunTime:0.000350s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:41:22+08:00 ] ::1 ::1 GET /user/airdrop/index/addon/fomo.html?_pjax=%23main_container
-[ info ] localhost/user/airdrop/index/addon/fomo.html?_pjax=%23main_container [运行时间：0.054178s][吞吐率：18.46req/s] [内存消耗：3,712.01kb] [文件加载：68]
+[ 2018-11-10T14:15:26+08:00 ] ::1 ::1 GET /user/reward_record/loadList/addon/fomo?type=0&page=1&rows=20
+[ info ] localhost/user/reward_record/loadList/addon/fomo?type=0&page=1&rows=20 [运行时间：0.325506s][吞吐率：3.07req/s] [内存消耗：3,551.95kb] [文件加载：67]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003655s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002792s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -661,73 +2006,7 @@
   'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
   'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
   'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/game/index/addon/fomo.html',
-  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
-  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'x-pjax-container' => '#main_container',
-  'x-pjax' => 'true',
-  'x-requested-with' => 'XMLHttpRequest',
-  'accept' => 'text/html, */*; q=0.01',
-  'connection' => 'keep-alive',
-  'host' => 'localhost',
-)
-[ info ] [ PARAM ] array (
-  '_pjax' => '#main_container',
-  'module' => 'user',
-  'controller' => 'airdrop',
-  'action' => 'index',
-  'addon' => 'fomo',
-)
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT File
-[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
-[ info ] [ SESSION ] INIT array (
-  'id' => '',
-  'var_session_id' => '',
-  'prefix' => 'think',
-  'type' => '',
-  'auto_start' => true,
-)
-[ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] addons\fomo\user\controller\Airdrop->index[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/Airdrop.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/fomo/user/view/default/airdrop/index.html [ array (
-  0 => 'is_admin',
-  1 => '_CONTROLLER_NAME',
-  2 => '_ADDON_NAME',
-  3 => 'PUBLIC_HEADER',
-  4 => 'loadDataAction',
-  5 => 'addon_id',
-  6 => 'page',
-  7 => 'page_nav',
-  8 => 'filter',
-  9 => 'login_user_name',
-) ]
-[ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000488s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000769s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'fomo'  AND `controller` = 'airdrop' LIMIT 1 [ RunTime:0.000398s ]
----------------------------------------------------------------
-[ 2018-11-10T13:41:22+08:00 ] ::1 ::1 GET /user/airdrop/loadList/addon/fomo?page=1&rows=20
-[ info ] localhost/user/airdrop/loadList/addon/fomo?page=1&rows=20 [运行时间：0.051156s][吞吐率：19.55req/s] [内存消耗：3,436.97kb] [文件加载：64]
-[ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003094s ]
-[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
-[ info ] [ ROUTE ] array (
-  'type' => 'module',
-  'module' => 
-  array (
-    0 => 'addons',
-    1 => 'AddonsExecute',
-    2 => 'run',
-  ),
-  'convert' => false,
-)
-[ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
-  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
-  'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/airdrop/index/addon/fomo.html',
+  'referer' => 'http://localhost/user/reward_record/index/addon/fomo.html',
   'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
   'x-requested-with' => 'XMLHttpRequest',
   'accept' => 'application/json, text/javascript, */*; q=0.01',
@@ -735,10 +2014,11 @@
   'host' => 'localhost',
 )
 [ info ] [ PARAM ] array (
+  'type' => '0',
   'page' => '1',
   'rows' => '20',
   'module' => 'user',
-  'controller' => 'airdrop',
+  'controller' => 'reward_record',
   'action' => 'loadList',
   'addon' => 'fomo',
 )
@@ -753,18 +2033,18 @@
   'type' => '',
   'auto_start' => true,
 )
-[ info ] [ RUN ] addons\fomo\user\controller\Airdrop->loadList[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/Airdrop.php ]
+[ info ] [ RUN ] addons\fomo\user\controller\RewardRecord->loadList[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/RewardRecord.php ]
 [ info ] [ DB ] INIT mysql
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000541s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] select count(*) c from tp_fomo_airdrop where 1=1 [ RunTime:0.000502s ]
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_fomo_airdrop` [ RunTime:0.000544s ]
-[ sql ] [ SQL ] select * from tp_fomo_airdrop order by id asc limit 0,20 [ RunTime:0.000322s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000504s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_fomo_reward_record c left join tp_member_account d on c.user_id = d.id where 1=1 [ RunTime:0.000972s ]
+[ sql ] [ SQL ] select a.*,b.coin_name from (select c.*, d.username,g.name as game_name,g.status from tp_fomo_reward_record c left join tp_member_account d on c.user_id = d.id left join tp_fomo_game g on c.game_id=g.id where 1=1) a left join tp_coins b  on a.coin_id = b.id order by id desc limit 0,20 [ RunTime:0.002796s ]
+[ sql ] [ SQL ] select sum(amount) as count_total from (select a.*,u.username from tp_fomo_reward_record a ,tp_member_account u where a.user_id=u.id) as tab where 1=1 [ RunTime:0.000678s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:41:24+08:00 ] ::1 ::1 GET /user/member/index/addon/member.html?_pjax=%23main_container
-[ info ] localhost/user/member/index/addon/member.html?_pjax=%23main_container [运行时间：0.056693s][吞吐率：17.64req/s] [内存消耗：3,726.23kb] [文件加载：66]
+[ 2018-11-10T14:15:28+08:00 ] ::1 ::1 GET /user/key_record/index/addon/fomo.html?_pjax=%23main_container
+[ info ] localhost/user/key_record/index/addon/fomo.html?_pjax=%23main_container [运行时间：0.337723s][吞吐率：2.96req/s] [内存消耗：3,853.68kb] [文件加载：70]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003405s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002786s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -780,7 +2060,134 @@
   'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
   'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
   'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/airdrop/index/addon/fomo.html',
+  'referer' => 'http://localhost/user/reward_record/index/addon/fomo.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-pjax-container' => '#main_container',
+  'x-pjax' => 'true',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'text/html, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  '_pjax' => '#main_container',
+  'module' => 'user',
+  'controller' => 'key_record',
+  'action' => 'index',
+  'addon' => 'fomo',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ RUN ] addons\fomo\user\controller\KeyRecord->index[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/KeyRecord.php ]
+[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/fomo/user/view/default/key_record/index.html [ array (
+  0 => 'is_admin',
+  1 => '_CONTROLLER_NAME',
+  2 => '_ADDON_NAME',
+  3 => 'PUBLIC_HEADER',
+  4 => 'loadDataAction',
+  5 => 'addon_id',
+  6 => 'page',
+  7 => 'page_nav',
+  8 => 'filter',
+  9 => 'login_user_name',
+  10 => 'games',
+  11 => 'teams',
+  12 => 'type',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000419s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000668s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'fomo'  AND `controller` = 'key_record' LIMIT 1 [ RunTime:0.000354s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_fomo_game` [ RunTime:0.000644s ]
+[ sql ] [ SQL ] select * from tp_fomo_game order by id asc [ RunTime:0.000576s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_fomo_team` [ RunTime:0.000590s ]
+[ sql ] [ SQL ] select * from tp_fomo_team order by id asc [ RunTime:0.000417s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:15:29+08:00 ] ::1 ::1 GET /user/key_record/loadList/addon/fomo?type=0&page=1&rows=20
+[ info ] localhost/user/key_record/loadList/addon/fomo?type=0&page=1&rows=20 [运行时间：0.327858s][吞吐率：3.05req/s] [内存消耗：3,576.30kb] [文件加载：67]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003374s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/key_record/index/addon/fomo.html',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+  'type' => '0',
+  'page' => '1',
+  'rows' => '20',
+  'module' => 'user',
+  'controller' => 'key_record',
+  'action' => 'loadList',
+  'addon' => 'fomo',
+)
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT Redis
+[ info ] [ CACHE ] INIT File
+[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] addons\fomo\user\controller\KeyRecord->loadList[ /Users/shilinqing/GitHub/lucky/addons/fomo/user/controller/KeyRecord.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000407s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) as c from (select a.*,g.name as game_name,g.status,t.name as team_name,u.username from tp_fomo_key_record a ,tp_fomo_game g,tp_fomo_team t,tp_member_account u where a.user_id=u.id and a.game_id=g.id and a.team_id=t.id) as tab where 1=1 [ RunTime:0.000498s ]
+[ sql ] [ SQL ] select * from (select a.*,g.name as game_name,g.status,t.name as team_name,u.username from tp_fomo_key_record a ,tp_fomo_game g,tp_fomo_team t,tp_member_account u where a.user_id=u.id and a.game_id=g.id and a.team_id=t.id) as tab where 1=1 order by update_time desc limit 0,20 [ RunTime:0.000493s ]
+[ sql ] [ SQL ] select sum(key_num) as count_total from (select a.*,u.username from tp_fomo_key_record a ,tp_member_account u where a.user_id=u.id) as tab where 1=1 [ RunTime:0.000321s ]
+---------------------------------------------------------------
+[ 2018-11-10T14:15:39+08:00 ] ::1 ::1 GET /user/member/index/addon/member.html?_pjax=%23main_container
+[ info ] localhost/user/member/index/addon/member.html?_pjax=%23main_container [运行时间：0.287143s][吞吐率：3.48req/s] [内存消耗：3,479.27kb] [文件加载：64]
+[ info ] [ CACHE ] INIT File
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002654s ]
+[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'addons',
+    1 => 'AddonsExecute',
+    2 => 'run',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
+  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
+  'accept-encoding' => 'gzip, deflate, br',
+  'referer' => 'http://localhost/user/key_record/index/addon/fomo.html',
   'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
   'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
   'x-pjax-container' => '#main_container',
@@ -824,14 +2231,14 @@
   10 => 'is_auth',
 ) ]
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000436s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000770s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000392s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000528s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000653s ]
+[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'member'  AND `controller` = 'member' LIMIT 1 [ RunTime:0.000349s ]
 ---------------------------------------------------------------
-[ 2018-11-10T13:41:25+08:00 ] ::1 ::1 GET /user/parameter/index/addon/config.html
-[ info ] localhost/user/parameter/index/addon/config.html [运行时间：0.061883s][吞吐率：16.16req/s] [内存消耗：3,750.48kb] [文件加载：67]
+[ 2018-11-10T14:15:40+08:00 ] ::1 ::1 GET /user/member/loadList/addon/member?page=1&rows=20
+[ info ] localhost/user/member/loadList/addon/member?page=1&rows=20 [运行时间：0.324192s][吞吐率：3.08req/s] [内存消耗：3,801.73kb] [文件加载：70]
 [ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.003591s ]
+[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002972s ]
 [ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
 [ info ] [ ROUTE ] array (
   'type' => 'module',
@@ -848,77 +2255,6 @@
   'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
   'accept-encoding' => 'gzip, deflate, br',
   'referer' => 'http://localhost/user/member/index/addon/member.html',
-  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-  'upgrade-insecure-requests' => '1',
-  'connection' => 'keep-alive',
-  'host' => 'localhost',
-)
-[ info ] [ PARAM ] array (
-  'module' => 'user',
-  'controller' => 'parameter',
-  'action' => 'index',
-  'addon' => 'config',
-)
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT Redis
-[ info ] [ CACHE ] INIT File
-[ info ] [ RUN ] web\addons\controller\AddonsExecute->run[ /Users/shilinqing/GitHub/lucky/web/addons/controller/AddonsExecute.php(8) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code ]
-[ info ] [ SESSION ] INIT array (
-  'id' => '',
-  'var_session_id' => '',
-  'prefix' => 'think',
-  'type' => '',
-  'auto_start' => true,
-)
-[ info ] [ DB ] INIT mysql
-[ info ] [ RUN ] addons\config\user\controller\Parameter->index[ /Users/shilinqing/GitHub/lucky/addons/config/user/controller/Parameter.php ]
-[ info ] [ VIEW ] /Users/shilinqing/GitHub/lucky/public/../addons/config/user/view/default/parameter/index.html [ array (
-  0 => 'SYS_TITLE',
-  1 => 'is_admin',
-  2 => '_CONTROLLER_NAME',
-  3 => '_ADDON_NAME',
-  4 => 'PUBLIC_HEADER',
-  5 => 'loadDataAction',
-  6 => 'addon_id',
-  7 => 'page',
-  8 => 'page_nav',
-  9 => 'filter',
-  10 => 'login_user_name',
-  11 => 'BASE_LIST',
-  12 => 'BASE_POPUP',
-  13 => 'BASE_POPUP_FORM',
-  14 => 'BASE_INDEX',
-  15 => 'id',
-  16 => 'param_list',
-) ]
-[ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000430s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_user_nav_menu` [ RunTime:0.000752s ]
-[ sql ] [ SQL ] SELECT `id`,`title` FROM `tp_user_nav_menu` WHERE  `addon` = 'config'  AND `controller` = 'parameter' LIMIT 1 [ RunTime:0.000347s ]
-[ sql ] [ SQL ] SHOW COLUMNS FROM `tp_sys_parameter` [ RunTime:0.001056s ]
-[ sql ] [ SQL ] SELECT `id`,`pid`,`title`,`remark`,`field_name`,`control_type`,`parameter_val` FROM `tp_sys_parameter` ORDER BY order_index,id asc [ RunTime:0.000494s ]
----------------------------------------------------------------
-[ 2018-11-10T13:41:26+08:00 ] ::1 ::1 GET /user/parameter/loadData/addon/config?id=1
-[ info ] localhost/user/parameter/loadData/addon/config?id=1 [运行时间：0.043692s][吞吐率：22.89req/s] [内存消耗：3,410.28kb] [文件加载：63]
-[ info ] [ CACHE ] INIT File
-[ info ] [ BEHAVIOR ] Run web\common\behavior\Init @app_init [ RunTime:0.002839s ]
-[ info ] [ LANG ] /Users/shilinqing/GitHub/lucky/thinkphp/lang/zh-cn.php
-[ info ] [ ROUTE ] array (
-  'type' => 'module',
-  'module' => 
-  array (
-    0 => 'addons',
-    1 => 'AddonsExecute',
-    2 => 'run',
-  ),
-  'convert' => false,
-)
-[ info ] [ HEADER ] array (
-  'cookie' => 'Hm_lvt_92855a84986cbc7841feb6f37f52a0e6=1540117944; PHPSESSID=58a7b895642c6e63f60bcda8d218e269',
-  'accept-language' => 'zh-CN,zh;q=0.9,ja;q=0.8,en;q=0.7',
-  'accept-encoding' => 'gzip, deflate, br',
-  'referer' => 'http://localhost/user/parameter/index/addon/config.html',
   'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
   'x-requested-with' => 'XMLHttpRequest',
   'accept' => 'application/json, text/javascript, */*; q=0.01',
@@ -926,11 +2262,12 @@
   'host' => 'localhost',
 )
 [ info ] [ PARAM ] array (
-  'id' => '1',
+  'page' => '1',
+  'rows' => '20',
   'module' => 'user',
-  'controller' => 'parameter',
-  'action' => 'loadData',
-  'addon' => 'config',
+  'controller' => 'member',
+  'action' => 'loadList',
+  'addon' => 'member',
 )
 [ info ] [ CACHE ] INIT Redis
 [ info ] [ CACHE ] INIT Redis
@@ -943,8 +2280,12 @@
   'type' => '',
   'auto_start' => true,
 )
-[ info ] [ RUN ] addons\config\user\controller\Parameter->loadData[ /Users/shilinqing/GitHub/lucky/addons/config/user/controller/Parameter.php ]
+[ info ] [ RUN ] addons\member\user\controller\Member->loadList[ /Users/shilinqing/GitHub/lucky/addons/member/user/controller/Member.php ]
 [ info ] [ DB ] INIT mysql
 [ info ] [ LOG ] INIT File
-[ sql ] [ DB ] CONNECT:[ UseTime:0.000445s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
-[ sql ] [ SQL ] select * from tp_sys_parameter order by id desc [ RunTime:0.000437s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000433s ] mysql:dbname=f4d;host=127.0.0.1;port=3307;charset=utf8
+[ sql ] [ SQL ] select count(*) c from tp_member_account where 1=1  and (  1 = 1 ) [ RunTime:0.000374s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=1 and a.coin_id=b.id) as tab limit 0,1 [ RunTime:0.000521s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000557s ]
+[ sql ] [ SQL ] select id,status,rule_id,coin_id,coin_name,winner_rate,team_rate,fund_rate,drop_total_amount,total_buy_seconds,total_amount,pool_total_amount,release_total_amount,start_time,end_game_time from (select a.* ,b.coin_name from tp_fomo_game a ,tp_coins b where a.status=2 and a.coin_id=b.id order by end_game_time desc) as tab limit 0,1 [ RunTime:0.000403s ]
+[ sql ] [ SQL ] select a.*,ifnull(count(b.id),0) recommend2  from (select a.*,ifnull(count(b.id),0) recommend1,GROUP_CONCAT(b.id) ids  from (select a.*,ifnull(token,0) token_total from (select a.*,ifnull(count(game_id),0) game_count from (select a.*,ifnull(sum(key_num),0) key_total from (select a.*,ifnull(sum(key_num),0) now_key_num from (select a.*,ifnull(sum(b.amount),0) reward_total from (select a.*,ifnull(b.amount,0) balance from (select * from (select tab.*,c.username as invite_user_name from tp_member_account as tab left join tp_member_account c on tab.pid=c.id) t where   1 = 1 ) a left join tp_member_balance b on a.id = b.user_id and coin_id =1) a left join tp_fomo_reward_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id and b.game_id = 37 group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_key_record b on a.id = b.user_id group by a.id) a left join tp_fomo_token_record b on a.id = b.user_id) a left join tp_member_account b on a.id = b.pid group by a.id) a left join tp_member_account b on b.pid in(a.ids) group by a.id order by register_time desc limit 0,20 [ RunTime:0.003947s ]

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:93:"/Users/shilinqing/GitHub/lucky/public/../addons/config/user/view/default/parameter/index.html";i:1541827347;s:83:"/Users/shilinqing/GitHub/lucky/public/../web/user/view/default/base/popup_form.html";i:1541827348;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:89:"/Users/shilinqing/GitHub/lucky/public/../addons/member/user/view/default/member/edit.html";i:1541827347;s:83:"/Users/shilinqing/GitHub/lucky/public/../web/user/view/default/base/popup_form.html";i:1541827348;}*/ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -217,60 +217,59 @@
         </script>
         <form id="form1" class="ui-form" method="post">
             
-<input type="hidden" id="id" name="id" />
-<input type="hidden" id="json" name="json"  value=""  />
-<div class="box-content">
-    <div class="control-row col-2">
-        <?php if(is_array($param_list) || $param_list instanceof \think\Collection || $param_list instanceof \think\Paginator): $i = 0; $__LIST__ = $param_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;if($vo['control_type'] == 'select'): ?>
+    <div class="box-content"> 
+        <input type="hidden" name="id" id="id" value="<?php echo $id; ?>"/>
+
+        <div class="control-row col-2">
             <div class="control-group">
-                <label class="control-label"><?php echo $vo['title']; ?></label>
-                <select name="<?php echo $vo['field_name']; ?>" class="required form-control" style='width:100px'>                
-                    <option value="0" <?php if($vo['parameter_val'] == 0): ?>selected<?php endif; ?>>否</option>
-                    <option value="1" <?php if($vo['parameter_val'] == 1): ?>selected<?php endif; ?>>是</option>
-                </select> 
+                <label class="control-label">用户名</label>
+                <div class="controls">
+                    <input type="text" id="username" name="username" class="form-control required"  />
+                </div>
             </div>
-            
-            <?php elseif($vo['control_type'] == 'number'): ?>
             <div class="control-group">
-                <label class="control-label"><?php echo $vo['title']; ?></label>
-                <input type="text" value="<?php echo $vo['parameter_val']; ?>" name="<?php echo $vo['field_name']; ?>" class="form-control" /><span class="tips"><?php echo $vo['remark']; ?></span>
+                <label class="control-label">手机号</label>
+                <div class="controls">
+                    <input type="text" id="phone" name="phone" class="form-control required"  />
+                </div>
             </div>
-                        
-            <?php elseif($vo['control_type'] == 'text'): ?>
+<!--            
             <div class="control-group">
-                <label class="control-label"><?php echo $vo['title']; ?></label>
-                <input type="text" value="<?php echo $vo['parameter_val']; ?>" name="<?php echo $vo['field_name']; ?>" class="form-control" /><span class="tips"><?php echo $vo['remark']; ?></span>
-            </div>
-            
-            <?php elseif($vo['control_type'] == 'password'): ?>
+                <label class="control-label">身份证号</label>
+                <div class="controls">
+                    <input type="text" id="card_no" name="card_no" class="form-control"  />
+                </div>
+            </div>-->
             <div class="control-group">
-                <label class="control-label"><?php echo $vo['title']; ?></label>
-                <input type="password" value="<?php echo $vo['parameter_val']; ?>" name="<?php echo $vo['field_name']; ?>" class="form-control" /><span class="tips"><?php echo $vo['remark']; ?></span>
+              <label class="control-label">登录密码</label>
+              <div class="controls">
+                  <input type="text"  name="now_password" class="form-control" placeholder="不修改密码请勿填写"/>
+              </div>
             </div>
-            <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+            <div class="control-group">
+                <label class="control-label">支付密码</label>
+                <div class="controls">
+                    <input type="text"  name="now_pay_password" class="form-control" placeholder="不修改支付密码请勿填写" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">分红封顶倍数</label>
+                <div class="controls">
+                    <input type="text" id="bonus_limit" name="bonus_limit" class="form-control"  />
+                    <span class='tips'>填0为不限制</span>
+                </div>
+            </div>
+        </div>
+        
+
+        
     </div>
-</div>
 
         </form>
         
 <script type="text/javascript">
-function chkForm() {
-    var data = {};
-    $("input[type='text']").each(function () {
-        var name = $(this)[0].name;
-        if(name != ''){
-            data[name] = $(this).val();
-        }
-    });
-    $("select").each(function () {
-        var name = $(this)[0].name;
-        var val = $(this).val();
-        data[name] = val;
-    });
-//    console.log(data)
-    $("#json").val(JSON.stringify(data));
-    return true;
-}
+
+
 </script>
 
     </body>    
