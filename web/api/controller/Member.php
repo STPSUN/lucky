@@ -40,11 +40,13 @@ class Member extends \web\api\controller\ApiBase
             $data = [];
             $data['eth_num'] = $eth_balance ? $eth_balance['amount'] : 0;
 
-            $keyRecordM = new \addons\fomo\model\KeyRecord();
-            $key = $keyRecordM->getKeyByGameId($user_id, $game_id); //持有游戏key数量
-            $data['key_num'] = $key ? $key['key_num'] : 0;
-            $data['lose_key_num'] = $key ? $key['lose_key_num'] : 0;
+            if(!empty($game_id)){
+                $keyRecordM = new \addons\fomo\model\KeyRecord();
+                $key = $keyRecordM->getKeyByGameId($user_id, $game_id); //持有游戏key数量
+                $data['key_num'] = $key ? $key['key_num'] : 0;
+                $data['lose_key_num'] = $key ? $key['lose_key_num'] : 0;
 
+            }
             $tokenM = new \addons\fomo\model\TokenRecord();
             $token = $tokenM->getDataByUserID($user_id);
             $data['token_num'] = (empty($token['token']))?0:$token['token'];
@@ -130,10 +132,6 @@ class Member extends \web\api\controller\ApiBase
     /*
      * 短信登录
      */
-
-    /**
-     *
-     */
     public function smsLogin()
     {
         if (IS_POST) {
@@ -188,8 +186,8 @@ class Member extends \web\api\controller\ApiBase
     public function register()
     {
         if (IS_POST) {
-            $data['phone'] = $this->_post('phone');
-            $data['verify_code'] = $this->_post('verify_code');
+//            $data['phone'] = $this->_post('phone');
+//            $data['verify_code'] = $this->_post('verify_code');
             $password = $this->_post('password');
             $password1 = $this->_post('password1');
             $pay_password = $this->_post('pay_password');
@@ -206,10 +204,10 @@ class Member extends \web\api\controller\ApiBase
             if (strlen($password) < 8) {
                 return $this->failJSON('密码长度不能小于8');
             }
-            $data['area'] = $this->_post('area');
-            if(!$data['area']){
-                return $this->failJSON('请选择手机区号');
-            }
+//            $data['area'] = $this->_post('area');
+//            if(!$data['area']){
+//                return $this->failJSON('请选择手机区号');
+//            }
             $data['password1'] = $password1;
             $data['password'] = md5($password);
             $data['pay_password'] = md5($pay_password);
@@ -221,15 +219,15 @@ class Member extends \web\api\controller\ApiBase
             if ($count > 0) {
                 return $this->failJSON('此用户名已被注册');
             }
-            $count = $m->hasRegsterPhone($data['phone']);
-            if ($count > 0) {
-                return $this->failJSON('此手机号已被注册,请直接登录或尝试找回密码');
-            }
+//            $count = $m->hasRegsterPhone($data['phone']);
+//            if ($count > 0) {
+//                return $this->failJSON('此手机号已被注册,请直接登录或尝试找回密码');
+//            }
             $m->startTrans();
             try {
-                $verifyM = new \addons\member\model\VericodeModel();
-                $_verify = $verifyM->VerifyCode($data['verify_code'], $data['phone']);
-                if (!empty($_verify)) {
+//                $verifyM = new \addons\member\model\VericodeModel();
+//                $_verify = $verifyM->VerifyCode($data['verify_code'], $data['phone']);
+//                if (!empty($_verify)) {
                     $inviter_address = $this->_post('inviter_address');
                     if (!empty($inviter_address)) {
                         //获取邀请者id
@@ -241,7 +239,7 @@ class Member extends \web\api\controller\ApiBase
                         }
                     }
                     $data['register_time'] = NOW_DATETIME;
-                    $res = $this->getEthAddr($data['phone']);
+                    $res = $this->getEthAddr($data['username']);
                     if ($res) {
                         $data['address'] = $this->_address; //eth地址
                         $data['eth_pass'] = $this->ethPass;
@@ -249,10 +247,10 @@ class Member extends \web\api\controller\ApiBase
                         $m->commit();
                         return $this->successJSON('注册成功');
                     }
-                } else {
-                    $m->rollback();
-                    return $this->failJSON('验证码失效,请重新注册');
-                }
+//                } else {
+//                    $m->rollback();
+//                    return $this->failJSON('验证码失效,请重新注册');
+//                }
             } catch (\Exception $ex) {
                 return $this->failJSON($ex->getMessage());
             }
@@ -530,9 +528,6 @@ class Member extends \web\api\controller\ApiBase
         }
     }
 
-    /**
-     *
-     */
     public function setLoginPass()
     {
         if (!IS_POST) {
@@ -542,27 +537,28 @@ class Member extends \web\api\controller\ApiBase
         if ($user_id <= 0) {
             return $this->failJSON("请登录");
         }
+        $old_password = $this->_post('old_password');
         $password = $this->_post('password');
         $now_password = $this->_post('pass2');
-        $code = $this->_post('code');
-        if (!$user_id || !$code || !$now_password) {
+//        $code = $this->_post('code');
+//        if (!$user_id || !$code || !$now_password) {
+        if (!$user_id|| !$old_password || !$now_password) {
             return $this->failJSON("illegal request");
         }
-
+        if (!preg_match("/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/", $now_password)) {
+                return $this->failJSON('请输入5~20位字母数字密码');
+            }
         try {
             $m = new \addons\member\model\MemberAccountModel();
             $user = $m->getDetail($user_id, "phone,password");
-            $verifyM = new \addons\member\model\VericodeModel();
-            $_verify = $verifyM->VerifyCode($code, $user['phone'], 5);
-            if (!empty($_verify)) {
-//                $password = md5($password);
-//                if($password !== $user['password']){
-//                    return $this->failJSON("原密码输入有误");
-//                }
-
-                if (!preg_match("/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/", $now_password)) {
-                    return $this->failJSON('请输入5~20位字母数字密码');
+//            $verifyM = new \addons\member\model\VericodeModel();
+//            $_verify = $verifyM->VerifyCode($code, $user['phone'], 5);
+//            if (!empty($_verify)) {
+                $old_password = md5($old_password);
+                if($old_password !== $user['password']){
+                    return $this->failJSON("原密码输入有误");
                 }
+                
 //                $now_password = md5(md5($now_password) . $user['salt']);
                 $now_password = md5($now_password);
 
@@ -575,10 +571,10 @@ class Member extends \web\api\controller\ApiBase
                 //添加资产记录
                 $m->commit();
                 return $this->successJSON();
-            } else {
-                $m->rollback();
-                return $this->failJSON('验证码失效,请重新输入');
-            }
+//            } else {
+//                $m->rollback();
+//                return $this->failJSON('验证码失效,请重新输入');
+//            }
         } catch (\Exception $ex) {
             return $this->failJSON($ex->getMessage());
         }
@@ -596,11 +592,13 @@ class Member extends \web\api\controller\ApiBase
         if ($user_id <= 0) {
             return $this->failJSON("请登录");
         }
+        $old_password = $this->_post('old_password');
         $password = $this->_post('pass2');
         $now_password = $this->_post('pass2', 0);
-
-        $code = $this->_post('code');
-        if (!$user_id || !$code || !$now_password) {
+        
+//        $code = $this->_post('code');
+//        if (!$user_id || !$code || !$now_password) {
+        if (!$user_id || !$old_password || !$now_password) {
             return $this->failJSON("illegal request");
         }
         if (!preg_match("/^[0-9]{6}$/", $now_password)) {
@@ -610,9 +608,13 @@ class Member extends \web\api\controller\ApiBase
         try {
             $m = new \addons\member\model\MemberAccountModel();
             $user = $m->getDetail($user_id, "phone,pay_password");
-            $verifyM = new \addons\member\model\VericodeModel();
-            $_verify = $verifyM->VerifyCode($code, $user['phone'], 7);
-            if (!empty($_verify)) {
+            $old_password = md5($old_password);
+            if($old_password !== $user['pay_password']){
+                return $this->failJSON("原密码输入有误");
+            }
+//            $verifyM = new \addons\member\model\VericodeModel();
+//            $_verify = $verifyM->VerifyCode($code, $user['phone'], 7);
+//            if (!empty($_verify)) {
                 $now_password = md5($now_password);
                 $data['id'] = $user_id;
                 $data['pay_password'] = $now_password;
@@ -623,10 +625,10 @@ class Member extends \web\api\controller\ApiBase
                 //添加资产记录
                 $m->commit();
                 return $this->successJSON();
-            } else {
-                $m->rollback();
-                return $this->failJSON('验证码失效,请重新输入或发送');
-            }
+//            } else {
+//                $m->rollback();
+//                return $this->failJSON('验证码失效,请重新输入或发送');
+//            }
         } catch (\Exception $ex) {
             return $this->failJSON($ex->getMessage());
         }
@@ -858,28 +860,3 @@ class Member extends \web\api\controller\ApiBase
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

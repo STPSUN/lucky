@@ -82,7 +82,8 @@ class Member extends \web\user\controller\AddonUserBase{
                 return $this->failData('用户id为空');
             }
         }else{
-            
+            $list = $m->field('id,username')->where('logic_delete=0')->order('id asc')->select();
+            $this->assign('user_list', json_encode($list, 256));
             $this->assign('id', $this->_get('id'));
             $this->setLoadDataAction('loadData');
             return $this->fetch();

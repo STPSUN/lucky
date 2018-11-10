@@ -16,6 +16,12 @@
                     <input type="text" id="phone" name="phone" class="form-control required"  />
                 </div>
             </div>
+            <div class="control-group">
+                <label class="control-label">推荐上级用户</label>
+                <div class="controls">
+                    <input id="pid" name="pid"  data-ui="combosearch" data-options="{valueField:'id',textField:'username',showList:true,matchFields:['username'],data:user_data,searchWin:openSearchWin}" class="form-control"/>   
+                </div>
+            </div>
 <!--            
             <div class="control-group">
                 <label class="control-label">身份证号</label>
@@ -35,13 +41,6 @@
                     <input type="text"  name="now_pay_password" class="form-control" placeholder="不修改支付密码请勿填写" />
                 </div>
             </div>
-            <div class="control-group">
-                <label class="control-label">分红封顶倍数</label>
-                <div class="controls">
-                    <input type="text" id="bonus_limit" name="bonus_limit" class="form-control"  />
-                    <span class='tips'>填0为不限制</span>
-                </div>
-            </div>
         </div>
         
 
@@ -51,7 +50,13 @@
 
 {block name="script"}
 <script type="text/javascript">
-
+var user_data ={$user_list};
+    function openSearchWin(){
+        var url = getURL('member/select_user','','member');
+        openBarWinParent('选择用户', 500, 600, url, function (data) {
+            $("#pid").setValue(data);
+        }, ['选定', '取消']);
+    }
 
 </script>
 {/block}
