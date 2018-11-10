@@ -133,7 +133,9 @@ class Member extends \web\user\controller\AddonUserBase{
 
             $m = new \addons\member\model\Balance();
             $m->startTrans();
-            $balance = $m->getBalanceByCoinID($user_id,$coin_id);
+            $where['user_id'] = $user_id;
+            $where['coin_id'] = $coin_id;
+            $balance = $m->where($where)->find();
             try{
                 $before_amount = 0;
                 if(!empty($balance)){
