@@ -29,21 +29,12 @@ class TradingRecord extends \web\common\model\BaseModel{
      * @param type $remark      备注
      * @param type $game_id      游戏id
      * @param type $team_id      队伍id
-     * @param type $key_num 购买key数量
      * @return type
      */
-    public function addRecord($user_id, $coin_id, $amount, $before_amount, $after_amount, $type, $change_type=0, $to_user_id = 0, $to_address = '', $from_address = '' , $remark='', $game_id = 0, $team_id  = 0,$key_num=0){
+    public function addRecord($user_id, $coin_id, $amount, $before_amount, $after_amount, $type, $change_type=0, $to_user_id = 0, $to_address = '', $from_address = '' , $remark='', $game_id = 0, $team_id  = 0){
         $data['user_id'] = $user_id;
         $data['to_user_id'] = $to_user_id;
         $data['type'] = $type; 
-        if($type == 10){
-            $sysM = new \web\common\model\sys\SysParameterModel();
-            $bonus_limit = $sysM->getValByName('bonus_limit');
-            if($bonus_limit > 0){
-                $bonus_limit_num = $amount * $bonus_limit; // 投注额 * 封顶限制倍数
-                $data['bonus_limit'] = $bonus_limit_num;
-            }
-        }
         $data['change_type'] = $change_type;
         $data['coin_id'] = $coin_id;
         $data['before_amount'] = $before_amount;
@@ -53,8 +44,6 @@ class TradingRecord extends \web\common\model\BaseModel{
         $data['from_address'] = $from_address;
         $data['game_id'] = $game_id;
         $data['team_id'] = $team_id;
-        $data['key_num'] = $key_num;
-        
         $data['remark'] = $remark;
         $data['update_time'] = NOW_DATETIME;
         return $this->add($data);

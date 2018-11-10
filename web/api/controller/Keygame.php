@@ -179,7 +179,7 @@ class Keygame extends \web\api\controller\ApiBase {
                 $after_amount = $balance['amount'];
                 $change_type = 0; //减少
                 $remark = '购买key';
-                $r_id = $recordM->addRecord($this->user_id, $coin_id, $key_total_price, $before_amount, $after_amount, $type, $change_type, '', '', '', $remark, $game_id, $team_id,$key_num);
+                $r_id = $recordM->addRecord($this->user_id, $coin_id, $key_total_price, $before_amount, $after_amount, $type, $change_type, '', '', '', $remark, $game_id, $team_id);
                 if (!$r_id) {
                     $gameM->rollback();
                     return $this->failJSON('购买失败');

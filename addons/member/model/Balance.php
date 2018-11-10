@@ -68,8 +68,8 @@ class Balance extends \web\common\model\BaseModel
             'withdraw_frozen_amount' => 0,
             'update_time' => NOW_DATETIME,
         ];
-        $ret = $this->add($data);
-        return $data;
+        $ret = $this->save($data);
+        return $data ;
     }
 
     /**
