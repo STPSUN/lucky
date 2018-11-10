@@ -262,7 +262,7 @@ class Crontab extends \web\common\controller\Controller {
                 if ($balance != false) {
                     $before_amount = $balance['before_amount'];
                     $after_amount = $balance['amount'];
-                    $type = 0; //奖励类型 0=投注分红，1=胜利战队分红，2=胜利者分红，3=邀请分红
+                    $type = 6; //奖励类型6
                     $remark = '福利之岛投注分红';
                     $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
                 }

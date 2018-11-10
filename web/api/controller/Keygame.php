@@ -25,7 +25,7 @@ class Keygame extends \web\api\controller\ApiBase {
             } else {
                 return $this->failJSON('等待开启新一轮');
             }
-        }else{
+        } else {
             $game = $game[0];
         }
         $end_game_time = $game['end_game_time'];
@@ -56,7 +56,7 @@ class Keygame extends \web\api\controller\ApiBase {
                     $recordM->addRecord($winner_user_id, $coin_id, $before_amount, $winner_amount, $after_amount, $type, $game_id, $remark);
 
                     $winner_team_id = $last_winner['team_id']; //胜利者队伍id
-                    if(empty($winner_team_id)){
+                    if (empty($winner_team_id)) {
                         $m->rollback();
                         return $this->failJSON('胜利战队异常');
                     }
@@ -106,7 +106,7 @@ class Keygame extends \web\api\controller\ApiBase {
         //获取当前key价,递增参数,空投进度
         $KeyPriceM = new \addons\fomo\model\KeyPrice();
         $game['drop'] = $KeyPriceM->getDropByGameID($game['id']);
-        
+
         //换算汇率
         $maketM = new \web\api\model\MarketModel();
         $rate = $maketM->getCnyRateByCoinId($game['coin_id']);
@@ -154,14 +154,14 @@ class Keygame extends \web\api\controller\ApiBase {
             }
             $keyRecordM = new \addons\fomo\model\KeyRecord(); //用户key记录
             $ruleM = new \addons\fomo\model\KeyConf();
-            $key_rule = $ruleM->getDetail($game['rule_id']);//key规则数组
-            if($key_rule['limit'] > 0){
-                if($key_rule['unfreeze'] > 0 && $game['total_amount'] < $key_rule['unfreeze']){
+            $key_rule = $ruleM->getDetail($game['rule_id']); //key规则数组
+            if ($key_rule['limit'] > 0) {
+                if ($key_rule['unfreeze'] > 0 && $game['total_amount'] < $key_rule['unfreeze']) {
                     //判断总投资额是否达到解除限制额度
                     //如果未达到,判断用户所购买额度是否已超过限制额度(超出额度不予购买,只添加到未达到额度的钥匙)
-                    $user_before_eth = $keyRecordM->getUserTotalEthByGameID($this->user_id,$game_id);
-                    if(($user_before_eth + $key_total_price) > $key_rule['limit']){
-                        return $this->failJSON('超出限购金额,限购金额为:'.$key_rule['limit'].'个ETH,当前已购:'.$user_before_eth.'个ETH');
+                    $user_before_eth = $keyRecordM->getUserTotalEthByGameID($this->user_id, $game_id);
+                    if (($user_before_eth + $key_total_price) > $key_rule['limit']) {
+                        return $this->failJSON('超出限购金额,限购金额为:' . $key_rule['limit'] . '个ETH,当前已购:' . $user_before_eth . '个ETH');
                     }
                 }
             }
@@ -184,7 +184,7 @@ class Keygame extends \web\api\controller\ApiBase {
                     $gameM->rollback();
                     return $this->failJSON('购买失败');
                 }
-                
+
                 $userM = new \addons\member\model\MemberAccountModel();
                 $pid = $userM->getPID($this->user_id);
                 if (!empty($pid)) {
@@ -201,16 +201,16 @@ class Keygame extends \web\api\controller\ApiBase {
                             $before_amount = $pidBalance['before_amount'];
                             $after_amount = $pidBalance['amount'];
                             $type = 3; //奖励类型 0=投注分红，1=胜利战队分红，2=胜利者分红，3=邀请分红
-                            $remark = '推荐投注分红';
+                            $remark = '邀请推荐分红';
                             $rewardM->addRecord($pid, $coin_id, $before_amount, $invite_amount, $after_amount, $type, $game_id, $remark);
                             $pid = $userM->getPID($pid);
-                            if(empty($pid))
+                            if (empty($pid))
                                 break;
                         }
                     }
                 }
                 $is_drop = $this->getAirDrop($key_total_price, $game_id, $coin_id, $game['drop_total_amount']);
-                if($is_drop == false){
+                if ($is_drop == false) {
                     $gameM->rollback();
                     return $this->failJSON('空投失败');
                 }
@@ -224,7 +224,8 @@ class Keygame extends \web\api\controller\ApiBase {
 
                 $time = time();
                 $end_game_time = $game['end_game_time'] + $inc_time;
-                if( ($end_game_time - $time ) > 3600 * $game['hour']) $end_game_time = $time + 3600 * $game['hour'];
+                if (($end_game_time - $time ) > 3600 * $game['hour'])
+                    $end_game_time = $time + 3600 * $game['hour'];
                 //更新数据
                 //奖池+ ,时间+
                 $game['end_game_time'] = $end_game_time;
@@ -241,21 +242,21 @@ class Keygame extends \web\api\controller\ApiBase {
                 $team_total['total_amount'] = $team_total['total_amount'] + $key_total_price;
                 $team_total['update_time'] = NOW_DATETIME;
                 $teamTotalM->save($team_total);
-                
+
                 //战队:投注p3d,f3d奖励队列
                 $sequeueM = new \addons\fomo\model\BonusSequeue();
-                
+
                 if ($team_config['p3d_rate'] > 0) {
                     $tokenRecordM = new \addons\fomo\model\TokenRecord();
                     $token_total = $tokenRecordM->getTotalToken();
-                    if($token_total > 0){
+                    if ($token_total > 0) {
                         $p3d_amount = $this->countRate($key_total_price, $team_config['p3d_rate']); //发放给p3d用户金额
                         $sequeueM->addSequeue($this->user_id, $coin_id, $p3d_amount, 0, 1, $game_id);
                     }
                 }
-                
+
                 $key_total = $keyRecordM->getCrontabTotalByGameID($game_id);
-                if($key_total > 0){//判断是否非第一笔
+                if ($key_total > 0) {//判断是否非第一笔
                     $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
                     //用户购买分配自己 : 然后f3d_amount - 分配给自己的 = 队列要处理的金额
                     $f3d_amount = $this->_sendToSelf($this->user_id, $game_id, $coin_id, $f3d_amount);
@@ -269,10 +270,10 @@ class Keygame extends \web\api\controller\ApiBase {
                 $priceM->save($current_price_data);
 
                 //代理奖励
-                $this->agencyAward($this->user_id,$key_total_price,$game_id,$coin_id);
+                $this->agencyAward($this->user_id, $key_total_price, $game_id, $coin_id);
 
                 //更新用户购买金额
-                $this->updateTokenNum($this->user_id,$key_total_price);
+                $this->updateTokenNum($this->user_id, $key_total_price);
                 $gameM->commit();
                 return $this->successJSON();
             } catch (\Exception $ex) {
@@ -285,79 +286,78 @@ class Keygame extends \web\api\controller\ApiBase {
     /**
      * 代理奖励
      */
-    private function agencyAward($user_id,$amount,$game_id,$coin_id)
-    {
+    private function agencyAward($user_id, $amount, $game_id, $coin_id) {
         $memberM = new \addons\member\model\MemberAccountModel();
         $user = $memberM->getDetail($user_id);
 
-        if(empty($user['pid']))
+        if (empty($user['pid']))
             return;
 
         $pOne = $memberM->getDetail($user['pid']);
         $one_level = $pOne['agency_level'];
 
         $this->rate = 0;
-        if($one_level > 0)
-        {
-            switch ($one_level)
-            {
+        if ($one_level > 0) {
+            switch ($one_level) {
                 case 1:
-                    $this->agencySeueqe($user['pid'],100,$amount,0.01,$game_id,$coin_id,1,$user_id);    break;
+                    $this->agencySeueqe($user['pid'], 100, $amount, 0.01, $game_id, $coin_id, 1, $user_id);
+                    break;
                 case 2:
-                    $this->agencySeueqe($user['pid'],300,$amount,0.03,$game_id,$coin_id,1,$user_id);   break;
+                    $this->agencySeueqe($user['pid'], 300, $amount, 0.03, $game_id, $coin_id, 1, $user_id);
+                    break;
                 case 3:
-                    $this->agencySeueqe($user['pid'],1000,$amount,0.05,$game_id,$coin_id,1,$user_id);   break;
+                    $this->agencySeueqe($user['pid'], 1000, $amount, 0.05, $game_id, $coin_id, 1, $user_id);
+                    break;
             }
         }
 
         $pTwo = $memberM->getDetail($pOne['pid']);
-        if(empty($pTwo))
+        if (empty($pTwo))
             return;
         $two_level = $pTwo['agency_level'];
-        if($two_level <= $one_level)
+        if ($two_level <= $one_level)
             return;
 
-        switch ($two_level)
-        {
+        switch ($two_level) {
             case 1:
-                $this->agencySeueqe($pOne['pid'],100,$amount,0.01,$game_id,$coin_id,2,$user_id);    break;
+                $this->agencySeueqe($pOne['pid'], 100, $amount, 0.01, $game_id, $coin_id, 2, $user_id);
+                break;
             case 2:
-                $this->agencySeueqe($pOne['pid'],300,$amount,0.03,$game_id,$coin_id,2,$user_id);   break;
+                $this->agencySeueqe($pOne['pid'], 300, $amount, 0.03, $game_id, $coin_id, 2, $user_id);
+                break;
             case 3:
-                $this->agencySeueqe($pOne['pid'],1000,$amount,0.05,$game_id,$coin_id,2,$user_id);   break;
+                $this->agencySeueqe($pOne['pid'], 1000, $amount, 0.05, $game_id, $coin_id, 2, $user_id);
+                break;
         }
     }
 
     /**
      * 获取伞下总投注数量
      */
-    public function getBuyAmount($user_id)
-    {
+    public function getBuyAmount($user_id) {
         $keyRecordM = new \addons\fomo\model\KeyRecord();
         $memberM = new \addons\member\model\MemberAccountModel();
-        $one_users = $memberM->where('pid',$user_id)->column('id');
-        if(empty($one_users))
+        $one_users = $memberM->where('pid', $user_id)->column('id');
+        if (empty($one_users))
             return 0;
 
         $one_ids = '';
-        foreach ($one_users as $v)
-        {
+        foreach ($one_users as $v) {
             $one_ids .= $v . ',';
         }
-        $one_ids = rtrim($one_ids,',');
-        $amount = $keyRecordM->where('user_id','in',$one_ids)->sum('eth');
+        $one_ids = rtrim($one_ids, ',');
+        $amount = $keyRecordM->where('user_id', 'in', $one_ids)->sum('eth');
 
-        $two_users = $memberM->where('pid','in',$one_ids)->column('id');
-        if(empty($two_users))
+        $two_users = $memberM->where('pid', 'in', $one_ids)->column('id');
+        if (empty($two_users))
             return $amount;
 
         $two_ids = '';
-        foreach ($two_users as $v)
-        {
+        foreach ($two_users as $v) {
             $two_ids .= $v . ',';
         }
-        $two_ids = rtrim($two_ids,',');
-        $two_amount = $keyRecordM->where('user_id','in',$two_ids)->sum('eth');
+        $two_ids = rtrim($two_ids, ',');
+        $two_amount = $keyRecordM->where('user_id', 'in', $two_ids)->sum('eth');
         $amount += $two_amount;
 
         return $amount;
@@ -366,35 +366,32 @@ class Keygame extends \web\api\controller\ApiBase {
     /**
      * 代理奖励加入队列
      */
-    private function agencySeueqe($user_id,$need_amount,$amount,$user_rate,$game_id,$coin_id,$type=1,$from_user_id)
-    {
+    private function agencySeueqe($user_id, $need_amount, $amount, $user_rate, $game_id, $coin_id, $type = 1, $from_user_id) {
         $total_amount = $this->getBuyAmount($user_id);
-        if($total_amount < $need_amount)
+        if ($total_amount < $need_amount)
             return true;
 
         $rate = 0;
-        if($type == 1)
-        {
+        if ($type == 1) {
             $this->rate = $rate = $user_rate;
-        }else
-        {
+        } else {
             $rate = $user_rate - $this->rate;
         }
 
-        $amount = bcmul($amount,$rate,4);
+        $amount = bcmul($amount, $rate, 4);
         $agencyAwardM = new \addons\fomo\model\AgencyAward();
         $data = array(
             'user_id' => $user_id,
             'from_user_id' => $from_user_id,
             'game_id' => $game_id,
             'coin_id' => $coin_id,
-            'amount'  => $amount,
-            'status'  => 1,
+            'amount' => $amount,
+            'status' => 1,
             'update_time' => NOW_DATETIME,
         );
 
         $res = $agencyAwardM->add($data);
-        if($res)
+        if ($res)
             return true;
         else
             return false;
@@ -404,22 +401,24 @@ class Keygame extends \web\api\controller\ApiBase {
      * @param $user_id
      * @param $amount
      */
-    private function updateBuyAmount($user_id,$amount)
-    {
+    private function updateBuyAmount($user_id, $amount) {
         $buyAmountM = new \addons\fomo\model\BuyAmount();
-        $buyAmount = $buyAmountM->where('user_id',$user_id)->find();
-        if(empty($buyAmount))
-        {
+        $buyAmount = $buyAmountM->where('user_id', $user_id)->find();
+        if (empty($buyAmount)) {
             $data = array(
-                'user_id'   => $user_id,
-                'amount'    => 0,
-                'update_time'   => NOW_DATETIME,
+                'user_id' => $user_id,
+                'amount' => $amount,
+                'total_amount' => $amount,
+                'update_time' => NOW_DATETIME,
             );
 
-            $buyAmountM->add($data);
+            return $buyAmountM->add($data);
+        }else{
+            $buyAmount['total_amount'] = $buyAmount['total_amount'] + $amount;
+            $buyAmount['amount'] = $buyAmount['amount'] + $amount;
+            return $buyAmountM->save($buyAmount);
         }
-
-        $buyAmountM->where('user_id',$user_id)->setInc('amount',$amount);
+        
     }
 
     /**
@@ -427,16 +426,14 @@ class Keygame extends \web\api\controller\ApiBase {
      * @param $user_id
      * @param $amount
      */
-    private function updateTokenNum($user_id,$amount)
-    {
-        $this->updateBuyAmount($user_id,$amount);
+    private function updateTokenNum($user_id, $amount) {
+        $this->updateBuyAmount($user_id, $amount);
         $memberM = new MemberAccountModel();
         $this->updateUserTokenNum($user_id);
 
         $user = $memberM->getDetail($user_id);
-        if($user['pid'])
-        {
-            $this->updateBuyAmount($user['pid'],$amount);
+        if ($user['pid']) {
+            $this->updateBuyAmount($user['pid'], $amount);
             $this->updateUserTokenNum($user['pid']);
         }
     }
@@ -445,47 +442,45 @@ class Keygame extends \web\api\controller\ApiBase {
      * 更新token数量
      * @param $user_id
      */
-    private function updateUserTokenNum($user_id)
-    {
+    private function updateUserTokenNum($user_id) {
         $buyAmountM = new \addons\fomo\model\BuyAmount();
-        $amount = $buyAmountM->where('user_id',$user_id)->value('amount');
-        if(empty($amount))
+        $amount = $buyAmountM->where('user_id', $user_id)->value('amount');
+        if (empty($amount))
             return;
         $amount = intval($amount);
 
         $sysM = new SysParameterModel();
         $get_token_amount = $sysM->getValByName('get_token_amount');
 
-        if(empty($get_token_amount))
+        if (empty($get_token_amount))
             return;
         $get_token_amount = intval($get_token_amount);
 
-        $token_amount = bcdiv($amount,intval($get_token_amount));
-        if($token_amount < 1)
+        $token_amount = bcdiv($amount, intval($get_token_amount));
+        if ($token_amount < 1)
             return;
 
-        $mod_amount = bcmod($amount,$get_token_amount);
+        $mod_amount = bcmod($amount, $get_token_amount);
         $tokenRecordM = new TokenRecord();
-        $user_token = $tokenRecordM->where('user_id',$user_id)->find();
-        if(empty($user_token))
-        {
+        $user_token = $tokenRecordM->where('user_id', $user_id)->find();
+        if (empty($user_token)) {
             $data = array(
-                'user_id'   => $user_id,
-                'token'     => 0,
-                'before_token'  => 0,
-                'update_time'   => NOW_DATETIME,
+                'user_id' => $user_id,
+                'token' => 0,
+                'before_token' => 0,
+                'update_time' => NOW_DATETIME,
             );
             $tokenRecordM->add($data);
         }
-        $tokenRecordM->where('user_id',$user_id)->setInc('token',$token_amount);
+        $tokenRecordM->where('user_id', $user_id)->setInc('token', $token_amount);
 
         $buyAmountM->save([
             'amount' => $mod_amount,
-        ],[
+                ], [
             'user_id' => $user_id,
         ]);
     }
-    
+
     /**
      * 
      * @param type $user_id 购买key用户
@@ -493,41 +488,39 @@ class Keygame extends \web\api\controller\ApiBase {
      * @param type $coin_id 币种id
      * @param type $amount  分配总额
      */
-    private function _sendToSelf($user_id,$game_id,$coin_id,$amount){
+    private function _sendToSelf($user_id, $game_id, $coin_id, $amount) {
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
         $keyRecordM = new \addons\fomo\model\KeyRecord(); //用户key记录
-        
-        $user_key = $keyRecordM->getTotalByGameID($user_id, $game_id);//用户所拥有的key数量
-        if($user_key > 0){
+
+        $user_key = $keyRecordM->getTotalByGameID($user_id, $game_id); //用户所拥有的key数量
+        if ($user_key > 0) {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
             //添加余额, 添加分红记录
             $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
-            if($balance != false){
+            if ($balance != false) {
                 $before_amount = $balance['before_amount'];
                 $after_amount = $balance['amount'];
-                $type = 0; //奖励类型 0=投注分红，1=胜利战队分红，2=胜利者分红，3=邀请分红
+                $type = 0; //奖励类型 0=投注key分红
                 $remark = '欲望之岛投注分红';
-                $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id,$remark);
+                $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
             }
             $amount = $amount - $_amount;
         }
         return $amount;
-        
     }
-        
+
     /**
      * 计算用户所拥有的key/token 数量占全部的百分比
      * @param type $total_amount
      * @param type $amount
      * @return type
      */
-    private function getUserRate($total_amount, $amount){
+    private function getUserRate($total_amount, $amount) {
         return $amount / $total_amount;
     }
-    
 
     /**
      * 获取空投
@@ -536,32 +529,31 @@ class Keygame extends \web\api\controller\ApiBase {
         $dropConfM = new \addons\fomo\model\AirdropConf();
         //判断是否开启空投 & 是否满足空投触发(所花费eth量)
         $is_airdrop = $dropConfM->getValByName('is_airdrop');
-        if($is_airdrop != 1){
-           return true;
+        if ($is_airdrop != 1) {
+            return true;
         }
         $gameM = new \addons\fomo\model\Game();
         //增加空投金额
-        $drop_rate = $dropConfM->getValByName('drop_rate');//投注空投百分比
+        $drop_rate = $dropConfM->getValByName('drop_rate'); //投注空投百分比
         $drop_amount = $this->countRate($key_total_price, $drop_rate);
         //update
-        $gameM->where('id='.$game_id)->setInc('drop_total_amount',$drop_amount);
+        $gameM->where('id=' . $game_id)->setInc('drop_total_amount', $drop_amount);
         $trigger = $dropConfM->getValByName('trigger');
-        if($trigger > $key_total_price){
+        if ($trigger > $key_total_price) {
             return true;
         }
         //增加空投触发几率
         $multi_rate = $dropConfM->getValByName('multi_rate');
         $priceM = new \addons\fomo\model\KeyPrice();
         $price_data = $priceM->getDropByGameID($game_id);
-        $after_drop_process = $price_data['drop_process'] + $multi_rate;//空投进度
+        $after_drop_process = $price_data['drop_process'] + $multi_rate; //空投进度
         $get_drop_rate = $dropConfM->getValByName('get_drop_rate');
-        if($after_drop_process < $get_drop_rate){
+        if ($after_drop_process < $get_drop_rate) {
             //更新空投进度
             $price_data['drop_process'] = $after_drop_process;
             $priceM->save($price_data);
             return true;
-            
-        }else{
+        } else {
 
             $drop_total_amount = $drop_total_amount + $drop_amount;
             //空投几率达到100%或以上,随机投放空投(根据用户购买key所花费的eth)
@@ -570,19 +562,19 @@ class Keygame extends \web\api\controller\ApiBase {
 //            if(!empty($user_key)){
 //                $user_id = $user_key['user_id'];
             $airdrop_user_id = $dropConfM->getValByName('airdrop_user_id');
-            if($airdrop_user_id ){
-                $eth = $keyRecordM->getUserTotalEthByGameID($airdrop_user_id,$game_id);
-                if($eth < $trigger){
+            if ($airdrop_user_id) {
+                $eth = $keyRecordM->getUserTotalEthByGameID($airdrop_user_id, $game_id);
+                if ($eth < $trigger) {
                     return true;
                 }
-            }else{
-                $eth = $keyRecordM->getUserTotalEthByGameID($this->user_id,$game_id);
+            } else {
+                $eth = $keyRecordM->getUserTotalEthByGameID($this->user_id, $game_id);
             }
 
             $airdrop_user_id = $airdrop_user_id ? $airdrop_user_id : $this->user_id;
 //                if($user_id == $this->user_id){
-                    $eth = $eth + $key_total_price;
-                    
+            $eth = $eth + $key_total_price;
+
 //                }
 //            }
             //2018年09月20日10:32:37 修改为根据用户总投注金额发放空投
@@ -592,11 +584,10 @@ class Keygame extends \web\api\controller\ApiBase {
 
 
 
-            $bonus_rate = $this->getDropRate($eth);//获取比率
+            $bonus_rate = $this->getDropRate($eth); //获取比率
 
-            if(!empty($bonus_rate)){
-                $bonus = $drop_total_amount * $bonus_rate / 100;//奖金
-
+            if (!empty($bonus_rate)) {
+                $bonus = $drop_total_amount * $bonus_rate / 100; //奖金
                 //更新用户资金
                 $balanceM = new \addons\member\model\Balance();
                 $balance = $balanceM->updateBalance($airdrop_user_id, $bonus, $coin_id, true);
@@ -604,7 +595,7 @@ class Keygame extends \web\api\controller\ApiBase {
                 //添加分红记录
                 $recordM = new \addons\fomo\model\RewardRecord();
                 $after_amount = $balance['amount'];
-                $remark = '空投奖励,发放前空投总池金额:'.$drop_total_amount.';获奖用户'.$airdrop_user_id.';当前购买用户:'.$airdrop_user_id.'已购:'.$eth.';百分比:'.$bonus_rate;
+                $remark = '空投奖励,发放前空投总池金额:' . $drop_total_amount . ';获奖用户' . $airdrop_user_id . ';当前购买用户:' . $airdrop_user_id . '已购:' . $eth . ';百分比:' . $bonus_rate;
                 $record_id = $recordM->addRecord($airdrop_user_id, $coin_id, $balance['before_amount'], $bonus, $after_amount, 0, $game_id, $remark);
             }
             //放完之后回到初始概率
@@ -614,10 +605,7 @@ class Keygame extends \web\api\controller\ApiBase {
             $price_data['total_drop_count'] = $price_data['total_drop_count'] + 1;
             $priceM->save($price_data);
             return true;
-            
         }
-        
-
     }
 
     //奖金比率
@@ -640,7 +628,7 @@ class Keygame extends \web\api\controller\ApiBase {
         if (empty($this->user_id)) {
             return $this->failJSON("登录已失效，请重新登录");
         }
-      	$this->getEthOrders($this->user_id);
+        $this->getEthOrders($this->user_id);
         $game_id = $this->_get('game_id');
         $coin_id = $this->_get('coin_id');
         $keyRecordM = new \addons\fomo\model\KeyRecord();
@@ -662,19 +650,19 @@ class Keygame extends \web\api\controller\ApiBase {
         try {
             $game_id = $this->_get("game_id/d");
             $m = new \addons\fomo\model\KeyRecord();
-            $filter = 'game_id='.$game_id;
+            $filter = 'game_id=' . $game_id;
             $list = $m->getList($this->getPageIndex(), 10, $filter);
             return $this->successJSON($list);
         } catch (\Exception $ex) {
             return $this->failJSON($ex->getMessage());
         }
     }
-    
-    public function getDropRecord(){
+
+    public function getDropRecord() {
         $game_id = $this->_get('game_id');
         $m = new \addons\fomo\model\RewardRecord();
         $userM = new \addons\member\model\MemberAccountModel();
-        $sql = 'select a.amount,b.username from '.$m->getTableName().' a ,'.$userM->getTableName().' b where a.game_id='.$game_id.' and a.user_id=b.id and remark=\'空投奖励\'';
+        $sql = 'select a.amount,b.username from ' . $m->getTableName() . ' a ,' . $userM->getTableName() . ' b where a.game_id=' . $game_id . ' and a.user_id=b.id and remark=\'空投奖励\'';
         $data = $m->query($sql);
         return $this->successJSON($data);
     }

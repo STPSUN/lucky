@@ -13,12 +13,17 @@
             </select>
         </span>
         <span>
+            <!--奖励类型 0=投注key分红，1=战队分红，2=胜利分红，3=邀请分红，4=空投分红 ，5 代理分红 ,6=投注token分红-->
             <select name="type" id="type" class="form-control" style="width:130px">
                 <option value="-1">选择分红类型</option>
-                <option value="0">投注分红</option>
+                <option value="0">投注钥匙分红</option>
                 <option value="1">战队分红</option>
                 <option value="2">胜利分红</option>
                 <option value="3">邀请分红</option>
+                <option value="4">空投分红</option>
+                <option value="5">代理分红</option>
+                <option value="6">投注token分红</option>
+
             </select>
         </span>
 
@@ -38,9 +43,9 @@
             <th data-options="field:'coin_name',width:120, align:'center'">分红币种</th>
             <th data-options="field:'game_name',width:120, align:'center'">所属游戏</th>
             <th data-options="field:'status',width:100, align:'center',formatter:formatStatus">游戏状态</th>
-            
+            <th data-options="field:'type',width:100, align:'center',formatter:formatType">分红类型</th>
             <th data-options="field:'amount',width:160, align:'center'">分红值</th>
-            <th data-options="field:'remark',width:140, align:'center'">分红类型</th>
+            <th data-options="field:'remark',width:140, align:'center'">备注</th>
             <th data-options="field:'update_time',width:140, align:'center'">更新时间</th>
         </tr>
         </thead>
@@ -52,12 +57,32 @@
 <script type="text/javascript">
     var type = "{$type}";
     function formatStatus(value,row,index){
-        if(row['game_id'] !=0){
+        if(row['id']){
             var text = '未开始'
             if(value == '1')
                 text = '<span style="color:green">进行中</span>';
             if(value == '2')
                 text= '<span style="color:red">已结束</span>'
+            return text;
+        }
+    }
+//    0=投注key分红，1=战队分红，2=胜利分红，3=邀请分红，4=空投分红 ，5 代理分红 ,6=投注token分红
+    function formatType(value,row,index){
+        if(row['id']){
+            var text = '投注钥匙分红'
+            if(value == '1')
+                text = '战队分红';
+            else if(value == '2')
+                text= '胜利分红'
+            else if(value == '3')
+                text= '邀请分红'
+            else if(value == '4')
+                text= '空投分红'
+            else if(value == '5')
+                text= '代理分红'
+            else if(value == '6')
+                text= '投注token分红'
+           
             return text;
         }
     }
