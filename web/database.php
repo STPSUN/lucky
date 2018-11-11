@@ -11,7 +11,7 @@ return [
 //    'database'        => 'fomo3d',
     // 用户名
 //    'username'        => 'root',
-    'username'        => 'f4d2',
+    'username'        => 'f4d',
     // 密码
 //    'password'        => 'root',
     'password'        => 'nWDRXY72SP',
