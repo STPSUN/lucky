@@ -174,11 +174,28 @@ class Crontab extends \web\common\controller\Controller {
                 $bonus_limit_num = $record['bonus_limit_num'];
                 if(!empty($bonus_limit_num))
                 {
-                    $profit_amount = $rewardM->where(['user_id' => $record['user_id'], 'type' => 0, 'game_id' => $game_id])->sum('amount');
+                    //获取交易记录数据，倒序
+//                    $recordM =  new \addons\member\model\TradingRecord();
+//                    $where['user_id'] = $user_id;
+//                    $where['type'] = 10;
+//                    $where['key_num'] = array('>',0);
+//                    $record_data = $recordM->field('bonus_limit,id')->where($where)->select();
+//                    foreach ($record_data as $v)
+//                    {
+//                        //判断当前分红，是否达到限制
+//                        if($v['bonus_limit'] > $_amount)
+//                            break;
+//
+//
+//                    }
+                    //获取令牌分红总数
+                    $profit_amount = $rewardM->where(['user_id' => $record['user_id'], 'type' => 6, 'game_id' => $game_id])->sum('amount');
+                    //总数 = 历史总数 + 当前分红数量
                     $total_amount = $profit_amount + $_amount;
                     if($profit_amount >= $bonus_limit_num)
                         continue;
 
+                    //总数大于等于令牌限制数量，则token失效
                     if($total_amount >= $bonus_limit_num)
                     {
                         $_amount = $bonus_limit_num - $profit_amount;
@@ -217,6 +234,8 @@ class Crontab extends \web\common\controller\Controller {
         $record = $keyRecordM->where(['game_id' => $game_id, 'user_id' => $user_id])->find();
         if(empty($record))
             return;
+
+        //获取交易记录，倒序
 
         $keyRecordM->save([
             'key_num' => 0,

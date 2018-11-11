@@ -108,8 +108,10 @@ class Keygame extends \web\api\controller\ApiBase {
         $game['drop'] = $KeyPriceM->getDropByGameID($game['id']);
 
         //换算汇率
-        $maketM = new \web\api\model\MarketModel();
-        $rate = $maketM->getCnyRateByCoinId($game['coin_id']);
+//        $maketM = new \web\api\model\MarketModel();
+//        $rate = $maketM->getCnyRateByCoinId($game['coin_id']);
+        $sysM = new SysParameterModel();
+        $rate = $sysM->getValByName('token_rate');
         $game['cny_rate'] = $rate;
 
         return $this->successJSON($game);
