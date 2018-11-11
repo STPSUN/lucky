@@ -167,6 +167,8 @@ class Keygame extends \web\api\controller\ApiBase {
             }
             $gameM->startTrans();
             try {
+                //更新用户购买金额
+                $this->updateTokenNum($this->user_id, $key_total_price);
                 //扣除用户余额
                 $balance['before_amount'] = $balance['amount'];
                 $balance['amount'] = $balance['amount'] - $key_total_price;
@@ -184,7 +186,6 @@ class Keygame extends \web\api\controller\ApiBase {
                     $gameM->rollback();
                     return $this->failJSON('购买失败');
                 }
-
                 $userM = new \addons\member\model\MemberAccountModel();
                 $pid = $userM->getPID($this->user_id);
                 if (!empty($pid)) {
@@ -271,9 +272,6 @@ class Keygame extends \web\api\controller\ApiBase {
 
                 //代理奖励
                 $this->agencyAward($this->user_id, $key_total_price, $game_id, $coin_id);
-
-                //更新用户购买金额
-                $this->updateTokenNum($this->user_id, $key_total_price);
                 $gameM->commit();
                 return $this->successJSON();
             } catch (\Exception $ex) {
@@ -492,12 +490,38 @@ class Keygame extends \web\api\controller\ApiBase {
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
         $keyRecordM = new \addons\fomo\model\KeyRecord(); //用户key记录
-
+        $tradeM = new \addons\member\model\TradingRecord();
+        
         $user_key = $keyRecordM->getTotalByGameID($user_id, $game_id); //用户所拥有的key数量
         if ($user_key > 0) {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
+//            $record_list = $tradeM->getBuyKeyRecord($user_id,$game_id,$coin_id);
+//            if(empty($record_list)){
+//                return $amount;
+//            }
+//            $less_need_minus_bonus = $_amount;
+//            foreach($record_list as $k => $record){
+//                if($less_need_minus_bonus == 0){
+//                    break;
+//                }
+//                //循环,扣除record['bonus_limit']
+//                $bonus_limit = $record['bonus_limit'];//当前记录封顶总额
+////                比封顶金额少就 ，记录的封顶金额 - 要发的分红金额 ，直到0
+//                if($bonus_limit >= $less_need_minus_bonus){
+//                    $record['bonus_limit'] = $bonus_limit - $less_need_minus_bonus;
+//                    $less_need_minus_bonus = 0;//剩余需扣除封顶金额=0
+//                }else{
+//                    $record['bonus_limit'] = 0;
+//                    $less_need_minus_bonus = $less_need_minus_bonus - $bonus_limit; // 该发放分红 - 当前记录封顶 = 还需扣除的分红
+//                }
+//                $tradeM->save($record);
+//                
+//            }
+//            if($less_need_minus_bonus > 0){
+//                $_amount = $_amount - $less_need_minus_bonus;
+//            }
             //添加余额, 添加分红记录
             $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
             if ($balance != false) {

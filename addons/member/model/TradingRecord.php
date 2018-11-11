@@ -104,4 +104,16 @@ class TradingRecord extends \web\common\model\BaseModel{
             return 0;
     }
     
+    /**
+     * 获取购买key记录
+     */
+    public function getBuyKeyRecord($user_id,$game_id,$coin_id){
+        $where['user_id'] = $user_id;
+        $where['game_id'] = $game_id;
+        $where['coin_id'] = $coin_id;
+        $where['type'] = 10;
+        $where['bonus_limit'] = array(">",0);
+        return $this->where($where)->field('id,key_num,bonus_limit')->select();
+    }
+    
 }
