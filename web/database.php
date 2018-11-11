@@ -7,7 +7,7 @@ return [
     'hostname'        => '127.0.0.1',
 //    'hostname'        => '107.174.247.122',
     // 数据库名
-    'database'        => 'lucky',
+    'database'        => 'f4d',
 //    'database'        => 'fomo3d',
     // 用户名
 //    'username'        => 'root',
