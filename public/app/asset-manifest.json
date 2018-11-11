@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.197b2d5f.css",
   "main.css.map": "static/css/main.197b2d5f.css.map",
-  "main.js": "static/js/main.3dc1d6fd.js",
-  "main.js.map": "static/js/main.3dc1d6fd.js.map",
+  "main.js": "static/js/main.b0ff6417.js",
+  "main.js.map": "static/js/main.b0ff6417.js.map",
   "static/media/banner1.png": "static/media/banner1.67a8622e.png",
   "static/media/bg-wallet.png": "static/media/bg-wallet.aa8d63eb.png",
   "static/media/change_balance.png": "static/media/change_balance.2e5f604d.png",
@@ -17,6 +17,7 @@
   "static/media/index_bg.png": "static/media/index_bg.241a6434.png",
   "static/media/logo.png": "static/media/logo.1ac2605f.png",
   "static/media/mine_bg.png": "static/media/mine_bg.41b1b445.png",
+  "static/media/recharge_btn.png": "static/media/recharge_btn.b343d9ba.png",
   "static/media/share_page_bg.png": "static/media/share_page_bg.bc11646a.png",
   "static/media/transition_bg.png": "static/media/transition_bg.035a10df.png"
 }
