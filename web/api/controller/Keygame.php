@@ -499,6 +499,10 @@ class Keygame extends \web\api\controller\ApiBase {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
+
+            //实际可得分红
+//            $_amount = $this->keyLimit($user_id,$game_id,$coin_id,$_amount);
+
 //            $record_list = $tradeM->getBuyKeyRecord($user_id,$game_id,$coin_id);
 //            if(empty($record_list)){
 //                return $amount;
@@ -536,6 +540,52 @@ class Keygame extends \web\api\controller\ApiBase {
             $amount = $amount - $_amount;
         }
         return $amount;
+    }
+
+    /**
+     * key失效
+     * @param $user_id
+     * @param $game_id
+     * @param $coin_id
+     * @param $amount
+     * @return int|string
+     */
+    private function keyLimit($user_id,$game_id,$coin_id,$amount)
+    {
+        $recordM = new \addons\member\model\TradingRecord();
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $record_list = $recordM->getBuyKeyRecord($user_id,$game_id,$coin_id);
+        if(empty($record_list))
+            return 0;
+
+        $bonus_amount = 0;  //分红金额
+        $total_lose_key_num = 0;    //失效钥匙总数量
+        foreach ($record_list as $v)
+        {
+            //每把key的封顶值
+            $key_bonus_limit = bcdiv($v['bonus_limit'],$v['key_num'],8);
+            //判断单个key的封顶值是否大于分红
+            if($key_bonus_limit > $amount)
+                break;
+
+            $lose_key_num = bcmod($amount,$key_bonus_limit);
+            if($lose_key_num < 1)
+            {
+                $bonus_amount += $amount;
+                break;
+            }
+
+            $total_lose_key_num += $lose_key_num;
+            $total_limit = $key_bonus_limit * $lose_key_num;    //当前记录减少的封顶金额
+            $recordM->where('id',$v['id'])->setInc('key_num',$lose_key_num);    //当前记录key减少
+            $recordM->where('id',$v['id'])->setInc('bonus_limit',$total_limit); //当天记录封顶金额减少
+
+            $bonus_amount += $total_limit;
+        }
+
+        $keyRecordM->updateKeyNum($user_id,$game_id,$total_lose_key_num);
+
+        return $bonus_amount;
     }
 
     /**

@@ -175,5 +175,29 @@ class KeyRecord extends \web\common\model\BaseModel{
         $where['user_id'] = $user_id;
         return $this->where($where)->sum('eth');
     }
+
+    /**
+     * 更新key数量
+     * @param $user_id
+     * @param $game_id
+     */
+    public function updateKeyNum($user_id,$game_id,$key_num)
+    {
+        $where['game_id'] = $game_id;
+        $where['user_id'] = $user_id;
+
+        $data = $this->where($where)->find();
+        if(empty($data))
+            return false;
+
+        return $this->save([
+            'key_num'   => $data['key_num'] - $key_num,
+            'before_num'    => $data['key_num'],
+            'lose_key_num'  => $data['lose_key_num'] + $key_num,
+            'update_time'   => NOW_DATETIME,
+        ],[
+            'id' => $data['id'],
+        ]);
+    }
   
 }
