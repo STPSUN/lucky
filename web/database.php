@@ -7,17 +7,17 @@ return [
     'hostname'        => '127.0.0.1',
 //    'hostname'        => '107.174.247.122',
     // 数据库名
-    'database'        => 'f4d',
+    'database'        => 'lucky',
 //    'database'        => 'fomo3d',
     // 用户名
-    'username'        => 'root',
-//    'username'        => 'fomo3d',
+//    'username'        => 'root',
+    'username'        => 'f4d',
     // 密码
-    'password'        => 'root',
-//    'password'        => 'RSeMD7Xm6jLeYdLm',
+//    'password'        => 'root',
+    'password'        => 'nWDRXY72SP',
     // 端口
-    'hostport'        => '3307',
-//    'hostport'        => '3306',
+//    'hostport'        => '3307',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
