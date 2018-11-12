@@ -48,65 +48,65 @@ class Crontab extends \web\common\controller\Controller {
                 $queueM->rollback();
                 return json($this->failData($ex->getMessage()));
             }
-        }else{
+        } else {
             return $this->successData();
         }
     }
-    
-    public function excuteAll(){
+
+    public function excuteAll() {
         set_time_limit(0);
-        $queueM = new \addons\fomo\model\BonusSequeue();
-        $sequeue_list = $queueM->getUnAllSendData(1000);
-//        dump($sequeue_list);exit;
-        if (!empty($sequeue_list)) {
-            foreach($sequeue_list as $k => $data){
-                try {
-                    $queueM->startTrans();
-                    if ($data['type'] == 1) {
-                        //f3d分红,去除用户本身
-                        $res = $this->sendF3d($data['user_id'], $data['coin_id'], $data['game_id'], $data['amount'], $data['scene'], $data['team_id']);
-                    } else {
-                        //p3d分红
-                        $res = $this->sendP3d($data['user_id'], $data['coin_id'], $data['amount'], $data['game_id'], $data['scene']);
-                    }
-                    if ($res) {
-                        //更新发放状态
-                        $data['status'] = 1;
-                        $data['update_time'] = NOW_DATETIME;
-                        $queueM->save($data);
-                        $queueM->commit();
-                    } else {
+        try{
+            $queueM = new \addons\fomo\model\BonusSequeue();
+            $sequeue_list = $queueM->getUnAllSendData(1000);
+            if (!empty($sequeue_list)) {
+                foreach ($sequeue_list as $k => $data) {
+                    try {
+                        $queueM->startTrans();
+                        if ($data['type'] == 1) {
+                            //f3d分红,去除用户本身
+                            $res = $this->sendF3d($data['user_id'], $data['coin_id'], $data['game_id'], $data['amount'], $data['scene'], $data['team_id']);
+                        } else {
+                            //p3d分红
+                            $res = $this->sendP3d($data['user_id'], $data['coin_id'], $data['amount'], $data['game_id'], $data['scene']);
+                        }
+                        if ($res) {
+                            //更新发放状态
+                            $data['status'] = 1;
+                            $data['update_time'] = NOW_DATETIME;
+                            $queueM->save($data);
+                            $queueM->commit();
+                        } else {
+                            $queueM->rollback();
+                        }
+                    } catch (\Exception $ex) {
                         $queueM->rollback();
                     }
-                } catch (\Exception $ex) {
-                    $queueM->rollback();
                 }
+                echo '队列处理成功';
+            } else {
+                echo '无队列';
             }
-            echo '队列处理成功';
-        }else{
-            echo '队列处理成功';
+        } catch (\Exception $ex) {
+            return $this->failData($ex->getMessage());
         }
     }
 
     /**
      * 代理奖励发放
      */
-    public function agencyAward()
-    {
+    public function agencyAward() {
         set_time_limit(0);
         $agencyAwardM = new \addons\fomo\model\AgencyAward();
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
-        $data = $agencyAwardM->where('status',1)->limit(1000)->select();
-        foreach ($data as $v)
-        {
-            try
-            {
+        $data = $agencyAwardM->where('status', 1)->limit(1000)->select();
+        foreach ($data as $v) {
+            try {
                 $agencyAwardM->startTrans();
                 $agencyAwardM->save([
                     'status' => 2,
                     'update_time' => NOW_DATETIME,
-                ],[
+                        ], [
                     'id' => $v['id'],
                 ]);
 
@@ -126,8 +126,7 @@ class Crontab extends \web\common\controller\Controller {
 
                 $agencyAwardM->commit();
                 echo '代理分红处理成功';
-            }catch (\Exception $e)
-            {
+            } catch (\Exception $e) {
                 $agencyAwardM->rollback();
                 echo '代理分红处理失败';
             }
@@ -150,13 +149,13 @@ class Crontab extends \web\common\controller\Controller {
         if ($scene == 2) {
             //开奖分红 查询战队成员key总数 and record
             $record_list = $keyRecordM->getRecordWithOutUserID($user_id, $game_id, $team_id);
-            $total_key = $keyRecordM->getCrontabTotalByGameID($game_id, $team_id,$user_id);
+            $total_key = $keyRecordM->getCrontabTotalByGameID($game_id, $team_id, $user_id);
             $type = 1; //1=胜利战队分红
             $remark = '胜利战队分红';
         } else {
             //查询拥有key的所有user
             $record_list = $keyRecordM->getRecordWithOutUserID($user_id, $game_id);
-            $total_key = $keyRecordM->getCrontabTotalByGameID($game_id,'',$user_id);
+            $total_key = $keyRecordM->getCrontabTotalByGameID($game_id, '', $user_id);
             $type = 0; //奖励类型 0=投注分红
             $remark = '欲望之岛投注分红';
         }
@@ -164,15 +163,12 @@ class Crontab extends \web\common\controller\Controller {
             foreach ($record_list as $k => $record) {
                 $user_id = $record['user_id'];
                 $key_num = $record['key_num'];
-                if($key_num <= 0)
+                if ($key_num <= 0)
                     continue;
-
                 $rate = $this->getUserRate($total_key, $key_num);
                 $_amount = $amount * $rate;
-
                 //实际可得分红
-                $_amount = $this->keyLimit($user_id,$game_id,$coin_id,$_amount);
-
+                $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount);
                 //添加余额, 添加分红记录
                 $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
                 if ($balance != false) {
@@ -181,107 +177,53 @@ class Crontab extends \web\common\controller\Controller {
                     $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
                 }
 
-               /* //封顶限制
-                $bonus_limit_num = $record['bonus_limit_num'];
-                if(!empty($bonus_limit_num))
-                {
-                    //获取交易记录数据，倒序
-//                    $recordM =  new \addons\member\model\TradingRecord();
-//                    $where['user_id'] = $user_id;
-//                    $where['type'] = 10;
-//                    $where['key_num'] = array('>',0);
-//                    $record_data = $recordM->field('bonus_limit,id')->where($where)->select();
-//                    foreach ($record_data as $v)
-//                    {
-//                        //判断当前分红，是否达到限制
-//                        if($v['bonus_limit'] > $_amount)
-//                            break;
-//
-//
-//                    }
-                    //获取令牌分红总数
-                    $profit_amount = $rewardM->where(['user_id' => $record['user_id'], 'type' => 6, 'game_id' => $game_id])->sum('amount');
-                    //总数 = 历史总数 + 当前分红数量
-                    $total_amount = $profit_amount + $_amount;
-                    if($profit_amount >= $bonus_limit_num)
-                        continue;
-
-                    //总数大于等于令牌限制数量，则token失效
-                    if($total_amount >= $bonus_limit_num)
-                    {
-                        $_amount = $bonus_limit_num - $profit_amount;
-                        //令牌失效
-                        $this->keyLose($record['user_id'],$game_id);
-                    }
-
-                    //添加余额, 添加分红记录
-                    $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
-                    if ($balance != false) {
-                        $before_amount = $balance['before_amount'];
-                        $after_amount = $balance['amount'];
-                        $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
-                    }
-                }else
-                {
-                    //添加余额, 添加分红记录
-                    $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
-                    if ($balance != false) {
-                        $before_amount = $balance['before_amount'];
-                        $after_amount = $balance['amount'];
-                        $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
-                    }
-                }*/
             }
         }
         return true;
     }
 
-    private function keyLimit($user_id,$game_id,$coin_id,$amount)
-    {
+    private function keyLimit($user_id, $game_id, $coin_id, $amount) {
         $recordM = new \addons\member\model\TradingRecord();
         $keyRecordM = new \addons\fomo\model\KeyRecord();
-        $record_list = $recordM->getBuyKeyRecord($user_id,$game_id,$coin_id);
-        if(empty($record_list))
+        $record_list = $recordM->getBuyKeyRecord($user_id, $game_id, $coin_id);
+        if (empty($record_list))
             return 0;
 
         $bonus_amount = 0;  //分红金额
         $total_lose_key_num = 0;    //失效钥匙总数量
-        foreach ($record_list as $v)
-        {
-            //每把key的封顶值
-            $key_bonus_limit = bcdiv($v['bonus_limit'],$v['key_num'],8);
-            //判断单个key的封顶值是否大于分红
-            if($key_bonus_limit > $amount)
-                break;
 
-            $lose_key_num = bcmod($amount,$key_bonus_limit);
-            if($lose_key_num < 1)
-            {
+        foreach ($record_list as $v) {
+            //每把key的封顶值
+            $key_bonus_limit = bcdiv($v['bonus_limit'], $v['key_num'], 8);
+            //判断单个key的封顶值是否大于分红
+            if ($key_bonus_limit > $amount)
+                break;
+            $lose_key_num = bcmod($v['key_num'], $amount);
+            if ($lose_key_num < 1) {
+                //足够扣除,直接return
                 $bonus_amount += $amount;
                 break;
             }
-
             $total_lose_key_num += $lose_key_num;
             $total_limit = $key_bonus_limit * $lose_key_num;    //当前记录减少的封顶金额
-            $recordM->where('id',$v['id'])->setDec('key_num',$lose_key_num);    //当前记录key减少
-            $recordM->where('id',$v['id'])->setDec('bonus_limit',$total_limit); //当天记录封顶金额减少
-
+            $recordM->where('id', $v['id'])->setDec('key_num', $lose_key_num);    //当前记录key减少
+            $recordM->where('id', $v['id'])->setDec('bonus_limit', $total_limit); //当天记录封顶金额减少
             $bonus_amount += $total_limit;
         }
-
-        $keyRecordM->updateKeyNum($user_id,$game_id,$total_lose_key_num);
-
+        if($total_lose_key_num > 0){
+            //钥匙失效
+            $res = $keyRecordM->updateKeyNum($user_id, $game_id, $total_lose_key_num);
+        }
         return $bonus_amount;
     }
 
     /**
      * 令牌失效
      */
-    private function keyLose($user_id,$game_id)
-    {
+    private function keyLose($user_id, $game_id) {
         $keyRecordM = new \addons\fomo\model\KeyRecord();
         $record = $keyRecordM->where(['game_id' => $game_id, 'user_id' => $user_id])->find();
-        if(empty($record))
+        if (empty($record))
             return;
 
         //获取交易记录，倒序
@@ -289,7 +231,7 @@ class Crontab extends \web\common\controller\Controller {
         $keyRecordM->save([
             'key_num' => 0,
             'lose_key_num' => $record['key_num'] + $record['lose_key_num'],
-        ],[
+                ], [
             'id' => $record['id']
         ]);
     }
@@ -307,7 +249,7 @@ class Crontab extends \web\common\controller\Controller {
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
         $total_amount = $tokenRecordM->getTotalToken(); //p3d总额
-        if($scene == 0){
+        if ($scene == 0) {
             $user_token = $tokenRecordM->getTotalToken($user_id);
             $total_amount = $total_amount - $user_token;
         }

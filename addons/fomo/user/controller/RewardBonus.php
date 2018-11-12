@@ -18,9 +18,6 @@ class RewardBonus extends \web\user\controller\AddonUserBase{
     public function index(){
         $type = $this->_get('type');
         $status = $this->_get('status',0);
-        if($type == '' || $type==0){
-            $type = 0;
-        }
         $m = new \addons\config\model\Coins;
         $coins = $m->getDataList(-1,-1,'','','id asc');
         $this->assign('coins',$coins);
@@ -31,22 +28,22 @@ class RewardBonus extends \web\user\controller\AddonUserBase{
 
     public function loadList() {
         $keyword = $this->_get('keyword');
-        $type = $this->_get('type', -1);
-        $scene = $this->_get('scene', -1);
-        $status = $this->_get('status', -1);
-        $coin_id = $this->_get('coin_id', 0);
+        $type = $this->_get('type');
+        $scene = $this->_get('scene');
+        $status = $this->_get('status');
+        $coin_id = $this->_get('coin_id');
         $m = new \addons\fomo\model\BonusSequeue();
-        $filter = '1=1 ';
-        if( $type != -1){
+        $filter = '1=1';
+        if($type != ''){
             $filter .= ' and type='. $type;
         }
-        if($status != -1){
+        if($status != ''){
             $filter .= ' and status='. $status;
         }
-        if( $scene != -1){
+        if( $scene != ''){
             $filter .= ' and scene='. $scene;
         }
-        if($coin_id && $coin_id !=0){
+        if($coin_id !=''){
             $filter .= ' and coin_id='. $coin_id;
         }
         if ($keyword != null) {

@@ -189,15 +189,19 @@ class KeyRecord extends \web\common\model\BaseModel{
         $data = $this->where($where)->find();
         if(empty($data))
             return false;
-
-        return $this->save([
-            'key_num'   => $data['key_num'] - $key_num,
-            'before_num'    => $data['key_num'],
-            'lose_key_num'  => $data['lose_key_num'] + $key_num,
-            'update_time'   => NOW_DATETIME,
-        ],[
-            'id' => $data['id'],
-        ]);
+        $data['before_num'] = $data['key_num'];
+        $data['key_num'] = $data['key_num'] - $key_num;
+        $data['lose_key_num'] = $data['lose_key_num'] + $key_num;
+        $data['update_time'] = NOW_DATETIME;
+        return $this->save($data);
+//        return $this->save([
+//            'key_num'   => $data['key_num'] - $key_num,
+//            'before_num'    => $data['key_num'],
+//            'lose_key_num'  => $data['lose_key_num'] + $key_num,
+//            'update_time'   => NOW_DATETIME,
+//        ],[
+//            'id' => $data['id'],
+//        ]);
     }
   
 }

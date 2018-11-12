@@ -9,7 +9,7 @@
     <div id="js_main_header" class="ui-form main_header">
         <span>
             <select name="coin_id" id="coin_id" class="form-control" style="width:130px">
-                <option value="0">选择币种</option>
+                <option value="">选择币种</option>
                 {volist name="coins" id="game"}
                 <option value="{$game.id}">{$game.coin_name}</option>
                 {/volist}
@@ -17,14 +17,14 @@
         </span>
         <span>
             <select name="type" id="type" class="form-control" style="width:130px">
-                <option value="-1">选择分红类型</option>
+                <option value="">选择分红类型</option>
                 <option value="0">p3d分红</option>
                 <option value="1">f3d分红</option>
             </select>
         </span>
         <span>
             <select name="type" id="scene" class="form-control" style="width:130px">
-                <option value="-1">选择分红场景</option>
+                <option value="">选择分红场景</option>
                 <option value="0">p3d购买</option>
                 <option value="1">f3d购买</option>
                 <option value="2">f3d开奖</option>

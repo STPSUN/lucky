@@ -29,7 +29,7 @@ class BonusSequeue extends \web\common\model\BaseModel {
      * @param type $game_id
      * @param type $team_id
      */
-    public function addSequeue($user_id, $coin_id, $amount, $type, $scene, $game_id = 0,$team_id=0) {
+    public function addSequeue($user_id, $coin_id, $amount, $type, $scene, $game_id = 0, $team_id = 0) {
         $data['user_id'] = $user_id;
         $data['coin_id'] = $coin_id;
         $data['game_id'] = $game_id;
@@ -43,21 +43,20 @@ class BonusSequeue extends \web\common\model\BaseModel {
     }
 
     public function getUnSendData($id = '') {
-        if(!empty($id))
+        if (!empty($id))
             $where['id'] = $id;
         $where['status'] = 0;
         return $this->where($where)->find();
     }
-    
-    public function getUnAllSendData($limit=''){
+
+    public function getUnAllSendData($limit = '') {
         $where['status'] = 0;
         $fields = 'id,user_id,coin_id,game_id,team_id,type,scene,amount';
-        if($limit != ''){
-            $this->limit(0,$limit);
+        if ($limit != '') {
+            $this->limit(0, $limit);
         }
         return $this->where($where)->field($fields)->select();
     }
-
 
     /**
      * 获取列表数据
@@ -68,19 +67,20 @@ class BonusSequeue extends \web\common\model\BaseModel {
      * @param type $order 排序
      * @return type
      */
-    public function getDataList($pageIndex = -1, $pageSize = -1, $filter = '', $fields = '*', $order = '')
-    {
-        if(!$order){
-            $order = $this->getPk(). " asc";
+    public function getDataList($pageIndex = -1, $pageSize = -1, $filter = '', $fields = '*', $order = '') {
+        if (!$order) {
+            $order = $this->getPk() . " asc";
         }
         $m = new \addons\member\model\MemberAccountModel();
         $gameM = new \addons\fomo\model\Game;
         $coinM = new \addons\config\model\Coins;
-        $sql = "select a.*,b.username from {$this->getTableName()} a  left join {$m->getTableName()} b on a.user_id = b.id";
-        $sql = "select a.*,b.name as game_name from ({$sql}) a left join {$gameM->getTableName()} b on a.game_id = b.id";
-        $sql = "select a.*,b.coin_name  from ({$sql}) a left join {$coinM->getTableName()} b on a.coin_id = b.id";
-
+        $sql = "select a.*,b.username,c.name as game_name,d.coin_name from {$this->getTableName()} a  "
+        . "left join {$m->getTableName()} b on a.user_id = b.id "
+        . "left join {$gameM->getTableName()} c on a.game_id = c.id "
+        . "left join {$coinM->getTableName()} d on a.coin_id = d.id ";
+        
         $sql = "select {$fields} from ($sql) a  where {$filter}";
+//        dump($sql);exit;
         return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
     }
 
@@ -93,4 +93,5 @@ class BonusSequeue extends \web\common\model\BaseModel {
         $count = $this->query($sql);
         return $count ? $count[0]['count_total'] : 0;
     }
+
 }
