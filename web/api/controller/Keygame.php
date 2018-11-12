@@ -260,6 +260,8 @@ class Keygame extends \web\api\controller\ApiBase {
                     }
                 }
 
+                //用户key+
+                $save_key = $keyRecordM->saveUserKey($this->user_id, $team_id, $game_id, $key_num, $key_total_price);
                 $key_total = $keyRecordM->getCrontabTotalByGameID($game_id);
                 if ($key_total > 0) {//判断是否非第一笔
                     $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
@@ -269,8 +271,7 @@ class Keygame extends \web\api\controller\ApiBase {
                         $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id);
                     }
                 }
-                //用户key+
-                $save_key = $keyRecordM->saveUserKey($this->user_id, $team_id, $game_id, $key_num, $key_total_price);
+                
                 //key 价格+
                 $current_price_data['key_amount'] = $current_price + $key_rule['multi'];
                 $current_price_data['update_time'] = NOW_DATETIME;
@@ -504,6 +505,7 @@ class Keygame extends \web\api\controller\ApiBase {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
+            $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount);
             //添加余额, 添加分红记录
             $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
             if ($balance != false) {
@@ -516,6 +518,57 @@ class Keygame extends \web\api\controller\ApiBase {
             $amount = $amount - $_amount;
         }
         return $amount;
+    }
+    
+    private function keyLimit($user_id, $game_id, $coin_id, $amount) {
+        $recordM = new \addons\member\model\TradingRecord();
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $record_list = $recordM->getBuyKeyRecord($user_id, $game_id, $coin_id);
+        if (empty($record_list))
+            return 0;
+
+        $bonus_amount = 0;  //分红金额
+        $total_lose_key_num = 0;    //失效钥匙总数量
+        foreach ($record_list as $v) {
+            //每把key的封顶值
+            $key_bonus_limit = bcdiv($v['bonus_limit'], $v['key_num'], 8);
+            //判断单个key的封顶值是否大于分红
+            if ($key_bonus_limit > $amount)
+                break;
+
+            //失效key = 分红金额/当个key的封顶值 取整
+            $lose_key_num = bcdiv($amount,$key_bonus_limit);
+            if ($lose_key_num < 1) {
+                //足够扣除,直接return
+                $bonus_amount += $amount;
+                break;
+            }
+
+            //当前记录钥匙数量
+            $record_key_num = $recordM->where('id',$v['id'])->value('key_num');
+            if($record_key_num < $lose_key_num)
+            {
+                $lose_key_num = $record_key_num;
+            }
+
+            $total_limit = $key_bonus_limit * $lose_key_num;    //当前记录减少的封顶金额
+            $recordM->where('id', $v['id'])->setDec('key_num', $lose_key_num);    //当前记录key减少
+            $recordM->where('id', $v['id'])->setDec('bonus_limit', $total_limit); //当天记录封顶金额减少
+            $bonus_amount += $total_limit;
+//            dump($bonus_amount);
+            //剩余分红值
+            $amount -= $total_limit;
+            $total_lose_key_num += $lose_key_num;
+        }
+        if($amount != 0){
+            $bonus_amount += $amount;
+        }
+        if($total_lose_key_num > 0){
+            //钥匙失效
+//            dump($total_lose_key_num);exit;
+            $res = $keyRecordM->updateKeyNum($user_id, $game_id, $total_lose_key_num);
+        }
+        return $bonus_amount;
     }
 
     /**

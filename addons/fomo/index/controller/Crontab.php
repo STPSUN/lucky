@@ -223,6 +223,9 @@ class Crontab extends \web\common\controller\Controller {
             $amount -= $total_limit;
             $total_lose_key_num += $lose_key_num;
         }
+        if($amount != 0){
+            $bonus_amount += $amount;
+        }
         if($total_lose_key_num > 0){
             //钥匙失效
             $res = $keyRecordM->updateKeyNum($user_id, $game_id, $total_lose_key_num);
