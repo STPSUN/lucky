@@ -192,23 +192,36 @@ class Crontab extends \web\common\controller\Controller {
         $bonus_amount = 0;  //分红金额
         $total_lose_key_num = 0;    //失效钥匙总数量
 
+//        echo $amount;exit();
         foreach ($record_list as $v) {
             //每把key的封顶值
             $key_bonus_limit = bcdiv($v['bonus_limit'], $v['key_num'], 8);
             //判断单个key的封顶值是否大于分红
             if ($key_bonus_limit > $amount)
                 break;
-            $lose_key_num = bcmod($v['key_num'], $amount);
+
+            //失效key = 分红金额/当个key的封顶值 取整
+            $lose_key_num = bcdiv($amount,$key_bonus_limit);
             if ($lose_key_num < 1) {
                 //足够扣除,直接return
                 $bonus_amount += $amount;
                 break;
             }
-            $total_lose_key_num += $lose_key_num;
+
+            //当前记录钥匙数量
+            $record_key_num = $recordM->where('id',$v['id'])->value('key_num');
+            if($record_key_num < $lose_key_num)
+            {
+                $lose_key_num = $record_key_num;
+            }
+
             $total_limit = $key_bonus_limit * $lose_key_num;    //当前记录减少的封顶金额
             $recordM->where('id', $v['id'])->setDec('key_num', $lose_key_num);    //当前记录key减少
             $recordM->where('id', $v['id'])->setDec('bonus_limit', $total_limit); //当天记录封顶金额减少
             $bonus_amount += $total_limit;
+            //剩余分红值
+            $amount -= $total_limit;
+            $total_lose_key_num += $lose_key_num;
         }
         if($total_lose_key_num > 0){
             //钥匙失效
