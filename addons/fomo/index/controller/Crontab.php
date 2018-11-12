@@ -210,6 +210,7 @@ class Crontab extends \web\common\controller\Controller {
 
             //当前记录钥匙数量
             $record_key_num = $recordM->where('id',$v['id'])->value('key_num');
+            //如果记录钥匙数量 小于 应该失效的数量
             if($record_key_num < $lose_key_num)
             {
                 $lose_key_num = $record_key_num;
@@ -224,7 +225,12 @@ class Crontab extends \web\common\controller\Controller {
             $total_lose_key_num += $lose_key_num;
         }
         if($amount != 0){
-            $bonus_amount += $amount;
+            $where['user_id'] = $user_id;
+            $where['game_id'] = $game_id;
+            $less_key_num = $recordM->where($where)->sum('key_num');
+            if($less_key_num > 0){
+                $bonus_amount += $amount;
+            }
         }
         if($total_lose_key_num > 0){
             //钥匙失效
