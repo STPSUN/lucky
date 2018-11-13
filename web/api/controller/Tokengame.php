@@ -20,7 +20,8 @@ class Tokengame extends \web\api\controller\ApiBase {
         $data['sale_tax'] = $m->getValByName('sale_tax');
         $data['buy_tax'] = $m->getValByName('buy_tax');
         $tokenRecordM = new \addons\fomo\model\TokenRecord();
-        $data['total_token_num'] = $tokenRecordM->getTotalToken(); //购买总量
+        $data['total_token_num'] = $tokenRecordM->getTotalToken(); //释放总量
+        $data['token_residue'] = $total_token_amount - $data['total_token_num'];
         $data['price'] = $this->getPrice(); //token 价格
 
         return $this->successJSON($data);
