@@ -183,7 +183,6 @@ class Transfer extends ApiBase{
             $to_address = $this->_post("to_address");
             $pay_pass = $this->_post("password");
 
-            $coin_id = 3;
             $coinM = new \addons\config\model\Coins();
             $coin = $coinM->getDetail($coin_id);
             if(empty($coin))
