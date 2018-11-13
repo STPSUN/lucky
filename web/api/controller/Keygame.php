@@ -529,7 +529,6 @@ class Keygame extends \web\api\controller\ApiBase {
 
         $bonus_amount = 0;  //分红金额
         $total_lose_key_num = 0;    //失效钥匙总数量
-//        echo $amount;
         foreach ($record_list as $v) {
             //每把key的封顶值
 //            $key_bonus_limit = bcdiv($v['bonus_limit'], $v['key_num'], 8);

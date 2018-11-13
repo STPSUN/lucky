@@ -178,10 +178,17 @@ class Transfer extends ApiBase{
             if($user_id <= 0){
                 return $this->failJSON("请登录");
             }
-            $coin_id = 1;
+            $coin_id = $this->_post("coin_id");
             $amount = floatval($this->_post('amount'));
             $to_address = $this->_post("to_address");
             $pay_pass = $this->_post("password");
+
+            $coin_id = 3;
+            $coinM = new \addons\config\model\Coins();
+            $coin = $coinM->getDetail($coin_id);
+            if(empty($coin))
+                return $this->failJSON('该币种不存在');
+
             if(!$amount || $amount <= 0){
                 return $this->failJSON('请输入有效转账数量');
             }
@@ -191,9 +198,9 @@ class Transfer extends ApiBase{
                 return $this->failJSON('请勿输入自身钱包地址');
             }
             $key_head = strtolower(substr($to_address,0,2));
-            if(($key_head!=="0x" || strlen($to_address) !==42)){
-                return $this->failJSON('地址是由0X开头的42位16进制数组成');
-            }
+//            if(($key_head!=="0x" || strlen($to_address) !==42)){
+//                return $this->failJSON('地址是由0X开头的42位16进制数组成');
+//            }
             try{
                 $memberM = new \addons\member\model\MemberAccountModel();
                 if($user['pay_password'] !== md5($pay_pass)){
@@ -208,7 +215,7 @@ class Transfer extends ApiBase{
 
                 $server_rate = $rate > 0 ? bcmul($amount, ($rate/100) , 5) : 0;
 
-                $coin_id = 1;
+//                $coin_id = 1;
                 $AssetModel = new \addons\member\model\Balance();
                 $userAsset = $AssetModel->getBalanceByCoinID($user_id,$coin_id);
                 $AssetModel->startTrans();
@@ -224,7 +231,7 @@ class Transfer extends ApiBase{
                     return $this->failJSON('账号扣款失败');
                 }
                 $tradeM = new \addons\eth\model\EthTradingOrder();
-                $trade_res = $tradeM->transactionIn($user_id, '',$to_address, 1, $amount,'', '', $server_rate,0, 0,  "可用WNCT转出外网");
+                $trade_res = $tradeM->transactionIn($user_id, '',$to_address, $coin_id, $amount,'', '', $server_rate,0, 0,  "可用WNCT转出外网");
                 if(!$trade_res){
                     $AssetModel->rollback();
                     return $this->failJSON('提交申请失败');

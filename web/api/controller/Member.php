@@ -747,6 +747,64 @@ class Member extends \web\api\controller\ApiBase
     }
 
     /**
+     * 代币兑换其他币种
+     */
+    public function tokenConvert()
+    {
+        $coin_id = $this->_post('coin_id');
+        $amount = $this->_post('amount');
+        $user_id = $this->user_id;
+
+        if (!$user_id || !$coin_id|| !$amount) {
+            return $this->failJSON("illegal request");
+        }
+
+        $sysM = new \web\common\model\sys\SysParameterModel();
+        $balanceM = new \addons\member\model\Balance();
+        $coinM = new Coins();
+
+        $coin = $coinM->getDetail($coin_id);
+        if(empty($coin))
+            return $this->failJSON('该币种不存在');
+
+        $coin_name = $coin['coin_name'] . '_rate';
+        $rate = $sysM->getValByName($coin_name);
+        $amount_rate = bcdiv($amount,$rate,8);
+        $type = 23;
+        $remark = '代币兑换其他币种';
+
+        $token_id = $coinM->where('is_token',1)->value('id');
+        if(empty($token_id))
+            return $this->failJSON('代币不存在');
+
+        $coin_balance = $balanceM->getBalanceByCoinID($user_id,$token_id);
+        if($coin_balance['amount'] < $amount)
+            return $this->failJSON('余额不足');
+
+        $recordM = new TradingRecord();
+        $balanceM->startTrans();
+        try
+        {
+            $balanceM->updateBalance($user_id,$amount,$token_id,false);
+            $coin_after = $coin_balance['amount'] - $amount;
+            $recordM->addRecord($user_id,$token_id,$amount,$coin_balance['amount'],$coin_after,$type,0,0,'','',$remark);
+
+            $agency_balance = $balanceM->getBalanceByCoinID($user_id,$coin_id);
+            $balanceM->updateBalance($user_id,$amount_rate,$coin_id,true);
+            $agency_after = $agency_balance['amount'] + $amount_rate;
+            $recordM->addRecord($user_id,$coin_id,$amount_rate,$agency_balance['amount'],$agency_after,$type,1,0,'','',$remark);
+
+            $balanceM->commit();
+        }catch (\Exception $e)
+        {
+            $balanceM->rollback();
+            return $this->failJSON($e->getMessage());
+        }
+
+        return $this->successJSON();
+    }
+
+    /**
      * 兑换代币
      */
     public function convertCoin()

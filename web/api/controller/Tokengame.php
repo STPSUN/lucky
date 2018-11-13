@@ -3,6 +3,7 @@
 namespace web\api\controller;
 
 use think\Exception;
+use web\common\model\sys\SysParameterModel;
 
 class Tokengame extends \web\api\controller\ApiBase {
     
