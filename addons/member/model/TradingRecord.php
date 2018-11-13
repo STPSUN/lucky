@@ -40,8 +40,8 @@ class TradingRecord extends \web\common\model\BaseModel{
             $sysM = new \web\common\model\sys\SysParameterModel();
             $bonus_limit = $sysM->getValByName('bonus_limit');
             if($bonus_limit > 0){
-                $bonus_limit_num = $amount * $bonus_limit; // 投注额 * 封顶限制倍数
-                $data['bonus_limit'] = $bonus_limit_num;
+//                $bonus_limit_num = $amount * $bonus_limit; // 投注额 * 封顶限制倍数
+                $data['bonus_limit'] = $bonus_limit;
             }
         }
         $data['change_type'] = $change_type;
@@ -112,7 +112,7 @@ class TradingRecord extends \web\common\model\BaseModel{
         $where['game_id'] = $game_id;
         $where['coin_id'] = $coin_id;
         $where['type'] = 10;
-        $where['bonus_limit'] = array(">",0);
+        $where['key_num'] = array(">",0);
         return $this->where($where)->field('id,key_num,bonus_limit')->select();
     }
     

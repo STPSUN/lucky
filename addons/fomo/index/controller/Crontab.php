@@ -191,6 +191,84 @@ class Crontab extends \web\common\controller\Controller {
 
         $bonus_amount = 0;  //分红金额
         $total_lose_key_num = 0;    //失效钥匙总数量
+//        echo $amount;
+        foreach ($record_list as $v) {
+            //每把key的封顶值
+//            $key_bonus_limit = bcdiv($v['bonus_limit'], $v['key_num'], 8);
+            $less_bonus_num = $keyRecordM->where(['game_id' => $game_id, 'user_id' => $user_id])->value('less_bonus_num');
+            if(!empty($less_bonus_num))
+            {
+                $amount += $less_bonus_num;
+            }
+            //判断单个key的封顶值是否大于分红
+            $key_bonus_limit = $v['bonus_limit'];
+            if ($key_bonus_limit > $amount)
+            {
+                $record_list_less = $recordM->getBuyKeyRecord($user_id,$game_id,$coin_id);
+                $record_num = count($record_list_less);
+                if($record_num < 1)
+                    break;
+
+                $less_bonus_num = $key_bonus_limit - $amount;
+                $keyRecordM->save([
+                    'less_bonus_num'    => $less_bonus_num,
+                ],[
+                    'game_id'   => $game_id,
+                    'user_id'   => $user_id,
+                ]);
+//                $recordM->where('id',$v['id'])->setDec('bonus_limit',$amount);
+                break;
+            }
+
+            //失效key = 分红金额/当个key的封顶值 取整
+            $lose_key_num = bcdiv($amount,$key_bonus_limit);
+//            if ($lose_key_num < 1) {
+//                //足够扣除,直接return
+//                $bonus_amount += $amount;
+//                break;
+//            }
+
+            //当前记录钥匙数量
+            $record_key_num = $recordM->where('id',$v['id'])->value('key_num');
+            if($record_key_num < $lose_key_num)
+            {
+                $lose_key_num = $record_key_num;
+            }
+
+            $total_limit = $key_bonus_limit * $lose_key_num;    //当前记录减少的封顶金额
+            $recordM->where('id', $v['id'])->setDec('key_num', $lose_key_num);    //当前记录key减少
+//            $recordM->where('id', $v['id'])->setDec('bonus_limit', $total_limit); //当天记录封顶金额减少
+            $bonus_amount += $total_limit;
+//            dump($bonus_amount);
+            //剩余分红值
+            $amount -= $total_limit;
+            $total_lose_key_num += $lose_key_num;
+        }
+        if($amount != 0){
+            $where['user_id'] = $user_id;
+            $where['game_id'] = $game_id;
+            $less_key_num = $recordM->where($where)->sum('key_num');
+            if($less_key_num > 0){
+                $bonus_amount += $amount;
+            }
+        }
+        if($total_lose_key_num > 0){
+            //钥匙失效
+//            dump($total_lose_key_num);exit;
+            $res = $keyRecordM->updateKeyNum($user_id, $game_id, $total_lose_key_num);
+        }
+        return $bonus_amount;
+    }
+
+    private function keyLimit2($user_id, $game_id, $coin_id, $amount) {
+        $recordM = new \addons\member\model\TradingRecord();
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $record_list = $recordM->getBuyKeyRecord($user_id, $game_id, $coin_id);
+        if (empty($record_list))
+            return 0;
+
+        $bonus_amount = 0;  //分红金额
+        $total_lose_key_num = 0;    //失效钥匙总数量
 
 //        echo $amount;exit();
         foreach ($record_list as $v) {
