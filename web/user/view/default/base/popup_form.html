@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title></title>      
         <link rel="stylesheet" type="text/css" href="__STATIC__/web-icons/css.css" />   
@@ -51,8 +50,9 @@
                         url += ref;
                     }
                 }
-                console.log(url);
+
                 var address = 'https://vworld.xyz' + url;
+                console.log(address);
                 return address;
             }
             var layer_div = null;
