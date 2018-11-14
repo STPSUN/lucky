@@ -74,15 +74,24 @@ class TradingRecord extends \web\common\model\BaseModel{
     }
     
     public function getDataList($pageIndex = -1, $pageSize = -1, $filter = '',$fileds='*', $order = 'id asc') {
-        $coinM = new \addons\config\model\Coins();
-        $userM = new \addons\member\model\MemberAccountModel();
-        $sql = 'select a.*,c.coin_name from '.$this->getTableName() . ' a,'.$coinM->getTableName().' c where a.coin_id=c.id';
-        $sql = 'select '.$fileds.' from ('.$sql.') as tab';
-        $sql = 'select s.*,u.username,z.username as to_username from ('.$sql.') as s left join '.$userM->getTableName().' u on s.user_id=u.id left join '.$userM->getTableName().' z on s.to_user_id=z.id';
-        if($filter != ''){
-            $sql = 'select * from ('.$sql.') as y where '.$filter;
-        }
-		$order = 'update_time desc';
+//        $coinM = new \addons\config\model\Coins();
+//        $userM = new \addons\member\model\MemberAccountModel();
+//        $sql = 'select a.*,c.coin_name from '.$this->getTableName() . ' a,'.$coinM->getTableName().' c where a.coin_id=c.id';
+//        $sql = 'select '.$fileds.' from ('.$sql.') as tab';
+//        $sql = 'select s.*,u.username,z.username as to_username from ('.$sql.') as s left join '.$userM->getTableName().' u on s.user_id=u.id left join '.$userM->getTableName().' z on s.to_user_id=z.id';
+//        if($filter != ''){
+//            $sql = 'select * from ('.$sql.') as y where '.$filter;
+//        }
+        $order = 'update_time desc';
+        $sql = " SELECT r.*,u.username,u2.username to_user_name,c.coin_name"
+            . " FROM tp_trading_record AS r "
+            . " LEFT JOIN tp_coins AS c ON c.id = r.coin_id"
+            . " LEFT JOIN tp_member_account AS u ON u.id = r.user_id"
+            . " LEFT JOIN tp_member_account AS u2 ON u2.id = r.to_user_id"
+            . " WHERE 1=1 ";
+
+        if($filter != '')
+            $sql .= ' and ' .$filter;
         return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
     }
     
@@ -92,14 +101,22 @@ class TradingRecord extends \web\common\model\BaseModel{
      * @return int
      */
     public function getTotal($filter = '') {
-        $userM = new \addons\member\model\MemberAccountModel();
-        $sql = 'select count(*) c from ' . $this->getTableName() . ' a left join '.$userM->getTableName().' y on a.user_id=y.id';
-        if($filter != ''){
-            $sql = 'select count(*) c from ('.$sql.') as tab where '.$filter;
-        }
+//        $userM = new \addons\member\model\MemberAccountModel();
+//        $sql = 'select count(*) c from ' . $this->getTableName() . ' a left join '.$userM->getTableName().' y on a.user_id=y.id';
+//        if($filter != ''){
+//            $sql = 'select count(*) c from ('.$sql.') as tab where '.$filter;
+//        }
+        $sql = "SELECT r.*,u.username,u.phone "
+            . " FROM tp_trading_record AS r "
+            . " LEFT JOIN tp_member_account AS u ON r.user_id = u.id "
+            . " WHERE 1=1 ";
+
+//        print_r($sql);exit();
+        if($filter != '')
+            $sql .= ' and ' . $filter;
         $result = $this->query($sql);
         if (count($result) > 0)
-            return intval($result[0]['c']);
+            return intval(count($result));
         else
             return 0;
     }

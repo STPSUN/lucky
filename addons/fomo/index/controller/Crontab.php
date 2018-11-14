@@ -166,9 +166,14 @@ class Crontab extends \web\common\controller\Controller {
                 if ($key_num <= 0)
                     continue;
                 $rate = $this->getUserRate($total_key, $key_num);
+//                echo $amount . '/';
+//                echo $rate . '/';
                 $_amount = $amount * $rate;
+//                echo $_amount . '/';
                 //实际可得分红
                 $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount);
+
+//                print_r($_amount);exit();
                 //添加余额, 添加分红记录
                 $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
                 if ($balance != false) {

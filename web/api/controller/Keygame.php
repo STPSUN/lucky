@@ -263,7 +263,8 @@ class Keygame extends \web\api\controller\ApiBase {
                 //用户key+
                 $save_key = $keyRecordM->saveUserKey($this->user_id, $team_id, $game_id, $key_num, $key_total_price);
                 $key_total = $keyRecordM->getCrontabTotalByGameID($game_id);
-                if ($key_total > 0) {//判断是否非第一笔
+//                echo $key_total;exit();
+                if ($key_total > 1) {//判断是否非第一笔
                     $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
                     //用户购买分配自己 : 然后f3d_amount - 分配给自己的 = 队列要处理的金额
                     $f3d_amount = $this->_sendToSelf($this->user_id, $game_id, $coin_id, $f3d_amount);

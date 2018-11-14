@@ -15,7 +15,7 @@ class Trade extends \web\user\controller\AddonUserBase{
     }
 
     public function loadList(){
-        $keyword = $this->_get('keyword');
+        /*$keyword = $this->_get('keyword');
         $status = $this->_get('status');
         $type = $this->_get('type');
         $filter = 'status='.$status;
@@ -29,7 +29,22 @@ class Trade extends \web\user\controller\AddonUserBase{
         $total = $m->getTotal($filter);
         $rows = $m->getList($this->getPageIndex(), $this->getPageSize(), $filter);
         $count_total = $m->getCountTotal($filter);
-        return $this->toDataGrid($total, $rows,$count_total);
+        return $this->toDataGrid($total, $rows,$count_total);*/
+
+        $keyword = $this->_get('keyword');
+        $status = $this->_get('status');
+        $type = $this->_get('type');
+        $filter = 'o.status='.$status;
+        if($type != ''){
+            $filter .= ' and o.type='.$type;
+        }
+        if ($keyword != null) {
+            $filter .= ' and m.username like \'%' . $keyword . '%\'';
+        }
+        $m = new \addons\eth\model\EthTradingOrder();
+        $total = $m->getTotal2($filter);
+        $rows = $m->getList2($this->getPageIndex(), $this->getPageSize(), $filter);
+        return $this->toDataGrid($total, $rows);
     }
 
     /**

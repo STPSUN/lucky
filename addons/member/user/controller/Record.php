@@ -18,7 +18,7 @@ class Record extends \web\user\controller\AddonUserBase{
         $status = $this->_get('status');
         $filter = '';
         if ($keyword != null) {
-            $filter = 'username like \'%' . $keyword . '%\'';
+            $filter = 'u.username like \'%' . $keyword . '%\'';
         }
         $m = new \addons\member\model\TradingRecord();
         $total = $m->getTotal($filter);

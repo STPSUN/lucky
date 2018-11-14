@@ -118,7 +118,7 @@ class Order extends \web\user\controller\AddonUserBase{
             return $this->failData('订单不存在');
         }
         try{
-            $balanceM = new \addons\member\model\AssetModel();
+            $balanceM = new \addons\member\model\Balance();
             $ret = $balanceM->otcTradingConfirm($order_id);
             if($ret){
                 return $this->successData();
