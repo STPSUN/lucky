@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title></title>      
         <link rel="stylesheet" type="text/css" href="__STATIC__/web-icons/css.css" />   
@@ -14,8 +15,8 @@
         <script type="text/javascript" src="__STATIC__/jquery/jquery.form.js"></script>                              
         <script type="text/javascript">
             function getURL(action, param, addon) {
-//                var m = "{:MODULE_NAME}";
-                var m = "32";
+                var m = "{:MODULE_NAME}";
+//                var m = "32";
                 var c = "{$_CONTROLLER_NAME}";
                 var a = "{$_ADDON_NAME}";
                 var arr = action.split('/');
@@ -50,7 +51,7 @@
                         url += ref;
                     }
                 }
-                console.log(url);
+//                console.log(url);
 //                var address = 'https://vworld.xyz' + url;
                 return url;
             }
