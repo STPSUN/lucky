@@ -14,7 +14,8 @@
         <script type="text/javascript" src="__STATIC__/jquery/jquery.form.js"></script>                              
         <script type="text/javascript">
             function getURL(action, param, addon) {
-                var m = "{:MODULE_NAME}";
+//                var m = "{:MODULE_NAME}";
+                var m = "32";
                 var c = "{$_CONTROLLER_NAME}";
                 var a = "{$_ADDON_NAME}";
                 var arr = action.split('/');
@@ -49,9 +50,9 @@
                         url += ref;
                     }
                 }
-                console.log(url)
-                var address = 'https://vworld.xyz' + url;
-                return address;
+                console.log(url);
+//                var address = 'https://vworld.xyz' + url;
+                return url;
             }
             var layer_div = null;
             var form = null;
