@@ -43,7 +43,12 @@ class KeyRecord extends \web\common\model\BaseModel{
         $count = $this->query($sql);
         return $count[0]['count_total'];
     }
-
+    
+    public function getUserKeyList($game_id,$user_id){
+        $where['game_id'] = $game_id;
+        $where['user_id'] = $user_id;
+        return $this->where($where)->select();
+    }
     
     public function saveUserKey($user_id,$team_id,$game_id, $key_num, $eth, $is_limit = true){
         $where['user_id'] = $user_id;
@@ -78,7 +83,7 @@ class KeyRecord extends \web\common\model\BaseModel{
     }
     
     /**
-     * 获取当场游戏用户key总量
+     * 获取当场游戏(所有战队)用户key总量
      * @param type $user_id
      * @param type $game_id
      * @return type
@@ -92,6 +97,22 @@ class KeyRecord extends \web\common\model\BaseModel{
         }
         return $data;
     }
+    
+    /**
+     * 用户封顶总金额(所有战队)
+     * @param type $user_id
+     * @param type $game_id
+     */
+    public function getTotalLimit($user_id,$game_id){
+        $where['user_id'] = $user_id;
+        $where['game_id'] = $game_id;
+        $data = $this->where($where)->sum('bonus_limit_num');
+        if(empty($data)){
+            return 0;
+        }
+        return $data;
+    }
+    
 
     public function getKeyByGameId($user_id,$game_id)
     {
