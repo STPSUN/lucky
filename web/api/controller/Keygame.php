@@ -504,6 +504,7 @@ class Keygame extends \web\api\controller\ApiBase {
         $keyRecordM = new \addons\fomo\model\KeyRecord(); //用户key记录
         $unCountM = new \addons\fomo\model\UncountRecord();//计算失效分红记录表
         $user_key = $keyRecordM->getTotalByGameID($user_id, $game_id); //用户所拥有的key数量
+        $user_key -= 1;
         if ($user_key > 0) {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
