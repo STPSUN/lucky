@@ -170,17 +170,24 @@ class Crontab extends \web\common\controller\Controller {
                 $_amount = $amount * $rate;
                 //        当前封顶总额 / 当前钥匙数量 = 当前每把钥匙的封顶值
                 $user_total_limit = $keyRecordM->getTotalLimit($user_id,$game_id);//用户总封顶金额
-   
+//                echo $user_total_limit . '/' . $user_id . '/' . $_amount;exit();
+
+
                 if($_amount > $user_total_limit){
                     $_amount = $user_total_limit; //超出封顶 就等于封顶值
                 }
-                $single_limit_amount = $user_total_limit / $total_key; //当前每把钥匙的封顶值
+//                echo $_amount;exit();
+//                $single_limit_amount = $user_total_limit / $total_key; //当前每把钥匙的封顶值
+                $single_limit_amount = $user_total_limit / $key_num; //当前每把钥匙的封顶值
                 $single_limit_amount = round($single_limit_amount, 4);//保留4位
                 //        当前用户分红累计额 >= 当前每把钥匙的封顶值
                 $uncount_amount_data = $unCountM->getUserUnCount($user_id, $game_id);//当前用户分红累计额
                 $uncount_amount = $uncount_amount_data['num'];
+                $current_total_amount = $uncount_amount;
+//                echo $current_total_amount;exit();
                 $uncount_amount += $_amount; // 加上当前需要发放的分红金额
-                
+
+//                echo $uncount_amount . '/' . $single_limit_amount . '/' . $key_num;exit();
                 if($uncount_amount < $single_limit_amount){
                     //继续累计分红
                     $uncount_amount_data['num'] = $uncount_amount;
@@ -224,13 +231,15 @@ class Crontab extends \web\common\controller\Controller {
                         $keyRecordM->save($key_data);
 
                     }
-                    if($current_loose_key_num > 0){
-                        $minus_bonus = $current_loose_key_num * $single_limit_amount;
-                        $_amount = $_amount - $minus_bonus; //扣除key不足的金额
-                    }
+//                    if($current_loose_key_num > 0){
+//                        $minus_bonus = $current_loose_key_num * $single_limit_amount;
+//                        $_amount = $_amount - $minus_bonus; //扣除key不足的金额
+//                    }
+                    $_amount = $single_limit_amount - $current_total_amount;
 //                    dump($_amount);exit;
 
                 }
+//                echo $_amount . '/' . $user_id;exit();
 //                $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount);
                 //添加余额, 添加分红记录
                 $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);

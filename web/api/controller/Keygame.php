@@ -271,8 +271,10 @@ class Keygame extends \web\api\controller\ApiBase {
                 $key_total = $keyRecordM->getCrontabTotalByGameID($game_id);
                 if ($key_total > 1) {//判断是否非第一笔
                     $f3d_amount = $this->countRate($key_total_price, $team_config['f3d_rate']); //发放给f3d用户金额
+//                    echo $f3d_amount . '/';
                     //用户购买分配自己 : 然后f3d_amount - 分配给自己的 = 队列要处理的金额
                     $f3d_amount = $this->_sendToSelf($this->user_id, $game_id, $coin_id, $f3d_amount);
+//                    echo $f3d_amount;exit();
                     if($f3d_amount > 0){
                         $sequeueM->addSequeue($this->user_id, $coin_id, $f3d_amount, 1, 1, $game_id);
                     }
@@ -508,6 +510,8 @@ class Keygame extends \web\api\controller\ApiBase {
         $user_key -= 1;
         if ($user_key > 0) {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
+            $total_key -= 1;
+//            echo $total_key . '/' . $user_key;exit();
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
             //        当前封顶总额 / 当前钥匙数量 = 当前每把钥匙的封顶值
@@ -577,6 +581,7 @@ class Keygame extends \web\api\controller\ApiBase {
                 $remark = '欲望之岛投注分红-自身购买';
                 $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
             }
+//            echo '/' . $_amount .'/';exit();
             $amount = $amount - $_amount;
         }
         return $amount;
