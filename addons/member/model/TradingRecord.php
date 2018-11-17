@@ -40,8 +40,8 @@ class TradingRecord extends \web\common\model\BaseModel{
             $sysM = new \web\common\model\sys\SysParameterModel();
             $bonus_limit = $sysM->getValByName('bonus_limit');
             if($bonus_limit > 0){
-//                $bonus_limit_num = $amount * $bonus_limit; // 投注额 * 封顶限制倍数
-                $data['bonus_limit'] = $bonus_limit;
+                $bonus_limit_num = $amount * $bonus_limit; // 投注额 * 封顶限制倍数
+                $data['bonus_limit'] = $bonus_limit_num;
             }
         }
         $data['change_type'] = $change_type;

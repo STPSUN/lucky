@@ -188,6 +188,7 @@ class Crontab extends \web\common\controller\Controller {
                 $uncount_amount += $_amount; // 加上当前需要发放的分红金额
 
 //                echo $uncount_amount . '/' . $single_limit_amount . '/' . $key_num;exit();
+                $still_keep_amount = 0;
                 if($uncount_amount < $single_limit_amount){
                     //继续累计分红
                     $uncount_amount_data['num'] = $uncount_amount;
@@ -217,6 +218,7 @@ class Crontab extends \web\common\controller\Controller {
                         if($_key_num == 0){
                             continue;
                         }
+                        //当前剩余失效钥匙
                         if($_key_num < $current_loose_key_num){
                             $minus_num = $_key_num;
                             $current_loose_key_num = $current_loose_key_num - $minus_num;
@@ -235,7 +237,7 @@ class Crontab extends \web\common\controller\Controller {
 //                        $minus_bonus = $current_loose_key_num * $single_limit_amount;
 //                        $_amount = $_amount - $minus_bonus; //扣除key不足的金额
 //                    }
-                    $_amount = $single_limit_amount - $current_total_amount;
+                    $_amount = $single_limit_amount - $current_total_amount + $still_keep_amount;
 //                    dump($_amount);exit;
 
                 }
