@@ -504,11 +504,12 @@ class Keygame extends \web\api\controller\ApiBase {
         if ($user_key > 0) {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $total_key -= 1;
-//            echo $total_key . '/' . $user_key;exit();
+//            echo $total_key . '/' . $user_key . '/' . $amount;exit();
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
 
-            $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount);
+            $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount,$user_key);
+//            echo $_amount;exit();
             //添加余额, 添加分红记录
             $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
             if ($balance != false) {
@@ -534,6 +535,7 @@ class Keygame extends \web\api\controller\ApiBase {
 
         $bonus_amount = 0;  //分红金额
         $total_lose_key_num = 0;    //失效钥匙总数量
+        $current_amount = $amount;
 //        echo $amount;
         foreach ($record_list as $v) {
             //每把key的封顶值
@@ -549,20 +551,23 @@ class Keygame extends \web\api\controller\ApiBase {
             //判断单个key的封顶值是否大于分红
             if ($single_limit_amount > $amount)
             {
+                $bonus_amount += $current_amount;
                 $record_list_less = $recordM->getBuyKeyRecord($user_id,$game_id,$coin_id);
                 $record_num = count($record_list_less);
                 if($record_num < 1)
                     break;
 
                 $less_bonus_num = $single_limit_amount - $amount;
-                $keyRecordM->save([
-                    'num'    => $less_bonus_num,
+                $unCountM->save([
+                    'num'    => $amount,
                     'update_time' => NOW_DATETIME,
                 ],[
                     'game_id'   => $game_id,
                     'user_id'   => $user_id,
                 ]);
 //                $recordM->where('id',$v['id'])->setDec('bonus_limit',$amount);
+//                echo $bonus_amount . '..';exit();
+                $amount = 0;
                 break;
             }
 
