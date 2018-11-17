@@ -142,7 +142,7 @@ class Crontab extends \web\common\controller\Controller {
      * @param type $scene 场景id 场景:0=p3d购买，1=f3d投注分配，2=f3d开奖分配'
      * @param type $team_id 
      */
-    private function sendF3d($user_id, $coin_id, $game_id, $amount, $scene, $team_id) {
+    private function sendF3d2($user_id, $coin_id, $game_id, $amount, $scene, $team_id) {
         $keyRecordM = new \addons\fomo\model\KeyRecord();
         $balanceM = new \addons\member\model\Balance();
         $rewardM = new \addons\fomo\model\RewardRecord();
@@ -256,9 +256,50 @@ class Crontab extends \web\common\controller\Controller {
         return true;
     }
 
-    private function keyLimit($user_id, $game_id, $coin_id, $amount) {
+    private function sendF3d($user_id, $coin_id, $game_id, $amount, $scene, $team_id) {
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $balanceM = new \addons\member\model\Balance();
+        $rewardM = new \addons\fomo\model\RewardRecord();
+        $unCountM = new \addons\fomo\model\UncountRecord();//计算失效分红记录表
+        if ($scene == 2) {
+            //开奖分红 查询战队成员key总数 and record
+            $record_list = $keyRecordM->getRecordWithOutUserID($user_id, $game_id, $team_id);
+            $total_key = $keyRecordM->getCrontabTotalByGameID($game_id, $team_id, $user_id);
+            $type = 1; //1=胜利战队分红
+            $remark = '胜利战队分红';
+        } else {
+            //查询拥有key的所有user
+            $record_list = $keyRecordM->getRecordWithOutUserID($user_id, $game_id);
+            $total_key = $keyRecordM->getCrontabTotalByGameID($game_id, '', $user_id);
+            $type = 0; //奖励类型 0=投注分红
+            $remark = '欲望之岛投注分红';
+        }
+        if (!empty($record_list)) {
+            foreach ($record_list as $k => $record) {
+                $user_id = $record['user_id'];
+                $key_num = $record['key_num'];
+                if ($key_num <= 0)
+                    continue;
+                $rate = $this->getUserRate($total_key, $key_num);
+                $_amount = $amount * $rate;
+                $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount,$key_num);
+                //添加余额, 添加分红记录
+                $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
+                if ($balance != false) {
+                    $before_amount = $balance['before_amount'];
+                    $after_amount = $balance['amount'];
+                    $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
+                }
+
+            }
+        }
+        return true;
+    }
+
+    private function keyLimit($user_id, $game_id, $coin_id, $amount,$user_key) {
         $recordM = new \addons\member\model\TradingRecord();
         $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $unCountM = new \addons\fomo\model\UncountRecord();//计算失效分红记录表
         $record_list = $recordM->getBuyKeyRecord($user_id, $game_id, $coin_id);
         if (empty($record_list))
             return 0;
@@ -268,24 +309,27 @@ class Crontab extends \web\common\controller\Controller {
 //        echo $amount;
         foreach ($record_list as $v) {
             //每把key的封顶值
+            $user_total_limit = $keyRecordM->getTotalLimit($user_id,$game_id);//用户总封顶金额
+            $single_limit_amount = $user_total_limit / $user_key; //当前每把钥匙的封顶值
+            $single_limit_amount = round($single_limit_amount, 4);//保留4位
 //            $key_bonus_limit = bcdiv($v['bonus_limit'], $v['key_num'], 8);
-            $less_bonus_num = $keyRecordM->where(['game_id' => $game_id, 'user_id' => $user_id])->value('less_bonus_num');
-            if(!empty($less_bonus_num))
+            $uncount_amount_data = $unCountM->getUserUnCount($user_id, $game_id);//当前用户分红累计额
+            if(!empty($uncount_amount_data['num']))
             {
-                $amount += $less_bonus_num;
+                $amount += $uncount_amount_data['num'];
             }
             //判断单个key的封顶值是否大于分红
-            $key_bonus_limit = $v['bonus_limit'];
-            if ($key_bonus_limit > $amount)
+            if ($single_limit_amount > $amount)
             {
                 $record_list_less = $recordM->getBuyKeyRecord($user_id,$game_id,$coin_id);
                 $record_num = count($record_list_less);
                 if($record_num < 1)
                     break;
 
-                $less_bonus_num = $key_bonus_limit - $amount;
+                $less_bonus_num = $single_limit_amount - $amount;
                 $keyRecordM->save([
-                    'less_bonus_num'    => $less_bonus_num,
+                    'num'    => $less_bonus_num,
+                    'update_time' => NOW_DATETIME,
                 ],[
                     'game_id'   => $game_id,
                     'user_id'   => $user_id,
@@ -295,7 +339,7 @@ class Crontab extends \web\common\controller\Controller {
             }
 
             //失效key = 分红金额/当个key的封顶值 取整
-            $lose_key_num = bcdiv($amount,$key_bonus_limit);
+            $lose_key_num = bcdiv($amount,$single_limit_amount);
 //            if ($lose_key_num < 1) {
 //                //足够扣除,直接return
 //                $bonus_amount += $amount;
@@ -309,15 +353,15 @@ class Crontab extends \web\common\controller\Controller {
                 $lose_key_num = $record_key_num;
             }
 
-            $total_limit = $key_bonus_limit * $lose_key_num;    //当前记录减少的封顶金额
+            $total_limit = $single_limit_amount * $lose_key_num;    //当前记录减少的封顶金额
             $recordM->where('id', $v['id'])->setDec('key_num', $lose_key_num);    //当前记录key减少
-//            $recordM->where('id', $v['id'])->setDec('bonus_limit', $total_limit); //当天记录封顶金额减少
             $bonus_amount += $total_limit;
 //            dump($bonus_amount);
             //剩余分红值
             $amount -= $total_limit;
             $total_lose_key_num += $lose_key_num;
         }
+
         if($amount != 0){
             $where['user_id'] = $user_id;
             $where['game_id'] = $game_id;
