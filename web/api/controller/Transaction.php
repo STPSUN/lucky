@@ -35,7 +35,8 @@ class Transaction extends ApiBase{
             $coin_id = $this->_get("coin_id",1);
             $data = [];
             $data['tax_rate'] = $this->_getTaxRate();
-            $data['price'] = $this->_getCoinPrice($coin_id);
+//            $data['price'] = $this->_getCoinPrice($coin_id);
+            $data['price'] = 6.9;
             return $this->successJSON($data);
         }catch(\Exception $ex){
             return $this->failJSON($ex->getMessage());
