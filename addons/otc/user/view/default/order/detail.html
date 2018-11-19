@@ -62,9 +62,27 @@
             
         </div>
         <div class="control-group">
-            <label class="control-label">收款账号</label>
+            <label class="control-label">账号</label>
             <div class="controls">
-                <input type="text" style="width:550px" id="pay_detail" name="pay_detail" class="form-control" disabled="disabled" />                                       
+                <input type="text" style="width:550px" id="account" name="pay_detail" class="form-control" disabled="disabled" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">姓名</label>
+            <div class="controls">
+                <input type="text" style="width:550px" id="wechat_name" name="pay_detail" class="form-control" disabled="disabled" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">开户行</label>
+            <div class="controls">
+                <input type="text" style="width:550px" id="bank_address" name="pay_detail" class="form-control" disabled="disabled" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">收款二维码</label>
+            <div class="controls">
+                <img style="width:250px" id="wechat_img" src="" />
             </div>
         </div>
         <div class="control-group">
@@ -87,14 +105,17 @@
     function onLoadDataSuccess(data){
         $("#pic").attr('src',data.pic);
         if(data.pay_detail_json){
-            var pay_detail = JSON.parse(data.pay_detail_json)
-            var str ='';
-            for(var i in pay_detail){
-                if(str != '')
-                    str += ' '
-                str += pay_detail[i]
-            }
-            $("#pay_detail").val(str);
+            var pay_detail = JSON.parse(data.pay_detail_json)[0];
+//            var str ='';
+//            for(var i in pay_detail){
+//                if(str != '')
+//                    str += ' '
+//                str += pay_detail[i]
+//            }
+            $('#account').val(pay_detail.account);
+            $('#wechat_name').val(pay_detail.name);
+            $("#wechat_img").attr('src',pay_detail.qrcode);
+            $("#bank_address").val(pay_detail.bank_address);
         }
     }
 </script>
