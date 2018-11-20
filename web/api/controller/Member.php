@@ -42,10 +42,10 @@ class Member extends \web\api\controller\ApiBase
 
             if(!empty($game_id)){
                 $keyRecordM = new \addons\fomo\model\KeyRecord();
-                $key = $keyRecordM->getKeyByGameId($user_id, $game_id); //持有游戏key数量
-                $data['key_num'] = $key ? $key['key_num'] : 0;
-                $data['lose_key_num'] = $key ? $key['lose_key_num'] : 0;
-
+                $key = $keyRecordM->getTotalByGameID($user_id, $game_id); //持有游戏key数量
+                $lose_Key = $keyRecordM->getTotalLoseByGameID($user_id,$game_id);
+                $data['key_num'] = $key ? $key : 0;
+                $data['lose_key_num'] = $lose_Key ? $lose_Key : 0;
             }
             $tokenM = new \addons\fomo\model\TokenRecord();
             $token = $tokenM->getDataByUserID($user_id);

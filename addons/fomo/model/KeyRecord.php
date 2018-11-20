@@ -97,6 +97,22 @@ class KeyRecord extends \web\common\model\BaseModel{
         }
         return $data;
     }
+
+    /**
+     * 获取当场游戏(所有战队)用户失效key总量
+     * @param type $user_id
+     * @param type $game_id
+     * @return type
+     */
+    public function getTotalLoseByGameID($user_id,$game_id){
+        $where['user_id'] = $user_id;
+        $where['game_id'] = $game_id;
+        $data = $this->where($where)->sum('lose_key_num');
+        if(empty($data)){
+            return 0;
+        }
+        return $data;
+    }
     
     /**
      * 用户封顶总金额(所有战队)
