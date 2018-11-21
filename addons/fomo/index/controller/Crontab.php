@@ -70,12 +70,14 @@ class Crontab extends \web\common\controller\Controller {
                             $res = $this->sendP3d($data['user_id'], $data['coin_id'], $data['amount'], $data['game_id'], $data['scene']);
                         }
                         if ($res) {
+                            echo 1 . '***';
                             //更新发放状态
                             $data['status'] = 1;
                             $data['update_time'] = NOW_DATETIME;
                             $queueM->save($data);
                             $queueM->commit();
                         } else {
+                            echo 2 . '***';
                             $queueM->rollback();
                         }
                     } catch (\Exception $ex) {
