@@ -15,7 +15,7 @@ class Coins extends \web\common\model\BaseModel{
         return $this->field('id,coin_name')->select(); 
     }
     
-    public function getCoinByName($name='eth',$fields = 'id'){
+    public function getCoinByName($name='WORLD',$fields = 'id'){
         $where['coin_name'] = $name;
         return $this->where($where)->field($fields)->find();
     }

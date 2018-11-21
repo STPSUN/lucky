@@ -13,9 +13,9 @@ class Tokengame extends \web\api\controller\ApiBase {
 
         $m = new \addons\fomo\model\TokenConf();
         $total_token_amount = $m->getValByName('total_token_amount');
-        $total_token_bonus = $m->getValByName('total_token_bonus');
+//        $total_token_bonus = $m->getValByName('total_token_bonus');
         $data['total_token_amount'] = $total_token_amount; //P3D总额
-        $data['total_token_bonus'] = $total_token_bonus; // P3D奖励总额
+//        $data['total_token_bonus'] = $total_token_bonus; // P3D奖励总额
         $data['token_float'] = $m->getValByName('token_float');
         $data['sale_tax'] = $m->getValByName('sale_tax');
         $data['buy_tax'] = $m->getValByName('buy_tax');
