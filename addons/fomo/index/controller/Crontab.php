@@ -58,6 +58,7 @@ class Crontab extends \web\common\controller\Controller {
         try{
             $queueM = new \addons\fomo\model\BonusSequeue();
             $sequeue_list = $queueM->getUnAllSendData(1000);
+            print_r($sequeue_list);exit();
             if (!empty($sequeue_list)) {
                 foreach ($sequeue_list as $k => $data) {
                     try {
