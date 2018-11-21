@@ -226,8 +226,10 @@ class KeyRecord extends \web\common\model\BaseModel{
         $data = $this->where($where)->find();
         if(empty($data))
             return false;
+        $temp = $data['key_num'] - $key_num;
+        $key_num = ($temp <= 0) ? 0 : $temp;
         $data['before_num'] = $data['key_num'];
-        $data['key_num'] = $data['key_num'] - $key_num;
+        $data['key_num'] = $key_num;
         $data['lose_key_num'] = $data['lose_key_num'] + $key_num;
         $data['update_time'] = NOW_DATETIME;
         return $this->save($data);

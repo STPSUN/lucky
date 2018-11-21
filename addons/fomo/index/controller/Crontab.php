@@ -81,6 +81,7 @@ class Crontab extends \web\common\controller\Controller {
                             $queueM->rollback();
                         }
                     } catch (\Exception $ex) {
+                        echo '队列处理失败';
                         $queueM->rollback();
                     }
                 }
@@ -89,6 +90,7 @@ class Crontab extends \web\common\controller\Controller {
                 echo '无队列';
             }
         } catch (\Exception $ex) {
+            echo '队列处理失败';
             return $this->failData($ex->getMessage());
         }
     }
