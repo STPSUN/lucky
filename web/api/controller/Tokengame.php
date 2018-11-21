@@ -248,7 +248,7 @@ class Tokengame extends \web\api\controller\ApiBase {
         $eth = $coinM->getCoinByName();
         $coin_id = $eth['id'];
         $RewardRecordM = new \addons\fomo\model\RewardRecord();
-        $total_token_bonus = $RewardRecordM->getUserTotal($this->user_id, $coin_id);
+        $total_token_bonus = $RewardRecordM->getTotalByType($this->user_id, $coin_id,'6');
         $data['total_token'] = $total_token;
         $data['total_token_eth'] = $total_token_eth;
         $data['total_token_bonus'] = $total_token_bonus;
