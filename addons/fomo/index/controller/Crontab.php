@@ -55,12 +55,12 @@ class Crontab extends \web\common\controller\Controller {
 
     public function excuteAll() {
         set_time_limit(0);
-//        try{
+        try{
             $queueM = new \addons\fomo\model\BonusSequeue();
             $sequeue_list = $queueM->getUnAllSendData(1000);
             if (!empty($sequeue_list)) {
                 foreach ($sequeue_list as $k => $data) {
-//                    try {
+                    try {
                         $queueM->startTrans();
                         if ($data['type'] == 1) {
                             //f3d分红,去除用户本身
@@ -75,22 +75,22 @@ class Crontab extends \web\common\controller\Controller {
                             $data['status'] = 1;
                             $data['update_time'] = NOW_DATETIME;
                             $queueM->save($data);
-//                            $queueM->commit();
+                            $queueM->commit();
                         } else {
                             echo 2 . '***';
                             $queueM->rollback();
                         }
-//                    } catch (\Exception $ex) {
-//                        $queueM->rollback();
-//                    }
+                    } catch (\Exception $ex) {
+                        $queueM->rollback();
+                    }
                 }
                 echo '队列处理成功';
             } else {
                 echo '无队列';
             }
-//        } catch (\Exception $ex) {
-//            return $this->failData($ex->getMessage());
-//        }
+        } catch (\Exception $ex) {
+            return $this->failData($ex->getMessage());
+        }
     }
 
     /**
