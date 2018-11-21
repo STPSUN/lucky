@@ -358,7 +358,6 @@ class Crontab extends \web\common\controller\Controller {
 
             $temp++;
 
-//            echo $amount;exit();
             //失效key = 分红金额/当个key的封顶值 取整
             $lose_key_num = bcdiv($amount,$single_limit_amount);
 //            if ($lose_key_num < 1) {
@@ -379,10 +378,8 @@ class Crontab extends \web\common\controller\Controller {
             //剩余分红值 = 分红总值（当前分红值+剩余分红值） - 封顶金额
             $amount -= $total_limit;
             $recordM->where('id', $v['id'])->setDec('key_num', $lose_key_num);    //当前记录key减少
-//            echo $total_limit . '/' . $uncount_amount_data['num'];exit();
             $total_limit = $total_limit - $uncount_amount_data['num'];
             $bonus_amount += $total_limit;
-//            echo $bonus_amount . '/';
 
             $record_list_less = $recordM->getBuyKeyRecord($user_id,$game_id,$coin_id);
             $record_num = count($record_list_less);
