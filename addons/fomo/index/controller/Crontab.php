@@ -55,7 +55,7 @@ class Crontab extends \web\common\controller\Controller {
 
     public function excuteAll() {
         set_time_limit(0);
-        try{
+//        try{
             $queueM = new \addons\fomo\model\BonusSequeue();
             $sequeue_list = $queueM->getUnAllSendData(1000);
             if (!empty($sequeue_list)) {
@@ -88,9 +88,9 @@ class Crontab extends \web\common\controller\Controller {
             } else {
                 echo '无队列';
             }
-        } catch (\Exception $ex) {
-            return $this->failData($ex->getMessage());
-        }
+//        } catch (\Exception $ex) {
+//            return $this->failData($ex->getMessage());
+//        }
     }
 
     /**
