@@ -230,7 +230,7 @@ class KeyRecord extends \web\common\model\BaseModel{
         $key_num = ($temp <= 0) ? 0 : $key_num;
 
         $data['before_num'] = $data['key_num'];
-        $data['key_num'] = $key_num;
+        $data['key_num'] = $data['key_num'] - $key_num;
         $data['lose_key_num'] = $data['lose_key_num'] + $key_num;
         $data['update_time'] = NOW_DATETIME;
         return $this->save($data);
