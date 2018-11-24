@@ -5,16 +5,16 @@ return [
     'type'            => 'mysql',
     // 服务器地址
     'hostname'        => '127.0.0.1',
-//    'hostname'        => '107.174.247.122',
+//    'hostname'        => '13.231.175.168',
     // 数据库名
-    'database'        => 'f4d',
-//    'database'        => 'fomo3d',
+//    'database'        => 'f4d',
+    'database'        => 'f4d_test',
     // 用户名
 //    'username'        => 'root',
-    'username'        => 'f4d',
+    'username'        => 'f4d_test',
     // 密码
 //    'password'        => 'root',
-    'password'        => 'nWDRXY72SP',
+    'password'        => 'f4d',
     // 端口
 //    'hostport'        => '3307',
     'hostport'        => '3306',
