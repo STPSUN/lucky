@@ -10,11 +10,11 @@ return [
     'database'        => 'f4d',
 //    'database'        => 'f4d_test',
     // 用户名
-//    'username'        => 'root',
-    'username'        => 'f4d',
+    'username'        => 'root',
+//    'username'        => 'f4d_test',
     // 密码
-//    'password'        => 'root',
-    'password'        => 'nWDRXY72SP',
+    'password'        => 'root',
+//    'password'        => 'f4d',
     // 端口
 //    'hostport'        => '3307',
     'hostport'        => '3306',
