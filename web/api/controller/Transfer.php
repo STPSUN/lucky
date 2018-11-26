@@ -92,7 +92,6 @@ class Transfer extends ApiBase{
         $user_id = $this->user_id;
         if($user_id <= 0)
             return $this->failData('请登录');
-        $coin_id = 1;
         $amount = floatval($this->_post('amount'));
         $to_address = $this->_post("to_address");
         $pay_pass = $this->_post("password");
@@ -119,7 +118,7 @@ class Transfer extends ApiBase{
 
             $server_rate = $rate > 0 ? bcmul($amount, ($rate/100) , 5) : 0;
 
-            $coin_id = 1;
+            $coin_id = 2;
             $AssetModel = new \addons\member\model\Balance();
             $userAsset = $AssetModel->getBalanceByCoinID($user_id,$coin_id);
             $total_amount = $amount + $server_rate;
@@ -214,7 +213,6 @@ class Transfer extends ApiBase{
 
                 $server_rate = $rate > 0 ? bcmul($amount, ($rate/100) , 5) : 0;
 
-//                $coin_id = 1;
                 $AssetModel = new \addons\member\model\Balance();
                 $userAsset = $AssetModel->getBalanceByCoinID($user_id,$coin_id);
                 $AssetModel->startTrans();
@@ -222,7 +220,7 @@ class Transfer extends ApiBase{
                 $total_amount = $amount + $server_rate;
                 if($total_amount >= $userAsset['amount']){
                     $AssetModel->rollback();
-                    return $this->failJSON('账户余额不足');
+                    return $this->failJSON('账户余额不足2');
                 }
                 $userAsset = $AssetModel->updateBalance($user_id,$total_amount,$coin_id);
                 if(!$userAsset){
