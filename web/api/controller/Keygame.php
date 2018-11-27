@@ -630,6 +630,7 @@ class Keygame extends \web\api\controller\ApiBase {
             $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount,$user_key);
             //添加余额, 添加分红记录
             $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
+            echo '/' . $_amount .'/';exit();
             if ($balance != false) {
                 $before_amount = $balance['before_amount'];
                 $after_amount = $balance['amount'];
@@ -637,7 +638,6 @@ class Keygame extends \web\api\controller\ApiBase {
                 $remark = '欲望之岛投注分红-自身购买';
                 $rewardM->addRecord($user_id, $coin_id, $before_amount, $_amount, $after_amount, $type, $game_id, $remark);
             }
-//            echo '/' . $_amount .'/';exit();
             $amount = $amount - $_amount;
         }
         return $amount;
