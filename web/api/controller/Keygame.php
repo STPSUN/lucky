@@ -177,7 +177,7 @@ class Keygame extends \web\api\controller\ApiBase {
                 }
             }
             $gameM->startTrans();
-            try {
+//            try {
                 //更新用户购买金额
                 $this->updateTokenNum($this->user_id, $key_total_price);
                 //扣除用户余额
@@ -287,10 +287,10 @@ class Keygame extends \web\api\controller\ApiBase {
                 $this->agencyAward($this->user_id, $key_total_price, $game_id, $coin_id);
                 $gameM->commit();
                 return $this->successJSON();
-            } catch (\Exception $ex) {
-                $gameM->rollback();
-                return $this->failJSON($ex);
-            }
+//            } catch (\Exception $ex) {
+//                $gameM->rollback();
+//                return $this->failJSON($ex);
+//            }
         }
     }
 
