@@ -294,10 +294,130 @@ class Keygame extends \web\api\controller\ApiBase {
         }
     }
 
+    private function agencyAward($user_id,$amount,$game_id,$coin_id)
+    {
+        $use_rate = 0;
+        $agency_level = 0;
+        $memberM = new \addons\member\model\MemberAccountModel();
+        $user = $memberM->getDetail($user_id);
+        if(empty($user['pid']))
+            return;
+
+        $puers = $this->getParentUser($user['pid']);
+
+        foreach ($puers as $k => $v)
+        {
+            switch ($v['agency_level'])
+            {
+                case 1:
+                {
+                    if($agency_level >= 1)
+                        break;
+
+                    $agency_level = 1;
+                    $use_rate = 0.02;
+                    $rate = 0.02;
+                    $this->agencySeueqe($v['user_id'], 10000, $amount, $rate, $game_id, $coin_id,$user_id);
+                    break;
+                }
+                case 2:
+                {
+                    if($agency_level >= 2)
+                        break;
+
+                    $agency_level = 2;
+                    $rate = 0.04 - $use_rate;
+                    $use_rate = 0.04;
+                    $this->agencySeueqe($v['user_id'], 50000, $amount, $rate, $game_id, $coin_id, $user_id);
+                    break;
+                }
+                case 3:
+                {
+                    if($agency_level >= 3)
+                        break;
+
+                    $agency_level = 3;
+                    $rate = 0.06 - $use_rate;
+                    $use_rate = 0.06;
+                    $this->agencySeueqe($v['user_id'], 500000, $amount, $rate, $game_id, $coin_id,$user_id);
+                    break;
+                }
+
+                case 4:
+                {
+                    if($agency_level >= 4)
+                        break;
+
+                    $agency_level = 4;
+                    $rate = 0.08 - $use_rate;
+                    $use_rate = 0.08;
+                    $this->agencySeueqe($v['user_id'], 1000000, $amount,$rate, $game_id, $coin_id,$user_id);
+                    break;
+                }
+                case 5:
+                {
+                    if($agency_level >= 5)
+                        break;
+
+                    $agency_level = 5;
+                    $rate = 0.1 - $use_rate;
+                    $use_rate = 0.1;
+                    $this->agencySeueqe($v['user_id'], 3000000, $amount,$rate, $game_id, $coin_id,$user_id);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取上级会员
+     */
+    private function getParentUser($pid,&$pUsers=array())
+    {
+        $userM = new \addons\member\model\MemberAccountModel();
+        $puser = $userM->getDetail($pid);
+
+        $temp = array(
+            'user_id' => $puser['id'],
+            'agency_level' => $puser['agency_level']
+        );
+        $pUsers[] = $temp;
+
+        $user = $userM->getDetail($puser['pid']);
+        if(!empty($user))
+        {
+            $this->getParentUser($user['id'],$pUsers);
+        }
+
+        return $pUsers;
+    }
+
+    private function getBuyAmount($user_id,&$amount=0)
+    {
+        $userM = new \addons\member\model\MemberAccountModel();
+        $users = $userM->where('pid','in',$user_id)->column('id');
+        $user_ids = '';
+        foreach ($users as $u)
+        {
+            $user_ids .= $u . ',';
+        }
+
+        $user_ids = rtrim($user_ids,',');
+        $keyRecordM = new \addons\fomo\model\KeyRecord();
+        $amount += $keyRecordM->where('user_id','in',$user_ids)->sum('eth');
+        $users = $userM->where('pid','in',$user_ids)->column('id');
+        if(!empty($users))
+        {
+            $this->getBuyAmount($user_ids,$amount);
+        }
+
+        return $amount;
+    }
+
     /**
      * 代理奖励
      */
-    private function agencyAward($user_id, $amount, $game_id, $coin_id) {
+    private function agencyAward2($user_id, $amount, $game_id, $coin_id) {
         $memberM = new \addons\member\model\MemberAccountModel();
         $user = $memberM->getDetail($user_id);
 
@@ -317,6 +437,12 @@ class Keygame extends \web\api\controller\ApiBase {
                     $this->agencySeueqe($user['pid'], 300, $amount, 0.03, $game_id, $coin_id, 1, $user_id);
                     break;
                 case 3:
+                    $this->agencySeueqe($user['pid'], 1000, $amount, 0.05, $game_id, $coin_id, 1, $user_id);
+                    break;
+                case 4:
+                    $this->agencySeueqe($user['pid'], 1000, $amount, 0.05, $game_id, $coin_id, 1, $user_id);
+                    break;
+                case 5:
                     $this->agencySeueqe($user['pid'], 1000, $amount, 0.05, $game_id, $coin_id, 1, $user_id);
                     break;
             }
@@ -345,7 +471,7 @@ class Keygame extends \web\api\controller\ApiBase {
     /**
      * 获取伞下总投注数量
      */
-    public function getBuyAmount($user_id) {
+    public function getBuyAmount2($user_id) {
         $keyRecordM = new \addons\fomo\model\KeyRecord();
         $memberM = new \addons\member\model\MemberAccountModel();
         $one_users = $memberM->where('pid', $user_id)->column('id');
@@ -377,19 +503,14 @@ class Keygame extends \web\api\controller\ApiBase {
     /**
      * 代理奖励加入队列
      */
-    private function agencySeueqe($user_id, $need_amount, $amount, $user_rate, $game_id, $coin_id, $type = 1, $from_user_id) {
+    private function agencySeueqe($user_id, $need_amount, $amount, $user_rate, $game_id, $coin_id,$from_user_id) {
+//        echo $user_id . '/';
         $total_amount = $this->getBuyAmount($user_id);
+//        echo $total_amount . '/' . $need_amount . '***';
         if ($total_amount < $need_amount)
             return true;
 
-        $rate = 0;
-        if ($type == 1) {
-            $this->rate = $rate = $user_rate;
-        } else {
-            $rate = $user_rate - $this->rate;
-        }
-
-        $amount = bcmul($amount, $rate, 4);
+        $amount = bcmul($amount, $user_rate, 4);
         $agencyAwardM = new \addons\fomo\model\AgencyAward();
         $data = array(
             'user_id' => $user_id,

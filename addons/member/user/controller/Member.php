@@ -61,6 +61,7 @@ class Member extends \web\user\controller\AddonUserBase{
         if(IS_POST){
             $data = $_POST;
             $password = $this->_post("now_password");
+            $agency_level = $this->_post("agency_level");
             if(!empty($password)){
                 if (!preg_match("/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/", $password)) {
                     return $this->failData('请输入5~20位字母数字密码');
@@ -73,6 +74,10 @@ class Member extends \web\user\controller\AddonUserBase{
                     return $this->failData('请输入6位数字交易密码');
                 }
                 $data['pay_password'] = md5($pay_password);
+            }
+            if(!empty($agency_level))
+            {
+                $data['agency_level'] = $agency_level;
             }
             if($data['id']){
                 $m->save($data);

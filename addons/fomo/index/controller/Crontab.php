@@ -129,12 +129,13 @@ class Crontab extends \web\common\controller\Controller {
                 }
 
                 $agencyAwardM->commit();
-                echo '代理分红处理成功';
             } catch (\Exception $e) {
                 $agencyAwardM->rollback();
                 echo '代理分红处理失败';
             }
         }
+
+        echo '代理分红处理成功';
     }
 
     /**
