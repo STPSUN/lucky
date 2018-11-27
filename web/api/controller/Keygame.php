@@ -177,7 +177,7 @@ class Keygame extends \web\api\controller\ApiBase {
                 }
             }
             $gameM->startTrans();
-//            try {
+            try {
                 //更新用户购买金额
                 $this->updateTokenNum($this->user_id, $key_total_price);
                 //扣除用户余额
@@ -287,10 +287,10 @@ class Keygame extends \web\api\controller\ApiBase {
                 $this->agencyAward($this->user_id, $key_total_price, $game_id, $coin_id);
                 $gameM->commit();
                 return $this->successJSON();
-//            } catch (\Exception $ex) {
-//                $gameM->rollback();
-//                return $this->failJSON($ex);
-//            }
+            } catch (\Exception $ex) {
+                $gameM->rollback();
+                return $this->failJSON($ex);
+            }
         }
     }
 
@@ -623,14 +623,12 @@ class Keygame extends \web\api\controller\ApiBase {
         if ($user_key > 0) {
             $total_key = $keyRecordM->getCrontabTotalByGameID($game_id);
             $total_key -= 1;
-//            echo $total_key . '/' . $user_key . '/' . $amount;exit();
             $rate = $this->getUserRate($total_key, $user_key); //占总数比率
             $_amount = $amount * $rate; //分配的金额
 
             $_amount = $this->keyLimit($user_id, $game_id, $coin_id, $_amount,$user_key);
             //添加余额, 添加分红记录
             $balance = $balanceM->updateBalance($user_id, $_amount, $coin_id, true);
-            echo '/' . $_amount .'/';exit();
             if ($balance != false) {
                 $before_amount = $balance['before_amount'];
                 $after_amount = $balance['amount'];
