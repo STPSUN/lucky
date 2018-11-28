@@ -505,10 +505,10 @@ class Keygame extends \web\api\controller\ApiBase {
      */
     private function agencySeueqe($user_id, $need_amount, $amount, $user_rate, $game_id, $coin_id,$from_user_id) {
 //        echo $user_id . '/';
-        $total_amount = $this->getBuyAmount($user_id);
+//        $total_amount = $this->getBuyAmount($user_id);
 //        echo $total_amount . '/' . $need_amount . '***';
-        if ($total_amount < $need_amount)
-            return true;
+//        if ($total_amount < $need_amount)
+//            return true;
 
         $amount = bcmul($amount, $user_rate, 4);
         $agencyAwardM = new \addons\fomo\model\AgencyAward();
