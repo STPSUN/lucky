@@ -910,9 +910,9 @@ class Member extends \web\api\controller\ApiBase
                 'username' => $v['username'],
                 'amount'   => empty($award) ? 0 : $award,
                 'register_time' => $register_time,
-//                'agency_level' => $memberM->where('id',$v['id'])->value('agency_level'),
-//                'num'      => count($users2),
-//                'total'    => empty($total) ? 0 : $total,
+                'agency_level' => $memberM->where('id',$v['id'])->value('agency_level'),
+                'num'      => count($users2),
+                'total'    => empty($total) ? 0 : $total,
             ];
 
             $detail[] = $temp;
