@@ -905,12 +905,14 @@ class Member extends \web\api\controller\ApiBase
             $award = $agencyAwardM->where(['user_id' => $user_id, 'from_user_id' => $v['id'], 'status' => 2])->sum('amount');
             $users2 = $memberM->getTeamByIdBreak($v['id'],1,2);
             $total = $agencyAwardM->where(['user_id' => $v['id'], 'status' => 2])->sum('amount');
+            $register_time = $memberM->where('id',$v['id'])->value('register_time');
             $temp = [
                 'username' => $v['username'],
                 'amount'   => empty($award) ? 0 : $award,
-                'agency_level' => $memberM->where('id',$v['id'])->value('agency_level'),
-                'num'      => count($users2),
-                'total'    => empty($total) ? 0 : $total,
+                'register_time' => $register_time,
+//                'agency_level' => $memberM->where('id',$v['id'])->value('agency_level'),
+//                'num'      => count($users2),
+//                'total'    => empty($total) ? 0 : $total,
             ];
 
             $detail[] = $temp;
