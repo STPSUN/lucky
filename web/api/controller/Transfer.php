@@ -33,7 +33,7 @@ class Transfer extends ApiBase{
             if($type != 0){
                 $filter .= ' and type='.$type;
             }else{
-                $filter .= ' and (type=11 or type=12)';
+                $filter .= ' and (type=13 or type=15)';
             }
             $m = new \addons\member\model\TradingRecord();
 
