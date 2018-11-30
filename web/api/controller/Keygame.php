@@ -1097,7 +1097,11 @@ class Keygame extends \web\api\controller\ApiBase {
             $game_id = $this->_get("game_id/d");
             $m = new \addons\fomo\model\KeyRecord();
             $filter = 'game_id=' . $game_id;
-            $list = $m->getList($this->getPageIndex(), 10, $filter);
+            $list = $m->getList2($this->getPageIndex(), 10, $filter);
+            foreach ($list as &$v)
+            {
+                $v['eth'] = round($v['eth'],2);
+            }
             return $this->successJSON($list);
         } catch (\Exception $ex) {
             return $this->failJSON($ex->getMessage());

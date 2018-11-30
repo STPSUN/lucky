@@ -21,6 +21,19 @@ class KeyRecord extends \web\common\model\BaseModel{
         }
         return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
     }
+
+    public function getList2($pageIndex = -1, $pageSize = -1, $filter = '', $order = 'update_time desc') {
+        $r = new \addons\member\model\TradingRecord();
+        $g = new \addons\fomo\model\Game();
+        $t = new \addons\fomo\model\Team();
+        $u = new \addons\member\model\MemberAccountModel();
+        $sql = 'select a.game_id,a.amount as eth,a.team_id,a.update_time,g.name as game_name,g.status,t.name as team_name,u.username from '.$r->getTableName().' a ,'.$g->getTableName().' g,'.$t->getTableName().' t,'.$u->getTableName().' u where a.user_id=u.id and a.game_id=g.id and a.team_id=t.id and a.type=10';
+        if($filter!=''){
+            $sql = 'select * from ('.$sql.') as tab where '.$filter;
+        }
+//        print_r($sql);exit();
+        return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
+    }
     
     public function getTotal($filter = '') {
         $g = new \addons\fomo\model\Game();
