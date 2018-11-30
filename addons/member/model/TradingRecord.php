@@ -92,6 +92,7 @@ class TradingRecord extends \web\common\model\BaseModel{
 
         if($filter != '')
             $sql .= ' and ' .$filter;
+//        print_r($sql);exit();
         return $this->getDataListBySQL($sql, $pageIndex, $pageSize, $order);
     }
     

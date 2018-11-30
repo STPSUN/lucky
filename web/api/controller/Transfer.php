@@ -23,7 +23,7 @@ class Transfer extends ApiBase{
         $user_id = $this->user_id;
         if($user_id <= 0)
             return $this->failData('请登录');
-        $coin_id = 1;
+        $coin_id = 2;
         $type = $this->_get('type'); // 12 = 转出,11= 转入
         if(empty($user_id) || empty($coin_id)){
             return $this->failJSON('missing arguments');
@@ -33,7 +33,7 @@ class Transfer extends ApiBase{
             if($type != 0){
                 $filter .= ' and type='.$type;
             }else{
-//                $filter .= ' and (type=11 or type=12)';
+                $filter .= ' and (type=11 or type=12)';
             }
             $m = new \addons\member\model\TradingRecord();
 
