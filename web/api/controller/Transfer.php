@@ -220,7 +220,7 @@ class Transfer extends ApiBase{
                 $total_amount = $amount + $server_rate;
                 if($total_amount >= $userAsset['amount']){
                     $AssetModel->rollback();
-                    return $this->failJSON('账户余额不足2');
+                    return $this->failJSON('账户余额不足');
                 }
                 $userAsset = $AssetModel->updateBalance($user_id,$total_amount,$coin_id);
                 if(!$userAsset){
