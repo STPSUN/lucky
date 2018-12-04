@@ -44,6 +44,10 @@ class Trade extends \web\user\controller\AddonUserBase{
         $m = new \addons\eth\model\EthTradingOrder();
         $total = $m->getTotal2($filter);
         $rows = $m->getList2($this->getPageIndex(), $this->getPageSize(), $filter);
+        foreach ($rows as &$v)
+        {
+            $v['amount'] += $v['tax'];
+        }
         return $this->toDataGrid($total, $rows);
     }
 
