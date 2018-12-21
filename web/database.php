@@ -14,7 +14,7 @@ return [
     'username'        => 'f4d',
     // 密码
 //    'password'        => 'root',
-    'password'        => 'nWDRXY72SP',
+    'password'        => 'jcKKr3NSASBrN7ib',
     // 端口
 //    'hostport'        => '3307',
     'hostport'        => '3306',
