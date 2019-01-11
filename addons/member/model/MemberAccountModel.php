@@ -28,8 +28,8 @@ class MemberAccountModel extends \web\common\model\BaseModel
             $sql =  'select * from ('.$sql.') t where '.$filter;
 
        
-        $RewardRecordM = new \addons\fomo\model\RewardRecord();
-        $sql = "select a.*,ifnull(sum(b.amount),0) reward_total from ({$sql}) a left join {$RewardRecordM->getTableName()} b on a.id = b.user_id group by a.id";
+//        $RewardRecordM = new \addons\fomo\model\RewardRecord();
+//        $sql = "select a.*,ifnull(sum(b.amount),0) reward_total from ({$sql}) a left join {$RewardRecordM->getTableName()} b on a.id = b.user_id group by a.id";
 //
 //        $gameM = new \addons\fomo\model\Game();
 //        $game = $gameM->getRunGame();
